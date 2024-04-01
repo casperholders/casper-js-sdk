@@ -6,7 +6,7 @@ import {
   CLContractPackageHashType
 } from './ContractPackageHash';
 
-describe('CLAccountHash', () => {
+describe('CLContractPackageHash', () => {
   it('Should be able to return proper value by calling .value()', () => {
     const arr8 = Uint8Array.from(Array(32).fill(42));
     const myHash = new CLContractPackageHash(arr8);

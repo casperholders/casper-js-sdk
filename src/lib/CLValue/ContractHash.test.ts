@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { CLValueParsers } from './Abstract';
 import { CLContractHash, CLContractHashType } from './ContractHash';
 
-describe('CLAccountHash', () => {
+describe('CLContractHash', () => {
   it('Should be able to return proper value by calling .value()', () => {
     const arr8 = Uint8Array.from(Array(32).fill(42));
     const myHash = new CLContractHash(arr8);
