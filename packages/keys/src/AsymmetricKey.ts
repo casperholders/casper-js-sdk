@@ -26,6 +26,22 @@ export abstract class AsymmetricKey {
   }
 
   /**
+   * Computes the blake2b account hash of the public key
+   * @returns The account hash as a byte array
+   */
+  public accountHash(): Uint8Array {
+    return this.publicKey.toAccountHash();
+  }
+
+  /**
+   * Gets the hexadecimal public key of the account
+   * @returns The public key of the `AsymmetricKey` as a hexadecimal string
+   */
+  public accountHex(): string {
+    return this.publicKey.toHex();
+  }
+
+  /**
    * Inserts the provided `content` and `tag` into a .pem compliant string
    * @param tag The tag inserted on the END line
    * @param content The base-64 PEM compliant key
