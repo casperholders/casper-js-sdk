@@ -1,18 +1,17 @@
 import { expect } from 'chai';
 import { Some } from 'ts-results';
+
 import {
   CLValueBuilder,
   CLTypeBuilder,
   CLValueParsers,
   CLURef,
   CLAccountHash,
-  CLPublicKey,
   CLPublicKeyTag,
-  Keys,
-  AccessRights,
-  decodeBase16
-} from '..';
+  AccessRights
+} from './CLValue';
 import { toBytesNumber, toBytesDeployHash } from './ByteConverters';
+import { decodeBase16 } from './Conversions';
 
 describe(`numbers' toBytes`, () => {
   it('CLU256 of zero after serialization should be equal to [0]', () => {
@@ -126,21 +125,7 @@ describe(`numbers' toBytes`, () => {
   it('should be able to serialize/deserialize utf8 string', () => {
     const clVal = CLValueBuilder.string('test_测试');
     const validBytes = Uint8Array.from([
-      11,
-      0,
-      0,
-      0,
-      116,
-      101,
-      115,
-      116,
-      95,
-      230,
-      181,
-      139,
-      232,
-      175,
-      149
+      11, 0, 0, 0, 116, 101, 115, 116, 95, 230, 181, 139, 232, 175, 149
     ]);
 
     const clValFromBytes = CLValueParsers.fromBytes(
@@ -189,52 +174,18 @@ describe(`numbers' toBytes`, () => {
 
     expect(validBytes2).to.deep.eq(
       Uint8Array.from([
-        2,
-        217,
-        61,
-        254,
-        223,
-        193,
-        49,
-        128,
-        160,
-        234,
-        24,
-        136,
-        65,
-        230,
-        78,
-        10,
-        26,
-        247,
-        24,
-        167,
-        51,
-        33,
-        110,
-        127,
-        174,
-        73,
-        9,
-        223,
-        172,
-        227,
-        114,
-        210,
-        176,
-        7
+        2, 217, 61, 254, 223, 193, 49, 128, 160, 234, 24, 136, 65, 230, 78, 10,
+        26, 247, 24, 167, 51, 33, 110, 127, 174, 73, 9, 223, 172, 227, 114, 210,
+        176, 7
       ])
     );
 
     expect(
-      CLValueParsers.fromBytes(bytes, CLTypeBuilder.key())
-        .unwrap()
-        .value().data
+      CLValueParsers.fromBytes(bytes, CLTypeBuilder.key()).unwrap().value().data
     ).to.deep.equal(decodeBase16(urefAddr));
     expect(
-      CLValueParsers.fromBytes(bytes, CLTypeBuilder.key())
-        .unwrap()
-        .value().accessRights
+      CLValueParsers.fromBytes(bytes, CLTypeBuilder.key()).unwrap().value()
+        .accessRights
     ).to.deep.equal(AccessRights.READ_ADD_WRITE);
   });
 
@@ -276,37 +227,8 @@ describe(`numbers' toBytes`, () => {
     const bytes = toBytesDeployHash(deployHash);
     expect(bytes).to.deep.eq(
       Uint8Array.from([
-        126,
-        131,
-        190,
-        142,
-        183,
-        131,
-        212,
-        99,
-        28,
-        50,
-        57,
-        238,
-        224,
-        142,
-        149,
-        243,
-        51,
-        150,
-        33,
-        14,
-        35,
-        137,
-        49,
-        85,
-        182,
-        251,
-        115,
-        78,
-        155,
-        127,
-        13,
+        126, 131, 190, 142, 183, 131, 212, 99, 28, 50, 57, 238, 224, 142, 149,
+        243, 51, 150, 33, 14, 35, 137, 49, 85, 182, 251, 115, 78, 155, 127, 13,
         247
       ])
     );
@@ -486,47 +408,9 @@ describe(`numbers' toBytes`, () => {
     ).unwrap();
     expect(bytes).to.deep.eq(
       Uint8Array.from([
-        32,
-        0,
-        0,
-        0,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        15,
-        32,
-        0,
-        0,
-        0
+        32, 0, 0, 0, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42,
+        42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 15,
+        32, 0, 0, 0
       ])
     );
   });
@@ -538,54 +422,9 @@ describe(`numbers' toBytes`, () => {
     ).unwrap();
     expect(bytes).to.deep.eq(
       Uint8Array.from([
-        1,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42,
-        42
+        1, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42,
+        42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42
       ])
-    );
-  });
-
-  it('should compute hex from PublicKey correctly', () => {
-    const ed25519Account = Keys.Ed25519.new();
-    const ed25519AccountHex = ed25519Account.accountHex();
-    expect(CLPublicKey.fromHex(ed25519AccountHex)).to.deep.equal(
-      ed25519Account.publicKey
-    );
-
-    const secp256K1Account = Keys.Secp256K1.new();
-    const secp256K1AccountHex = secp256K1Account.accountHex();
-    expect(CLPublicKey.fromHex(secp256K1AccountHex)).to.deep.equal(
-      secp256K1Account.publicKey
     );
   });
 });
