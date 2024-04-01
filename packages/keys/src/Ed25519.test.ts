@@ -1,4 +1,9 @@
-import { byteHash, decodeBase16, decodeBase64 } from '@casper-js-sdk/types';
+import {
+  CLPublicKey,
+  byteHash,
+  decodeBase16,
+  decodeBase64
+} from '@casper-js-sdk/types';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
@@ -193,6 +198,14 @@ describe('Ed25519', () => {
 
     expect(publicKeyHexString).to.eq(
       '01e17b438d7b28778ad5ebaf3b47a927ebf3e471cb19097d4061a5e05661fb015b'
+    );
+  });
+
+  it('should compute hex from PublicKey correctly', () => {
+    const ed25519Account = Ed25519.new();
+    const ed25519AccountHex = ed25519Account.accountHex();
+    expect(CLPublicKey.fromHex(ed25519AccountHex)).to.deep.equal(
+      ed25519Account.publicKey
     );
   });
 });

@@ -1,4 +1,4 @@
-import { byteHash, decodeBase16 } from '@casper-js-sdk/types';
+import { CLPublicKey, byteHash, decodeBase16 } from '@casper-js-sdk/types';
 import { expect } from 'chai';
 
 import { Secp256K1 } from './Secp256k1';
@@ -91,6 +91,14 @@ describe('Secp256K1', () => {
 
     expect(keyPair.exportPrivateKeyInPem()).to.eq(privateKyePEM);
     expect(keyPair.exportPublicKeyInPem()).to.eq(pubickKeyPEM);
+  });
+
+  it('should compute hex from PublicKey correctly', () => {
+    const secp256K1Account = Secp256K1.new();
+    const secp256K1AccountHex = secp256K1Account.accountHex();
+    expect(CLPublicKey.fromHex(secp256K1AccountHex)).to.deep.equal(
+      secp256K1Account.publicKey
+    );
   });
 
   if (isNodeJS) {

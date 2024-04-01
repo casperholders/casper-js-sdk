@@ -5,6 +5,7 @@ import { blake2b, SignatureAlgorithm } from '@casper-js-sdk/types';
  * @param signatureAlgorithm The signature algorithm of the key. Currently supported are Ed25519 and Secp256k1
  * @param publicKey The public key as a byte array
  * @returns A blake2b hash of the public key
+ * @deprecated use `CLPublicKey` class
  */
 export function accountHashHelper(
   signatureAlgorithm: SignatureAlgorithm,

@@ -64,6 +64,10 @@ export class Secp256K1 extends AsymmetricKey {
    * Generates the account hash of a secp256k1 public key
    * @param {Uint8Array} publicKey A secp256k1 public key
    * @returns The blake2b account hash of the public key
+   * @deprecated use `CLPublicKey` class
+   * ```ts
+   * new CLPublicKey(publicKey, CLPublicKeyTag.SECP256K1).toAccountHash();
+   * ```
    */
   public static accountHash(publicKey: Uint8Array): Uint8Array {
     return accountHashHelper(SignatureAlgorithm.Secp256K1, publicKey);
@@ -74,6 +78,10 @@ export class Secp256K1 extends AsymmetricKey {
    * @param publicKey
    * @remarks
    * The returned public key hex will be prefixed with a "02" to indicate that it is of the secp256k1 variety
+   * @deprecated use `CLPublicKey` class
+   * ```ts
+   * new CLPublicKey(publicKey, CLPublicKeyTag.SECP256K1).toHex(false);
+   * ```
    */
   public static accountHex(publicKey: Uint8Array): string {
     return '02' + encodeBase16(publicKey);

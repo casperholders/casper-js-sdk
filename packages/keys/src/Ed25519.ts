@@ -83,6 +83,10 @@ export class Ed25519 extends AsymmetricKey {
   /**
    * Generate the accountHex for the Ed25519 public key
    * @param publicKey
+   * @deprecated use `CLPublicKey` class
+   * ```ts
+   * new CLPublicKey(publicKey, CLPublicKeyTag.ED25519).toHex(false);
+   * ```
    */
   public static accountHex(publicKey: Uint8Array): string {
     return '01' + encodeBase16(publicKey);
@@ -107,6 +111,10 @@ export class Ed25519 extends AsymmetricKey {
    * Generates the account hash of a Ed25519 public key
    * @param {Uint8Array} publicKey An Ed25519 public key
    * @returns The blake2b account hash of the public key
+   * @deprecated use `CLPublicKey` class
+   * ```ts
+   * new CLPublicKey(publicKey, CLPublicKeyTag.ED25519).toAccountHash();
+   * ```
    */
   public static accountHash(publicKey: Uint8Array): Uint8Array {
     return accountHashHelper(SignatureAlgorithm.Ed25519, publicKey);
