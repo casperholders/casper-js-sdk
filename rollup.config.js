@@ -58,7 +58,7 @@ function getConfig(opts) {
 
 /** @type {import('rollup').RollupOptions[]} */
 module.exports = [
-  getConfig({ browser: true, format: 'esm' }),
+  getConfig({ browser: true, suffix: '.browser', format: 'esm' }),
   getConfig({
     browser: false,
     suffix: '.node',

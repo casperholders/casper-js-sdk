@@ -3,7 +3,7 @@
   "version": "3.0.0-beta",
   "description": "",
   "main": "dist/lib.node.js",
-  "browser": "dist/lib.js",
+  "browser": "dist/lib.browser.js",
   "types": "dist/index.d.ts",
   "author": "Jan Hoffmann <jan@casperlabs.io>, Ryo Kanazawa <ryo@casperlabs.io>",
   "license": "Apache-2.0",
