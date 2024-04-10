@@ -1,1 +1,1 @@
-# @casper-js-sdk/types
+# casper-js-types

@@ -1,1 +1,1 @@
-# @casper-js-sdk/keys
+# casper-js-keys
