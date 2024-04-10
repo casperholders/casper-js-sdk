@@ -74,10 +74,10 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test docs build
-        run: npm run docs:build
+        run: yarn docs:build
 
       - name: Test build
-        run: npm run build
+        run: yarn build
 
       # test mainnet
       - name: Get the mainnet version
