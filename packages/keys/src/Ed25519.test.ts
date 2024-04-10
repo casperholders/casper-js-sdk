@@ -3,7 +3,7 @@ import {
   byteHash,
   decodeBase16,
   decodeBase64
-} from '@casper-js-sdk/types';
+} from 'casper-js-types';
 import { expect } from 'chai';
 import sinon from 'sinon';
 

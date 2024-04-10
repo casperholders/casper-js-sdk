@@ -1,4 +1,4 @@
-import { SignatureAlgorithm } from '@casper-js-sdk/types';
+import { SignatureAlgorithm } from 'casper-js-types';
 import { expect } from 'chai';
 
 import { accountHashHelper } from './utils';

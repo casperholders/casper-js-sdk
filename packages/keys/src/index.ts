@@ -1,4 +1,4 @@
-export { SignatureAlgorithm } from '@casper-js-sdk/types';
+export { SignatureAlgorithm } from 'casper-js-types';
 
 export * from './AsymmetricKey';
 export * from './Ed25519';

@@ -1,8 +1,4 @@
-import {
-  CLPublicKey,
-  decodeBase64,
-  SignatureAlgorithm
-} from '@casper-js-sdk/types';
+import { CLPublicKey, decodeBase64, SignatureAlgorithm } from 'casper-js-types';
 
 export abstract class AsymmetricKey {
   public readonly publicKey: CLPublicKey;

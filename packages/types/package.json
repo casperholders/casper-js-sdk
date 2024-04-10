@@ -1,5 +1,5 @@
 {
-  "name": "@casper-js-sdk/types",
+  "name": "casper-js-types",
   "version": "3.0.0-beta",
   "description": "",
   "main": "dist/lib.node.js",

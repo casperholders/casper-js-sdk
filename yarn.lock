@@ -247,20 +247,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@casper-js-sdk/keys@workspace:packages/keys":
-  version: 0.0.0-use.local
-  resolution: "@casper-js-sdk/keys@workspace:packages/keys"
-  dependencies:
-    "@casper-js-sdk/types": "workspace:^"
-  languageName: unknown
-  linkType: soft
-
-"@casper-js-sdk/types@workspace:^, @casper-js-sdk/types@workspace:packages/types":
-  version: 0.0.0-use.local
-  resolution: "@casper-js-sdk/types@workspace:packages/types"
-  languageName: unknown
-  linkType: soft
-
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -1938,6 +1924,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"casper-js-keys@workspace:packages/keys":
+  version: 0.0.0-use.local
+  resolution: "casper-js-keys@workspace:packages/keys"
+  dependencies:
+    casper-js-types: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "casper-js-sdk@workspace:.":
   version: 0.0.0-use.local
   resolution: "casper-js-sdk@workspace:."
@@ -2016,6 +2010,12 @@ __metadata:
     typescript: "npm:^5.2.2"
     url: "npm:^0.11.0"
     util: "npm:^0.12.5"
+  languageName: unknown
+  linkType: soft
+
+"casper-js-types@workspace:^, casper-js-types@workspace:packages/types":
+  version: 0.0.0-use.local
+  resolution: "casper-js-types@workspace:packages/types"
   languageName: unknown
   linkType: soft
 

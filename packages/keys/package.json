@@ -1,5 +1,5 @@
 {
-  "name": "@casper-js-sdk/keys",
+  "name": "casper-js-keys",
   "version": "3.0.0-beta",
   "description": "",
   "main": "dist/lib.node.js",
@@ -14,6 +14,6 @@
     "coverage": "run -T codecov"
   },
   "dependencies": {
-    "@casper-js-sdk/types": "workspace:^"
+    "casper-js-types": "workspace:^"
   }
 }

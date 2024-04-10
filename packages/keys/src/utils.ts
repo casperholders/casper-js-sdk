@@ -1,4 +1,4 @@
-import { blake2b, SignatureAlgorithm } from '@casper-js-sdk/types';
+import { blake2b, SignatureAlgorithm } from 'casper-js-types';
 
 /**
  * Gets the blake2b hash of the provided public key
