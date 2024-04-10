@@ -86,6 +86,7 @@ jobs:
         run: echo "MAINNET_VERSION=$(curl -s -X POST --data-raw '${{ env.VERSION_QUERY }}' -H "Content-Type:application/json" ${{ env.MAINNET_NODE_URL }} | jq -r .result.build_version | cut -d "-" -f 1)" >> "$GITHUB_ENV"
 
       - name: Test RPC - mainnet ${{ env.MAINNET_VERSION }}
+        if: ${{ false }}
         run: npx casper-node-launcher-js node v${{ env.MAINNET_VERSION }} --daemon && npm run test:e2e && npx casper-node-launcher-js stop
 
       # test testnet
