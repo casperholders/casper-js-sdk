@@ -1924,6 +1924,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"casper-js-api@workspace:packages/api":
+  version: 0.0.0-use.local
+  resolution: "casper-js-api@workspace:packages/api"
+  dependencies:
+    casper-js-types: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "casper-js-keys@workspace:packages/keys":
   version: 0.0.0-use.local
   resolution: "casper-js-keys@workspace:packages/keys"
@@ -1970,6 +1978,7 @@ __metadata:
     casper-node-launcher-js: "npm:^0.0.3"
     chai: "npm:^4.2.0"
     chai-as-promised: "npm:^7.1.1"
+    class-transformer: "npm:^0.5.1"
     codecov: "npm:^3.8.3"
     cross-env: "npm:^7.0.3"
     crypto-browserify: "npm:^3.12.0"
@@ -1988,12 +1997,13 @@ __metadata:
     key-encoder: "npm:^2.0.3"
     lint-staged: "npm:^10.5.4"
     lodash: "npm:^4.17.21"
+    merge-options: "npm:^3.0.4"
     mocha: "npm:^10.1.0"
     node-fetch: "npm:2.6.13"
     nyc: "npm:^15.1.0"
     prettier: "npm:^3.2.5"
     process: "npm:^0.11.10"
-    reflect-metadata: "npm:^0.1.13"
+    reflect-metadata: "npm:^0.2.2"
     rollup: "npm:^3.28.1"
     rollup-plugin-buble: "npm:^0.19.8"
     rollup-plugin-polyfill-node: "npm:^0.12.0"
@@ -2165,6 +2175,13 @@ __metadata:
     inherits: "npm:^2.0.1"
     safe-buffer: "npm:^5.0.1"
   checksum: 3d5d6652ca499c3f7c5d7fdc2932a357ec1e5aa84f2ad766d850efd42e89753c97b795c3a104a8e7ae35b4e293f5363926913de3bf8181af37067d9d541ca0db
+  languageName: node
+  linkType: hard
+
+"class-transformer@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "class-transformer@npm:0.5.1"
+  checksum: 750327e3e9a5cf233c5234252f4caf6b06c437bf68a24acbdcfb06c8e0bfff7aa97c30428184813e38e08111b42871f20c5cf669ea4490f8ae837c09f08b31e7
   languageName: node
   linkType: hard
 
@@ -4985,6 +5002,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"merge-options@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "merge-options@npm:3.0.4"
+  dependencies:
+    is-plain-obj: "npm:^2.1.0"
+  checksum: d86ddb3dd6e85d558dbf25dc944f3527b6bacb944db3fdda6e84a3f59c4e4b85231095f58b835758b9a57708342dee0f8de0dffa352974a48221487fe9f4584f
+  languageName: node
+  linkType: hard
+
 "merge-source-map@npm:^1.1.0":
   version: 1.1.0
   resolution: "merge-source-map@npm:1.1.0"
@@ -6012,10 +6038,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reflect-metadata@npm:^0.1.13":
-  version: 0.1.13
-  resolution: "reflect-metadata@npm:0.1.13"
-  checksum: 732570da35d2d96f8fdd5aac60fb263aa92f6512eaded5962b052bd9e90f22a9dec5aaf0d7ff4bfe97646c9530e8444e8435c2d80b24d0bdf938b5d47f6f5b83
+"reflect-metadata@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "reflect-metadata@npm:0.2.2"
+  checksum: 1c93f9ac790fea1c852fde80c91b2760420069f4862f28e6fae0c00c6937a56508716b0ed2419ab02869dd488d123c4ab92d062ae84e8739ea7417fae10c4745
   languageName: node
   linkType: hard
 

@@ -12,17 +12,17 @@ export type JRPCVersion = '2.0';
 export type JRPCId = number | string | void;
 
 export interface JRPCBase {
-  jsonrpc?: JRPCVersion;
-  id?: JRPCId;
+  jsonrpc: JRPCVersion;
+  id: JRPCId;
 }
 
-export interface JRPCRequest<T> extends JRPCBase {
+export interface JsonRpcRequest<T> extends JRPCBase {
   method: string;
   params?: T;
 }
 
-export interface JRPCResponse<T> extends JRPCBase {
-  result?: T;
+export interface JsonRpcResponse<T> extends JRPCBase {
+  result: T;
   error?: any;
 }
 
@@ -35,10 +35,10 @@ export interface RequestArguments<T> {
 }
 
 export interface SafeEventEmitterProvider {
-  sendAsync: <T, U>(req: JRPCRequest<T>) => Promise<U>;
+  sendAsync: <T, U>(req: JsonRpcRequest<T>) => Promise<U>;
   send: <T, U>(
-    req: JRPCRequest<T>,
-    callback: SendCallBack<JRPCResponse<U>>
+    req: JsonRpcRequest<T>,
+    callback: SendCallBack<JsonRpcResponse<U>>
   ) => void;
   request: <T, U>(req: RequestArguments<T>) => Promise<Maybe<U>>;
 }
@@ -61,7 +61,7 @@ class ProviderTransport extends Transport {
     const batch = getBatchRequests(data);
     try {
       const result = await this.provider.request(
-        (data.request as IJSONRPCRequest) as RequestArguments<any>
+        data.request as IJSONRPCRequest as RequestArguments<any>
       );
       const jsonrpcResponse = {
         id: data.request.id,
