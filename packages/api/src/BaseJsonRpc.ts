@@ -95,7 +95,7 @@ export class BaseJsonRpc extends Client {
   ): Promise<JsonRpcResponse<U>> {
     const response = await this._request<T, U>(requestObject, options);
 
-    if (returnType === 'raw' || cls === undefined) return response;
+    if (returnType === ReturnType.Raw || cls === undefined) return response;
 
     return {
       ...response,
