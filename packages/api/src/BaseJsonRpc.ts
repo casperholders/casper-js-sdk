@@ -66,14 +66,9 @@ export class BaseJsonRpc extends Client {
     requestObject: RequestArguments<T>,
     options?: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
-    const mergedOptions: JsonRpcOptions | undefined = mergeOptions(
-      this.options,
-      options
-    );
-
     // TODO: Handle options properly
 
-    return this.request(requestObject, mergedOptions?.timeout);
+    return this.request(requestObject, options?.timeout);
   }
 
   async requests<T extends readonly unknown[] | object, U = any>(
@@ -82,7 +77,12 @@ export class BaseJsonRpc extends Client {
     requestObject: RequestArguments<T>,
     options?: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
-    const response = await this._request<T, U>(requestObject, options);
+    const mergedOptions: JsonRpcOptions | undefined = mergeOptions(
+      this.options,
+      options
+    );
+
+    const response = await this._request<T, U>(requestObject, mergedOptions);
 
     if (returnType === ReturnType.Raw || cls === undefined) return response;
 
