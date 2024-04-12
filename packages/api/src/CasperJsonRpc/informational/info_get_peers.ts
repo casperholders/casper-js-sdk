@@ -28,19 +28,10 @@ export interface IGetPeersResult extends IRpcResult {
 
 export type GetPeersParams = string[];
 
-export async function infoGetPeers(
-  baseJsonRPC: BaseJsonRpc,
-  returnType: ReturnType.Raw,
-  params?: GetPeersParams,
-  options?: RpcRequestOptions
-): Promise<JsonRpcResponse<IGetPeersResult>>;
-
-export async function infoGetPeers(
-  baseJsonRPC: BaseJsonRpc,
-  returnType?: ReturnType.Parsed,
-  params?: GetPeersParams,
-  options?: RpcRequestOptions
-): Promise<JsonRpcResponse<GetPeersResult>>;
+export type InfoGetPeersReturnTypeMap = {
+  [ReturnType.Raw]: IGetPeersResult;
+  [ReturnType.Parsed]: GetPeersResult;
+};
 
 /**
  * Returns a list of peers connected to the node
@@ -48,14 +39,13 @@ export async function infoGetPeers(
  * @param options
  * @returns
  */
-export async function infoGetPeers(
+export async function infoGetPeers<T extends keyof InfoGetPeersReturnTypeMap>(
   baseJsonRPC: BaseJsonRpc,
-  returnType: ReturnType = ReturnType.Parsed,
+  returnType: T,
   params: GetPeersParams = [],
   options?: RpcRequestOptions
-) {
-  // @ts-ignore
-  return baseJsonRPC.requests<GetPeersParams, unknown>(
+): Promise<JsonRpcResponse<InfoGetPeersReturnTypeMap[T]>> {
+  return baseJsonRPC.requests<GetPeersParams>(
     GetPeersResult,
     returnType,
     {

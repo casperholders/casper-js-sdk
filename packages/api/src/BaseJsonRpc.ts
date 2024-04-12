@@ -73,21 +73,7 @@ export class BaseJsonRpc extends Client {
     return this.request(requestObject, mergedOptions?.timeout);
   }
 
-  async requests<T extends readonly unknown[] | object, U extends IRpcResult>(
-    cls: undefined,
-    returnType: ReturnType.Raw,
-    requestObject: RequestArguments<T>,
-    options?: RpcRequestOptions
-  ): Promise<JsonRpcResponse<U>>;
-
-  async requests<T extends readonly unknown[] | object, U extends RpcResult>(
-    cls: ClassConstructor<U>,
-    returnType: ReturnType.Parsed,
-    requestObject: RequestArguments<T>,
-    options?: RpcRequestOptions
-  ): Promise<JsonRpcResponse<U>>;
-
-  async requests<T extends readonly unknown[] | object, U = unknown>(
+  async requests<T extends readonly unknown[] | object, U = any>(
     cls: undefined | ClassConstructor<U>,
     returnType: ReturnType = ReturnType.Parsed,
     requestObject: RequestArguments<T>,
