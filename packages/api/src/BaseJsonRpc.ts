@@ -17,8 +17,9 @@ import { DTO, ICamelToSnakeCase } from './utils';
 
 export class JsonRpcError extends JSONRPCError {}
 
-export interface RpcRequestOptions {
+export interface JsonRpcOptions {
   timeout?: number;
+  validateParsedData?: boolean;
 }
 
 export class RpcResult {
@@ -33,11 +34,11 @@ export enum ReturnType {
 }
 
 export class BaseJsonRpc extends Client {
-  options?: RpcRequestOptions;
+  options?: JsonRpcOptions;
 
   constructor(
     provider: string | SafeEventEmitterProvider,
-    options?: RpcRequestOptions
+    options?: JsonRpcOptions
   ) {
     let transport: HTTPTransport | ProviderTransport;
     if (typeof provider === 'string') {
@@ -63,9 +64,9 @@ export class BaseJsonRpc extends Client {
 
   private async _request<T extends readonly unknown[] | object, U = unknown>(
     requestObject: RequestArguments<T>,
-    options?: RpcRequestOptions
+    options?: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
-    const mergedOptions: RpcRequestOptions | undefined = mergeOptions(
+    const mergedOptions: JsonRpcOptions | undefined = mergeOptions(
       this.options,
       options
     );
@@ -79,7 +80,7 @@ export class BaseJsonRpc extends Client {
     cls: undefined | ClassConstructor<U>,
     returnType: ReturnType = ReturnType.Parsed,
     requestObject: RequestArguments<T>,
-    options?: RpcRequestOptions
+    options?: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
     const response = await this._request<T, U>(requestObject, options);
 

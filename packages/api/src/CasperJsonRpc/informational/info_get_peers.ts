@@ -3,7 +3,7 @@ import { Expose, Type } from 'class-transformer';
 import {
   BaseJsonRpc,
   IRpcResult,
-  RpcRequestOptions,
+  JsonRpcOptions,
   RpcResult,
   ReturnType
 } from '../../BaseJsonRpc';
@@ -43,7 +43,7 @@ export async function infoGetPeers<T extends keyof InfoGetPeersReturnTypeMap>(
   baseJsonRPC: BaseJsonRpc,
   returnType: T,
   params: GetPeersParams = [],
-  options?: RpcRequestOptions
+  options?: JsonRpcOptions
 ): Promise<JsonRpcResponse<InfoGetPeersReturnTypeMap[T]>> {
   return baseJsonRPC.requests<GetPeersParams>(
     GetPeersResult,
