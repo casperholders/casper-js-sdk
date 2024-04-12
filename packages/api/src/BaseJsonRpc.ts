@@ -56,6 +56,8 @@ export class BaseJsonRpc extends Client {
     const requestManager = new RequestManager([transport]);
 
     super(requestManager);
+
+    // TODO: Handle default option
     this.options = options;
   }
 
@@ -63,7 +65,7 @@ export class BaseJsonRpc extends Client {
     requestObject: RequestArguments<T>,
     options?: RpcRequestOptions
   ): Promise<JsonRpcResponse<U>> {
-    const mergedOptions: RpcRequestOptions = mergeOptions(
+    const mergedOptions: RpcRequestOptions | undefined = mergeOptions(
       this.options,
       options
     );
