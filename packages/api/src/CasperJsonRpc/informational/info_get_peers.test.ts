@@ -29,14 +29,16 @@ describe('info_get_peers', () => {
   });
 
   it('should return a list of peers connected to the node - raw', async () => {
-    const { result } = await infoGetPeers(baseJsonRPC, ReturnType.Raw);
+    // baseJsonRPC ReturnType is Parsed by default, so type case - <ReturnType.Raw> is required with modified options.
+    const { result } = await infoGetPeers<ReturnType.Raw>(baseJsonRPC, [], {
+      returnType: ReturnType.Raw
+    });
 
     expect(result).to.deep.equal(mockedResponse);
   });
 
   it('should return a list of peers connected to the node - parsed', async () => {
-    const { result } = await infoGetPeers(baseJsonRPC, ReturnType.Parsed);
-
+    const { result } = await infoGetPeers(baseJsonRPC, []);
     expect(result.apiVersion).to.eq(mockedResponse.api_version);
     expect(result.peers.length).to.eq(1);
     result.peers[0].should.be.instanceof(Peer);

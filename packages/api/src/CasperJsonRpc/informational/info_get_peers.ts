@@ -10,11 +10,6 @@ import {
 import { DTO, ICamelToSnakeCase } from '../../utils';
 import { JsonRpcResponse } from '../../ProviderTransport';
 
-export class GetPeersResult extends RpcResult {
-  @Type(() => Peer)
-  peers: Peer[];
-}
-
 export class Peer {
   @Expose({ name: 'node_id' })
   nodeId: string;
@@ -22,6 +17,12 @@ export class Peer {
 }
 
 export type IPeer = ICamelToSnakeCase<DTO<Peer>>;
+
+export class GetPeersResult extends RpcResult {
+  @Type(() => Peer)
+  peers: Peer[];
+}
+
 export interface IGetPeersResult extends IRpcResult {
   peers: IPeer[];
 }
@@ -40,14 +41,12 @@ export type InfoGetPeersReturnTypeMap = {
  * @returns
  */
 export async function infoGetPeers<T extends keyof InfoGetPeersReturnTypeMap>(
-  baseJsonRPC: BaseJsonRpc,
-  returnType: T,
+  baseJsonRPC: BaseJsonRpc<T>,
   params: GetPeersParams = [],
-  options?: JsonRpcOptions
+  options?: JsonRpcOptions<T>
 ): Promise<JsonRpcResponse<InfoGetPeersReturnTypeMap[T]>> {
   return baseJsonRPC.requests<GetPeersParams>(
     GetPeersResult,
-    returnType,
     {
       method: 'info_get_peers',
       params

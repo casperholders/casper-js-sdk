@@ -4,7 +4,7 @@ import {
   Client,
   JSONRPCError
 } from '@open-rpc/client-js';
-import { ClassConstructor, Expose, plainToClass } from 'class-transformer';
+import { ClassConstructor, Expose, plainToInstance } from 'class-transformer';
 import mergeOptions from 'merge-options';
 import 'reflect-metadata';
 
@@ -17,9 +17,9 @@ import { DTO, ICamelToSnakeCase } from './utils';
 
 export class JsonRpcError extends JSONRPCError {}
 
-export interface JsonRpcOptions {
+export interface JsonRpcOptions<T = ReturnType> {
+  returnType?: T;
   timeout?: number;
-  validateParsedData?: boolean;
 }
 
 export class RpcResult {
@@ -33,12 +33,14 @@ export enum ReturnType {
   Parsed = 'parsed'
 }
 
-export class BaseJsonRpc extends Client {
-  options?: JsonRpcOptions;
+export class BaseJsonRpc<
+  T extends ReturnType = ReturnType.Parsed
+> extends Client {
+  options: JsonRpcOptions;
 
   constructor(
     provider: string | SafeEventEmitterProvider,
-    options?: JsonRpcOptions
+    options?: JsonRpcOptions<T>
   ) {
     let transport: HTTPTransport | ProviderTransport;
     if (typeof provider === 'string') {
@@ -59,32 +61,32 @@ export class BaseJsonRpc extends Client {
     super(requestManager);
 
     // TODO: Handle default option
-    this.options = options;
+    const defaultJsonRpcOptions: JsonRpcOptions = {
+      returnType: ReturnType.Parsed
+    };
+
+    this.options = mergeOptions(defaultJsonRpcOptions, options);
   }
 
   private async _request<T extends readonly unknown[] | object, U = unknown>(
     requestObject: RequestArguments<T>,
-    options?: JsonRpcOptions
+    options: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
     // TODO: Handle options properly
 
-    return this.request(requestObject, options?.timeout);
+    return this.request(requestObject, options.timeout);
   }
 
   async requests<T extends readonly unknown[] | object, U = any>(
     cls: undefined | ClassConstructor<U>,
-    returnType: ReturnType = ReturnType.Parsed,
     requestObject: RequestArguments<T>,
     options?: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
-    const mergedOptions: JsonRpcOptions | undefined = mergeOptions(
-      this.options,
-      options
-    );
-
+    const mergedOptions: JsonRpcOptions = mergeOptions(this.options, options);
     const response = await this._request<T, U>(requestObject, mergedOptions);
 
-    if (returnType === ReturnType.Raw || cls === undefined) return response;
+    if (mergedOptions.returnType === ReturnType.Raw || cls === undefined)
+      return response;
 
     return {
       ...response,
