@@ -5,6 +5,7 @@ import {
   JSONRPCError
 } from '@open-rpc/client-js';
 import { ClassConstructor, Expose, plainToInstance } from 'class-transformer';
+import { IsString, validateOrReject, ValidatorOptions } from 'class-validator';
 import mergeOptions from 'merge-options';
 import 'reflect-metadata';
 
@@ -20,10 +21,13 @@ export class JsonRpcError extends JSONRPCError {}
 export interface JsonRpcOptions<T = ReturnType> {
   returnType?: T;
   timeout?: number;
+  validateParsedData?: boolean;
+  validatorOptions?: ValidatorOptions;
 }
 
 export class RpcResult {
   @Expose({ name: 'api_version' })
+  @IsString()
   apiVersion: string;
 }
 export type IRpcResult = ICamelToSnakeCase<DTO<RpcResult>>;
@@ -62,14 +66,19 @@ export class BaseJsonRpc<
 
     // TODO: Handle default option
     const defaultJsonRpcOptions: JsonRpcOptions = {
-      returnType: ReturnType.Parsed
+      returnType: ReturnType.Parsed,
+      validateParsedData: false,
+      validatorOptions: {
+        whitelist: true,
+        forbidNonWhitelisted: true
+      }
     };
 
     this.options = mergeOptions(defaultJsonRpcOptions, options);
   }
 
-  private async _request<T extends readonly unknown[] | object, U = unknown>(
-    requestObject: RequestArguments<T>,
+  private async _request<R extends readonly unknown[] | object, U = unknown>(
+    requestObject: RequestArguments<R>,
     options: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
     // TODO: Handle options properly
@@ -77,20 +86,25 @@ export class BaseJsonRpc<
     return this.request(requestObject, options.timeout);
   }
 
-  async requests<T extends readonly unknown[] | object, U = any>(
+  async requests<R extends readonly unknown[] | object, U = any>(
     cls: undefined | ClassConstructor<U>,
-    requestObject: RequestArguments<T>,
+    requestObject: RequestArguments<R>,
     options?: JsonRpcOptions
   ): Promise<JsonRpcResponse<U>> {
     const mergedOptions: JsonRpcOptions = mergeOptions(this.options, options);
-    const response = await this._request<T, U>(requestObject, mergedOptions);
+    const response = await this._request<R, U>(requestObject, mergedOptions);
 
     if (mergedOptions.returnType === ReturnType.Raw || cls === undefined)
       return response;
 
+    const parsed = plainToInstance(cls, response.result);
+    if (mergedOptions.validateParsedData) {
+      await validateOrReject(parsed as object, mergedOptions.validatorOptions);
+    }
+
     return {
       ...response,
-      result: plainToClass(cls, response.result)
+      result: parsed
     };
   }
 }

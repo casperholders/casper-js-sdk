@@ -1,4 +1,5 @@
 import { Expose, Type } from 'class-transformer';
+import { IsString, ValidateNested } from 'class-validator';
 
 import {
   BaseJsonRpc,
@@ -12,7 +13,10 @@ import { JsonRpcResponse } from '../../ProviderTransport';
 
 export class Peer {
   @Expose({ name: 'node_id' })
+  @IsString()
   nodeId: string;
+
+  @IsString()
   address: string;
 }
 
@@ -20,6 +24,7 @@ export type IPeer = ICamelToSnakeCase<DTO<Peer>>;
 
 export class GetPeersResult extends RpcResult {
   @Type(() => Peer)
+  @ValidateNested({ each: true })
   peers: Peer[];
 }
 
