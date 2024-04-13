@@ -9,7 +9,6 @@ import {
   ReturnType
 } from '../../BaseJsonRpc';
 import { DTO, ICamelToSnakeCase } from '../../utils';
-import { JsonRpcResponse } from '../../ProviderTransport';
 
 export class Peer {
   @Expose({ name: 'node_id' })
@@ -49,7 +48,7 @@ export async function infoGetPeers<T extends keyof InfoGetPeersReturnTypeMap>(
   baseJsonRPC: BaseJsonRpc<T>,
   params: GetPeersParams = [],
   options?: JsonRpcOptions<T>
-): Promise<JsonRpcResponse<InfoGetPeersReturnTypeMap[T]>> {
+): Promise<InfoGetPeersReturnTypeMap[T]> {
   return baseJsonRPC.requests<GetPeersParams>(
     GetPeersResult,
     {

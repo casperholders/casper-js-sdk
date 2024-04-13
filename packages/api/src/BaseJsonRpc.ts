@@ -10,7 +10,6 @@ import mergeOptions from 'merge-options';
 import 'reflect-metadata';
 
 import ProviderTransport, {
-  JsonRpcResponse,
   RequestArguments,
   SafeEventEmitterProvider
 } from './ProviderTransport';
@@ -80,7 +79,7 @@ export class BaseJsonRpc<
   private async _request<R extends readonly unknown[] | object, U = unknown>(
     requestObject: RequestArguments<R>,
     options: JsonRpcOptions
-  ): Promise<JsonRpcResponse<U>> {
+  ): Promise<U> {
     // TODO: Handle options properly
 
     return this.request(requestObject, options.timeout);
@@ -90,21 +89,17 @@ export class BaseJsonRpc<
     cls: undefined | ClassConstructor<U>,
     requestObject: RequestArguments<R>,
     options?: JsonRpcOptions
-  ): Promise<JsonRpcResponse<U>> {
+  ): Promise<U> {
     const mergedOptions: JsonRpcOptions = mergeOptions(this.options, options);
     const response = await this._request<R, U>(requestObject, mergedOptions);
 
     if (mergedOptions.returnType === ReturnType.Raw || cls === undefined)
       return response;
 
-    const parsed = plainToInstance(cls, response.result);
+    const parsed = plainToInstance(cls, response);
     if (mergedOptions.validateParsedData) {
       await validateOrReject(parsed as object, mergedOptions.validatorOptions);
     }
-
-    return {
-      ...response,
-      result: parsed
-    };
+    return parsed;
   }
 }

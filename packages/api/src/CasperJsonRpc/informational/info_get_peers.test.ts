@@ -21,16 +21,14 @@ describe('info_get_peers', () => {
   };
 
   before(() => {
-    sinon.stub(HTTPTransport.prototype, 'sendData').callsFake(async () => ({
-      id: 1,
-      jsonrpc: '2.0',
-      result: mockedResponse
-    }));
+    sinon
+      .stub(HTTPTransport.prototype, 'sendData')
+      .callsFake(async () => mockedResponse);
   });
 
   it('should return a list of peers connected to the node - raw', async () => {
     // baseJsonRPC ReturnType is Parsed by default, so type case - <ReturnType.Raw> is required with modified options.
-    const { result } = await infoGetPeers<ReturnType.Raw>(baseJsonRPC, [], {
+    const result = await infoGetPeers<ReturnType.Raw>(baseJsonRPC, [], {
       returnType: ReturnType.Raw
     });
 
@@ -38,7 +36,7 @@ describe('info_get_peers', () => {
   });
 
   it('should return a list of peers connected to the node - parsed', async () => {
-    const { result } = await infoGetPeers(baseJsonRPC, []);
+    const result = await infoGetPeers(baseJsonRPC, []);
     expect(result.apiVersion).to.eq(mockedResponse.api_version);
     expect(result.peers.length).to.eq(1);
     result.peers[0].should.be.instanceof(Peer);
