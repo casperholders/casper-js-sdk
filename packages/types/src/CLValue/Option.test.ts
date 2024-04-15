@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { None, Some } from 'ts-results';
 
 import {

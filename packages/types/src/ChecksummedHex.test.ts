@@ -1,15 +1,9 @@
-import chai from 'chai';
-
 import {
   encode,
   isChecksummed,
   isSamecase,
   SMALL_BYTES_COUNT
 } from './ChecksummedHex';
-
-chai.should();
-
-const { assert } = chai;
 
 describe('ChecksumedHex', () => {
   it('should decode empty input', () => {

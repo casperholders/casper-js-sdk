@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { CLUnit, CLValueParsers } from './index';
 
 describe('Unit implementation tests', () => {

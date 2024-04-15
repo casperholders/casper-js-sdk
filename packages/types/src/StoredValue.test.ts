@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
 import { TypedJSON } from 'typedjson';

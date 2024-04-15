@@ -21,10 +21,10 @@ component_management:
     - component_id: 'casper-js-api'
       paths:
         - /packages/api/src/
-    - component_id: '@casper-js-sdk/types'
+    - component_id: 'casper-js-types'
       paths:
         - /packages/types/src/
-    - component_id: '@casper-js-sdk/keys'
+    - component_id: 'casper-js-keys'
       paths:
         - /packages/keys/src/
 

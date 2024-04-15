@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { CLAccountHash } from './AccountHash';
 import { CLAccountHashType, CLValueParsers } from './index';
 
