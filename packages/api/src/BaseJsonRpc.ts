@@ -18,13 +18,38 @@ import { DTO, ICamelToSnakeCase } from './utils';
 export class JsonRpcError extends JSONRPCError {}
 
 export interface JsonRpcOptions<T = ReturnType> {
+  /**
+   * Return type of the response
+   * @default ReturnType.Parsed
+   */
   returnType?: T;
+
+  /**
+   * Timeout in milliseconds
+   */
   timeout?: number;
+
+  /**
+   * Validate parsed data using class-validator if true.
+   * @default false
+   */
   validateParsedData?: boolean;
+
+  /**
+   * Validator options for class-validator
+   * @default
+   * {
+   *  whitelist: true,
+   *  forbidNonWhitelisted: true
+   * }
+   */
   validatorOptions?: ValidatorOptions;
 }
 
 export class RpcResult {
+  /**
+   * The RPC API version
+   */
   @Expose({ name: 'api_version' })
   @IsString()
   apiVersion: string;
@@ -36,6 +61,20 @@ export enum ReturnType {
   Parsed = 'parsed'
 }
 
+/**
+ * Base class for JSON-RPC client
+ * @example
+ * ```ts
+ * import { BaseJsonRpc, ReturnType } from 'casper-js-api';
+ * const baseJsonRpc = new BaseJsonRpc('http://localhost:7777/rpc', {
+ *   returnType: ReturnType.Raw,
+ * });
+ * const result = await baseJsonRPC.requests<GetPeersParams>(undefined, {
+ *   method: 'info_get_peers',
+ *   params: [],
+ * });
+ * ```
+ */
 export class BaseJsonRpc<
   T extends ReturnType = ReturnType.Parsed
 > extends Client {

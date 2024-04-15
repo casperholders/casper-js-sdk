@@ -10,6 +10,9 @@ import {
 } from '../../BaseJsonRpc';
 import { DTO, ICamelToSnakeCase } from '../../utils';
 
+/**
+ * The node ID and network address of each connected peer.
+ */
 export class Peer {
   @Expose({ name: 'node_id' })
   @IsString()
