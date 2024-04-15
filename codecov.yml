@@ -18,6 +18,9 @@ component_management:
         target: 80%
 
   individual_components:
+    - component_id: 'casper-js-api'
+      paths:
+        - /packages/api/src/
     - component_id: '@casper-js-sdk/types'
       paths:
         - /packages/types/src/
