@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "run -T rollup -c",
-    "test": "run -T cross-env NODE_ENV=test TS_NODE_FILES=true mocha -r ts-node/register \"src/**/*.test.ts\"",
+    "test": "run -T cross-env NODE_ENV=test TS_NODE_FILES=true mocha",
     "test:coverage": "run -T nyc --reporter=lcov yarn test",
     "coverage": "run -T codecov"
   },

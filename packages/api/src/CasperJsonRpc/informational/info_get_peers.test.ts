@@ -1,8 +1,5 @@
 import { HTTPTransport } from '@open-rpc/client-js';
-import { expect, should } from 'chai';
 import sinon from 'sinon';
-
-should();
 
 import { BaseJsonRpc, ReturnType } from '../../BaseJsonRpc';
 import { IGetPeersResult, infoGetPeers, Peer } from './info_get_peers';
