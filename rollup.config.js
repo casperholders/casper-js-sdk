@@ -32,7 +32,7 @@ function getConfig(opts) {
   const plugins = [
     json(),
     commonjs(),
-    typescript({ tsconfig: './tsconfig.json' }),
+    typescript({ tsconfig: './tsconfig.build.json' }),
     nodeResolve({
       exportConditions,
       mainFields,
