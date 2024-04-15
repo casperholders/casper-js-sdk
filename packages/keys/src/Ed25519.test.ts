@@ -4,7 +4,6 @@ import {
   decodeBase16,
   decodeBase64
 } from 'casper-js-types';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { Ed25519 } from './Ed25519';

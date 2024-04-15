@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { SignatureAlgorithm } from '../types';
 import {
   CLPublicKey,

@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { decodeBase16 } from '../Conversions';
 import { AccessRights, CLURef, CLURefType, CLValueParsers } from './index';
 
