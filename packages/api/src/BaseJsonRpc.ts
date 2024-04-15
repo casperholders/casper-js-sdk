@@ -4,6 +4,7 @@ import {
   Client,
   JSONRPCError
 } from '@open-rpc/client-js';
+import { type HTTPTransportOptions } from '@open-rpc/client-js/build/transports/HTTPTransport';
 import { ClassConstructor, Expose, plainToInstance } from 'class-transformer';
 import { IsString, validateOrReject, ValidatorOptions } from 'class-validator';
 import mergeOptions from 'merge-options';
@@ -28,6 +29,11 @@ export interface JsonRpcOptions<T = ReturnType> {
    * Timeout in milliseconds
    */
   timeout?: number;
+
+  /**
+   * HTTP transport options, applies only in the constructor
+   */
+  httpTransportOptions?: HTTPTransportOptions;
 
   /**
    * Validate parsed data using class-validator if true.
@@ -94,7 +100,7 @@ export class BaseJsonRpc<
         ? providerUrl
         : providerUrl + '/rpc';
 
-      transport = new HTTPTransport(providerUrl);
+      transport = new HTTPTransport(providerUrl, options?.httpTransportOptions);
     } else {
       transport = new ProviderTransport(provider);
     }
