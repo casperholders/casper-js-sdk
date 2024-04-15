@@ -1,4 +1,5 @@
 const typescript = require('@rollup/plugin-typescript');
+const commonjs = require('@rollup/plugin-commonjs');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const json = require('@rollup/plugin-json');
 const nodePolyfills = require('rollup-plugin-polyfill-node');
@@ -30,7 +31,8 @@ function getConfig(opts) {
 
   const plugins = [
     json(),
-    typescript({ tsconfig: './tsconfig.json' }),
+    commonjs(),
+    typescript({ tsconfig: './tsconfig.build.json' }),
     nodeResolve({
       exportConditions,
       mainFields,

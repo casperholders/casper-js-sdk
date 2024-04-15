@@ -1,5 +1,4 @@
 import { CLPublicKey, byteHash, decodeBase16 } from 'casper-js-types';
-import { expect } from 'chai';
 
 import { Secp256K1 } from './Secp256k1';
 

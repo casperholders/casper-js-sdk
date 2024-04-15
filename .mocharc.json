@@ -1,0 +1,10 @@
+{
+  "spec": "src/**/*.test.ts",
+  "require": [
+    "ts-node/register",
+    "chai/register-assert.js",
+    "chai/register-expect.js",
+    "chai/register-should.js"
+  ],
+  "recursive": true
+}
