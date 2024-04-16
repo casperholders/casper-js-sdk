@@ -11,6 +11,8 @@
     "build": "run -T rollup -c",
     "test": "run -T cross-env NODE_ENV=test TS_NODE_FILES=true mocha",
     "test:coverage": "run -T nyc --reporter=lcov yarn test",
+    "download:rpc-schema": "node \"scripts/download-rpc-schema.js\"",
+    "run:mock-node": "run -T open-rpc-mock-server -d \"rpc-schema.json\" -p 7777",
     "coverage": "run -T codecov"
   },
   "dependencies": {
