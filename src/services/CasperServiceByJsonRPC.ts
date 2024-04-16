@@ -27,7 +27,9 @@ import {
   SpeculativeExecutionResult,
   BlockIdentifier,
   GetChainSpecResult,
-  StateIdentifier
+  StateIdentifier,
+  getBlockHash,
+  getHeight
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -187,10 +189,12 @@ export class CasperServiceByJsonRPC {
         props?.timeout
       )
       .then((res: GetBlockResult) => {
-        if (
-          res.block !== null &&
-          res.block.hash.toLowerCase() !== blockHash.toLowerCase()
-        ) {
+        const block_with_signatures = res.block_with_signatures;
+        if (block_with_signatures === null) {
+          return res;
+        }
+        const gotBlockHash = getBlockHash(block_with_signatures.block);
+        if (gotBlockHash.toLowerCase() !== blockHash.toLowerCase()) {
           throw new Error('Returned block does not have a matching hash.');
         }
         return res;
@@ -220,7 +224,12 @@ export class CasperServiceByJsonRPC {
         props?.timeout
       )
       .then((res: GetBlockResult) => {
-        if (res.block !== null && res.block.header.height !== height) {
+        const block_with_signatures = res.block_with_signatures;
+        if (block_with_signatures === null) {
+          return res;
+        }
+        const gotHeight = getHeight(block_with_signatures.block);
+        if (gotHeight !== height) {
           throw new Error('Returned block does not have a matching height.');
         }
         return res;
@@ -286,10 +295,10 @@ export class CasperServiceByJsonRPC {
         method: 'state_get_auction_info',
         params: blockHash
           ? [
-              {
-                Hash: blockHash
-              }
-            ]
+            {
+              Hash: blockHash
+            }
+          ]
           : []
       },
       props?.timeout
@@ -312,10 +321,10 @@ export class CasperServiceByJsonRPC {
         params:
           blockHeight >= 0
             ? [
-                {
-                  Height: blockHeight
-                }
-              ]
+              {
+                Height: blockHeight
+              }
+            ]
             : []
       },
       props?.timeout
@@ -514,7 +523,7 @@ export class CasperServiceByJsonRPC {
     if (size > oneMegaByte) {
       throw Error(
         `Deploy can not be send, because it's too large: ${size} bytes. ` +
-          `Max size is 1 megabyte.`
+        `Max size is 1 megabyte.`
       );
     }
   }
@@ -625,10 +634,10 @@ export class CasperServiceByJsonRPC {
         method: 'chain_get_block_transfers',
         params: blockHash
           ? [
-              {
-                Hash: blockHash
-              }
-            ]
+            {
+              Hash: blockHash
+            }
+          ]
           : []
       },
       props?.timeout
@@ -658,10 +667,10 @@ export class CasperServiceByJsonRPC {
         params: [
           blockHash
             ? [
-                {
-                  Hash: blockHash
-                }
-              ]
+              {
+                Hash: blockHash
+              }
+            ]
             : []
         ]
       },
@@ -717,10 +726,10 @@ export class CasperServiceByJsonRPC {
       params: [
         blockHash
           ? [
-              {
-                Hash: blockHash
-              }
-            ]
+            {
+              Hash: blockHash
+            }
+          ]
           : []
       ]
     });
@@ -746,10 +755,10 @@ export class CasperServiceByJsonRPC {
       params: [
         blockHeight !== undefined && blockHeight >= 0
           ? [
-              {
-                Height: blockHeight
-              }
-            ]
+            {
+              Height: blockHeight
+            }
+          ]
           : []
       ]
     });

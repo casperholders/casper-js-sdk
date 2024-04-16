@@ -3,7 +3,8 @@ import { BigNumber } from '@ethersproject/bignumber';
 import {
   BlockIdentifier,
   CasperServiceByJsonRPC,
-  GetDeployResult
+  GetDeployResult,
+  getStateRootHash
 } from '../services';
 import { DeployUtil, Keys, CLPublicKey } from './index';
 import { encodeBase16 } from './Conversions';
@@ -249,7 +250,13 @@ export class CasperClient {
     try {
       const stateRootHash = await this.nodeClient
         .getLatestBlockInfo()
-        .then(it => it.block?.header.state_root_hash);
+        .then(it => {
+          const block_with_signatures = it.block_with_signatures;
+          if (!block_with_signatures) {
+            return null;
+          }
+          return getStateRootHash(block_with_signatures.block);
+        });
       // Find the balance Uref and cache it if we don't have it.
       if (!stateRootHash) {
         return BigNumber.from(0);
@@ -297,7 +304,13 @@ export class CasperClient {
   ): Promise<string | null> {
     const stateRootHash = await this.nodeClient
       .getLatestBlockInfo()
-      .then(it => it.block?.header.state_root_hash);
+      .then(it => {
+        const block_with_signatures = it.block_with_signatures;
+        if (!block_with_signatures) {
+          return null;
+        }
+        return getStateRootHash(block_with_signatures.block);
+      });
 
     if (!stateRootHash) {
       return null;

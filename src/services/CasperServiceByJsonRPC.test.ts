@@ -13,7 +13,9 @@ import { DeployUtil, Keys } from '../lib';
 chai.use(chaiAsPromised);
 
 describe('CasperServiceByJsonRPC', () => {
+  console.error("A")
   it('should send request with timeout params using HTTPTransport', async () => {
+    console.error("B")
     const client = new CasperServiceByJsonRPC('');
     const sandbox = sinon.createSandbox();
     const httpTransport = sandbox

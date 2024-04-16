@@ -154,8 +154,8 @@ export type TransformValue =
   | 'WriteContract'
   | 'WriteContractPackage'
   | {
-      WriteCLValue: WriteCLValue;
-    }
+    WriteCLValue: WriteCLValue;
+  }
   | { WriteDeployInfo: WriteDeployInfo }
   | { WriteTransfer: WriteTransfer }
   | { AddUInt512: string }
@@ -208,7 +208,7 @@ export interface SpeculativeExecutionResult extends RpcResult {
 
 /** Result interface for a get-block call */
 export interface GetBlockResult extends RpcResult {
-  block: JsonBlock | null;
+  block_with_signatures: JsonBlockWithSignatures | null;
 }
 
 /** Result interface for a account_put_deploy call */
@@ -305,11 +305,110 @@ export interface JsonHeader {
   protocol_version: string;
 }
 
-/** Interface describing JSON represented block related information */
-export interface JsonBlock {
+/** Interface describing JSON represented block proof */
+export interface Proof {
+  public_key: string;
+  signature: string;
+}
+
+export interface BlockBodyV1 {
+  proposer: string;
+  deploy_hashes: JsonDeployHash[];
+  transfer_hashes: JsonDeployHash[];
+  hash: JsonBlockHash;
+}
+
+export interface Version1Block {
   hash: JsonBlockHash;
   header: JsonHeader;
   proofs: string[];
+  body: BlockBodyV1;
+}
+
+export interface NextEraValidatorV2 {
+  validator: string;
+  weight: string;
+}
+export interface EraEndV2 {
+  equivocators: string[],
+  inactive_validators: string[],
+  next_era_validator_weights: NextEraValidatorV2[];
+  rewards: object; //TODO make this a map
+  next_era_gas_price: number;
+}
+
+export interface BlockHeaderV2 {
+  parent_hash: JsonBlockHash;
+  state_root_hash: string;
+  body_hash: string;
+  random_bit: boolean;
+  accumulated_seed: string;
+  era_end: EraEndV2 | null;
+  timestamp: string; //TODO this probably needs to be a class
+  era_id: number;
+  height: number;
+  protocol_version: string;
+  current_gas_price: number;
+  block_hash: string;
+}
+export interface TransactionHash {
+  Deploy: string | null
+  Version1: string | null
+}
+
+export interface BlockBodyV2 {
+  proposer: string;
+  mint: TransactionHash[];
+  auction: TransactionHash[];
+  install_upgrade: TransactionHash;
+  standard: TransactionHash[];
+  rewarded_signatures: number[][];
+  hash: string,
+}
+
+export interface Version2Block {
+  hash: JsonBlockHash;
+  header: BlockHeaderV2;
+  body: BlockBodyV2;
+}
+
+export interface Block {
+  Version1: Version1Block | null;
+  Version2: Version2Block | null;
+}
+
+export function getStateRootHash(block: Block): string {
+  if (block.Version1) {
+    return block.Version1.header.state_root_hash;
+  } else if (block.Version2) {
+    return block.Version2.header.state_root_hash;
+  }
+  throw new Error('Got block with unknown structure.');
+}
+
+export function getHeight(block: Block): number {
+  if (block.Version1) {
+    return block.Version1.header.height;
+  } else if (block.Version2) {
+    return block.Version2.header.height;
+  }
+  throw new Error('Got block with unknown structure.');
+}
+
+export function getBlockHash(block: Block): string {
+  if (block.Version1) {
+    return block.Version1.hash;
+  } else if (block.Version2) {
+    return block.Version2.hash;
+  }
+  throw new Error('Got block with unknown structure.');
+}
+
+
+/** Interface describing JSON represented block related information */
+export interface JsonBlockWithSignatures {
+  block: Block;
+  proofs: Proof[];
 }
 
 /** Interface describing auction bidding information */

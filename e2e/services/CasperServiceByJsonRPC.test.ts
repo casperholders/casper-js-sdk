@@ -8,7 +8,9 @@ import { BigNumber } from '@ethersproject/bignumber';
 import {
   CasperServiceByJsonRPC,
   EraSummary,
-  PurseIdentifier
+  PurseIdentifier,
+  getBlockHash,
+  getHeight
 } from '../../src/services';
 import {
   Keys,
@@ -50,12 +52,13 @@ describe('CasperServiceByJsonRPC', () => {
         setInterval(async () => {
           try {
             const latestBlock = await client.getLatestBlockInfo();
-
-            if (
-              latestBlock.block?.header.height !== undefined &&
-              latestBlock.block?.header.height > BLOCKS_TO_CHECK
-            )
-              return resolve();
+            const block_with_signatures = latestBlock.block_with_signatures;
+            if (block_with_signatures !== null) {
+              let gotHeight = getHeight(block_with_signatures.block);
+              if (gotHeight > BLOCKS_TO_CHECK) {
+                return resolve();
+              }
+            }
           } catch (error) {
             console.error(error);
           }
@@ -93,7 +96,7 @@ describe('CasperServiceByJsonRPC', () => {
   it('chain_get_block - by number', async () => {
     const check = async (height: number) => {
       const result = await client.getBlockInfoByHeight(height);
-      assert.equal(result.block?.header.height, height);
+      assert.equal(getHeight(result.block_with_signatures!.block), height);
     };
 
     for (let i = 0; i < BLOCKS_TO_CHECK; i++) {
@@ -110,11 +113,12 @@ describe('CasperServiceByJsonRPC', () => {
   it('chain_get_block - by hash', async () => {
     const check = async (height: number) => {
       const block_by_height = await client.getBlockInfoByHeight(height);
-      const block_hash = block_by_height.block?.hash;
+      let block_hash = getBlockHash(block_by_height.block_with_signatures!.block);
       assert.exists(block_hash);
 
       const block = await client.getBlockInfo(block_hash!);
-      assert.equal(block.block?.hash, block_hash);
+      const block_hash_2 = getBlockHash(block.block_with_signatures!.block);
+      assert.equal(block_hash_2, block_hash);
     };
 
     for (let i = 0; i < BLOCKS_TO_CHECK; i++) {
@@ -153,7 +157,7 @@ describe('CasperServiceByJsonRPC', () => {
       .catch(err => {
         const expectedMessage =
           `Deploy can not be send, because it's too large: ${oneMegaByte +
-            1} bytes. ` + `Max size is 1 megabyte.`;
+          1} bytes. ` + `Max size is 1 megabyte.`;
         assert.equal(err.message, expectedMessage);
       });
   });
@@ -161,10 +165,10 @@ describe('CasperServiceByJsonRPC', () => {
   it('chain_get_state_root_hash - by hash', async () => {
     const latestBlock = await client.getLatestBlockInfo();
 
-    expect(latestBlock.block).to.exist;
-
+    expect(latestBlock.block_with_signatures).to.exist;
+    const block_hash = getBlockHash(latestBlock.block_with_signatures!.block);
     const stateRootHash = await client.getStateRootHash(
-      latestBlock.block!.hash
+      block_hash!
     );
     assert.equal(stateRootHash.length, 64);
   });
@@ -172,8 +176,8 @@ describe('CasperServiceByJsonRPC', () => {
   it('chain_get_state_root_hash - by height', async () => {
     const latestBlock = await client.getLatestBlockInfo();
 
-    expect(latestBlock.block).to.exist;
-    expect(latestBlock.block!.header.height).to.greaterThan(1);
+    expect(latestBlock.block_with_signatures).to.exist;
+    expect(getHeight(latestBlock.block_with_signatures!.block)).to.greaterThan(1);
 
     const stateRootHash = await client.getStateRootHashByHeight(1);
     assert.equal(stateRootHash.length, 64);
@@ -446,7 +450,7 @@ describe('CasperServiceByJsonRPC', () => {
 
     const [height, eraSummary] = await getEarliestSwitchBlock();
     const blockInfo = await client.getBlockInfoByHeight(height);
-    expect(eraSummary.blockHash).to.be.equal(blockInfo.block?.hash);
+    expect(eraSummary.blockHash).to.be.equal(getBlockHash(blockInfo.block_with_signatures!.block));
   });
 
   it('chain_get_era_summary - by hash');
