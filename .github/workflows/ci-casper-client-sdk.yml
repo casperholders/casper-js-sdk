@@ -68,4 +68,4 @@ jobs:
         run: npm run build
 
       - name: Test DevNet
-        run: npm rn test:e2e
+        run: npm run test:e2e
