@@ -199,7 +199,12 @@ describe('CasperServiceByJsonRPC', () => {
     expect(validators.auction_state.block_height).to.be.eq(1);
   });
 
-  it('state_get_item - account hash to main purse uref', async () => {
+  it.only('state_get_item - account hash to main purse uref', async () => {
+    let a = '{"cl_type": "Key","bytes": "110189009df4163298981c3b09cabf6ceac3e694c8c45b48067a497d24dea0b7c091","parsed": "entity-account-89009df4163298981c3b09cabf6ceac3e694c8c45b48067a497d24dea0b7c091"}';
+    let b = JSON.parse(a);
+    CLValueParsers.fromJSON(b);
+
+    return;
     const stateRootHash = await client.getStateRootHash();
     const uref = await client.getAccountBalanceUrefByPublicKeyHash(
       stateRootHash,

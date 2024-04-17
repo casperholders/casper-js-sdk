@@ -162,6 +162,89 @@ export class EraInfoJson {
   @jsonArrayMember(SeigniorageAllocation, { name: 'seigniorage_allocations' })
   public seigniorageAllocations: SeigniorageAllocation[];
 }
+/*TODO
+@jsonObject
+export class EntryPoint {
+  name: String,
+  args: Parameters,
+  ret: CLType,
+  access: EntryPointAccess,
+  entry_point_type: EntryPointType,
+}
+*/
+/*
+@jsonObject
+export class EntityKind {
+  System? :string;
+  Account?: string;
+  SmartContract;
+}
+
+@jsonObject
+export class AddressableEntityJson {
+  @jsonMember({
+    name: 'protocol_version'
+  })
+  protocolVersion: string;
+  @jsonMember({
+    name: 'package_hash'
+  })
+  packageHash: string;
+  @jsonMember({
+    name: 'byte_code_hash'
+  })
+  byteCodeHash: string;
+
+  @jsonMember({
+    name: 'entry_points'
+  })
+  entryPoints: EntryPoint[];
+  @jsonMember({
+    name: 'action_thresholds'
+  })
+  actionThresholds: ActionThresholds; //TODO - check if the old ActionThresholds type suits 2.0, maybe we need a new type for this
+  @jsonMember({
+    name: 'main_purse'
+  })
+  mainPurse: URef;
+  @jsonMember({
+    name: 'entity_kind'
+  })
+  entityKind: EntityKind;
+  @jsonMember({
+    name: 'associated_keys'
+  })
+  associatedKeys: AssociatedKeys;
+  @jsonMember({
+    name: 'message_topics'
+  })
+  messageTopics: MessageTopics;
+  
+}
+*/
+
+/**
+ * A NamedKey value.
+ */
+@jsonObject
+export class NamedKeyJson {
+  @jsonMember({
+    name: 'named_key',
+    deserializer: json => {
+      if (!json) return;
+      return CLValueParsers.fromJSON(json).unwrap();
+    }
+  })
+  namedKey: CLValue;
+
+  @jsonMember({
+    deserializer: json => {
+      if (!json) return;
+      return CLValueParsers.fromJSON(json).unwrap();
+    }
+  })
+  name: CLValue;
+}
 
 /**
  * Named CLType arguments
@@ -323,4 +406,27 @@ export class StoredValue {
 
   @jsonMember({ constructor: EraInfoJson })
   public EraInfo?: EraInfoJson;
+
+  //@jsonMember({ constructor: AddressableEntityJson })
+  //public AddressableEntity?: AddressableEntityJson;
+
+  @jsonMember({ constructor: NamedKeyJson })
+  public NamedKey?: NamedKeyJson;
+
+  /* TODO - uncomment and finish implementing missing variants
+  @jsonMember({ constructor: BidKindJson })
+  public BidKind?: BidKindJson;
+
+  @jsonMember({ constructor: PackageJson })
+  public Package?: PackageJson;
+  
+  @jsonMember({ constructor: ByteCodeJson })
+  public ByteCode?: ByteCodeJson;
+
+  @jsonMember({ constructor: MessageTopicJson })
+  public MessageTopic?: MessageTopicJson; //TODO check if this is serialized as "MessageTopic" or "MessageTopicSummary"
+  
+  @jsonMember({ constructor: MessageJson })
+  public Message?: MessageJson; //TODO check if this is serialized as "Message" or "MessageChecksum"
+*/
 }
