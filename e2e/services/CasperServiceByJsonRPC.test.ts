@@ -22,7 +22,6 @@ import {
   CLKeyParameters
 } from '../../src/index';
 import { sleep } from './utils';
-import { Transfers } from '../../src/lib/StoredValue';
 import { Contract } from '../../src/lib/Contracts';
 
 import { FAUCET_PRIV_KEY, NETWORK_NAME, NODE_URL } from '../config';
@@ -396,8 +395,8 @@ describe('CasperServiceByJsonRPC', () => {
   });
 
   it('chain_get_block_transfers - blockHash', async () => {
-    const transfers = await client.getBlockTransfers(transferBlockHash);
-    expect(transfers).to.be.an.instanceof(Transfers);
+    const { transfers } = await client.getBlockTransfers(transferBlockHash);
+    expect(transfers.length).to.be.greaterThan(0);
   });
 
   it('chain_get_era_info_by_switch_block - by height', async () => {

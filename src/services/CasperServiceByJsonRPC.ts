@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
 import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
 
-import { DeployUtil, encodeBase16, StoredValue, Transfers } from '..';
+import { DeployUtil, encodeBase16, StoredValue } from '..';
 
 import ProviderTransport, {
   SafeEventEmitterProvider
@@ -27,7 +27,8 @@ import {
   getHeight,
   EntityIdentifier,
   AddressableEntity,
-  QueryGlobalStateResult
+  QueryGlobalStateResult,
+  GetBlockTransfersResult
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -669,8 +670,8 @@ export class CasperServiceByJsonRPC {
   public async getBlockTransfers(
     blockHash?: string,
     props?: RpcRequestProps
-  ): Promise<Transfers> {
-    const res = await this.client.request(
+  ): Promise<GetBlockTransfersResult> {
+    return this.client.request(
       {
         method: 'chain_get_block_transfers',
         params: blockHash
@@ -683,13 +684,6 @@ export class CasperServiceByJsonRPC {
       },
       props?.timeout
     );
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(Transfers);
-      const storedValue = serializer.parse(res)!;
-      return storedValue;
-    }
   }
 
   /**

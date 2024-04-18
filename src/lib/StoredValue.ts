@@ -83,12 +83,6 @@ export class TransferJson {
 }
 
 @jsonObject
-export class Transfers {
-  @jsonArrayMember(TransferJson)
-  transfers: TransferJson[];
-}
-
-@jsonObject
 export class DeployInfoJson {
   // The relevant Deploy.
   @jsonMember({ name: 'deploy_hash', constructor: String })

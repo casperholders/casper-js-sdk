@@ -382,10 +382,11 @@ export interface BlockHeaderV2 {
   protocol_version: string;
   current_gas_price: number;
 }
-export interface TransactionHash {
-  Deploy: string | null;
-  Version1: string | null;
-}
+export type TransactionHash =
+  | {
+      Deploy: string;
+    }
+  | { Version1: string };
 
 export interface BlockBodyV2 {
   proposer: string;
@@ -456,14 +457,15 @@ export interface ValidatorWeight {
   weight: string;
 }
 
-export type EntityIdentifier =
+export type Account =
   | {
       PublicKey: string;
     }
   | {
       AccountHash: string;
-    }
-  | { EntityAddr: string };
+    };
+
+export type EntityIdentifier = Account | { EntityAddr: string };
 
 export interface AddressableEntity {
   protocol_version: string;
@@ -490,4 +492,46 @@ export interface QueryGlobalStateResult extends RpcResult {
   block_header: BlockHeader | null;
   stored_value: StoredValueJson;
   merkle_proof: string;
+}
+
+export interface TransferV1 {
+  deploy_hash: string;
+  /** account hash as a formatted string */
+  from: string;
+  /** account hash as a formatted string */
+  to: string | null;
+  /** source uref */
+  source: string;
+  /** target uref */
+  target: string;
+  amount: string;
+  gas: string;
+  id: number | null;
+}
+
+export interface TransferV2 {
+  transaction_hash: TransactionHash;
+  from: Account;
+  /** account hash as a formatted string */
+  to: string | null;
+  /** source uref */
+  source: string;
+  /** target uref */
+  target: string;
+  amount: string;
+  gas: string;
+  id: number | null;
+}
+
+export type Transfer =
+  | {
+      Version1: TransferV1;
+    }
+  | {
+      Version2: TransferV2;
+    };
+
+export interface GetBlockTransfersResult extends RpcResult {
+  block_hash: string;
+  transfers: Transfer[];
 }
