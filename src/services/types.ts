@@ -180,22 +180,39 @@ interface ExecutionResultBody {
   effect: Effect;
 }
 
-/** Result interface for an execution result */
-export interface ExecutionResult {
-  Success?: ExecutionResultBody;
-  Failure?: ExecutionResultBody;
-}
-
 /** Result interface for a JSON execution result */
 export interface JsonExecutionResult {
   block_hash: JsonBlockHash;
   result: ExecutionResult;
 }
 
+export interface ExecutionResultV1 {
+  Success?: ExecutionResultBody;
+  Failure?: ExecutionResultBody;
+}
+
+export interface ExecutionResultV2 {
+  initiator: any;
+  /** If error_message is null, the execution was successful */
+  error_message: string | null;
+  limit: string;
+  consumed: string;
+  cost: string;
+  payment: { source: string }[];
+  transfers: any[];
+  effect: Effect;
+}
+
+export type ExecutionResult =
+  | { Version1: ExecutionResultV1 }
+  | { Version2: ExecutionResultV2 };
+
 /** Result interface for a get-deploy call */
 export interface GetDeployResult extends RpcResult {
   deploy: JsonDeploy;
-  execution_results: JsonExecutionResult[];
+  block_hash: string;
+  block_height: number;
+  execution_result: ExecutionResult | undefined;
 }
 
 export interface BlockIdentifier {

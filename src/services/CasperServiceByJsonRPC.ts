@@ -3,13 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
 import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
 
-import {
-  DeployUtil,
-  encodeBase16,
-  CLPublicKey,
-  StoredValue,
-  Transfers
-} from '..';
+import { DeployUtil, encodeBase16, StoredValue, Transfers } from '..';
 
 import ProviderTransport, {
   SafeEventEmitterProvider
@@ -396,24 +390,6 @@ export class CasperServiceByJsonRPC {
   }
 
   /**
-   * Get the reference to an account balance uref by an account's public key, so it may be cached
-   * @param _stateRootHash The state root hash at which the main purse URef will be queried
-   * @param _publicKey The public key of the account
-   * @param _props optional request props
-   * @returns The account's main purse URef
-   * @see [getAccountBalanceUrefByPublicKeyHash](#L380)
-   */
-  public async getAccountBalanceUrefByPublicKey(
-    _stateRootHash: string,
-    _publicKey: CLPublicKey,
-    _props?: RpcRequestProps
-  ): Promise<string> {
-    throw new Error(
-      'This method has been removed, please use getAccount or getEntity instead.'
-    );
-  }
-
-  /**
    * Get the balance of an account using its main purse URef
    * @param stateRootHash The state root hash at which the account balance will be queried
    * @param balanceUref The URef of an account's main purse URef
@@ -586,6 +562,9 @@ export class CasperServiceByJsonRPC {
       checkApproval?: boolean;
     }
   ): Promise<DeployResult> {
+    console.warn(
+      'This method has been deprecated, please use sendTransaction instead'
+    );
     this.checkDeploySize(signedDeploy);
 
     const { checkApproval = false } = props ?? {};
@@ -622,7 +601,22 @@ export class CasperServiceByJsonRPC {
       const deployHash =
         typeof deploy === 'string' ? deploy : encodeBase16(deploy.hash);
       const deployInfo = await this.getDeployInfo(deployHash);
-      if (deployInfo.execution_results.length > 0) {
+
+      let successful = false;
+
+      if (!deployInfo.execution_result) {
+        successful = false;
+      } else {
+        if ('Version1' in deployInfo.execution_result) {
+          successful = !!deployInfo.execution_result.Version1.Success;
+        }
+        if ('Version2' in deployInfo.execution_result) {
+          successful =
+            deployInfo.execution_result.Version2.error_message === null;
+        }
+      }
+
+      if (successful) {
         clearTimeout(timer);
         return deployInfo;
       } else {
