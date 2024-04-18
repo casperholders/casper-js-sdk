@@ -145,12 +145,16 @@ export class CasperServiceByJsonRPC {
    * @param finalizedApprovals Whether to return the deploy with the finalized approvals substituted. If `false` or omitted, returns the deploy with the approvals that were originally received by the node.
    * @param props optional request props
    * @returns A `Promise` that resolves to a `GetDeployResult`
+   * @deprecated use `getTransactionInfo` method
    */
   public async getDeployInfo(
     deployHash: string,
     finalizedApprovals?: boolean,
     props?: RpcRequestProps
   ): Promise<GetDeployResult> {
+    console.warn(
+      'This method is deprecated and will be removed in the future release, please use getTransactionInfo method instead.'
+    );
     const params: any[] = [deployHash];
     if (finalizedApprovals) {
       params.push(finalizedApprovals);
@@ -551,6 +555,7 @@ export class CasperServiceByJsonRPC {
    * @param signedDeploy A signed `Deploy` object to be sent to a node
    * @param props optional request props
    * @remarks A deploy must not exceed 1 megabyte
+   * @deprecated use `sendTransaction` method
    */
   public async deploy(
     signedDeploy: DeployUtil.Deploy,
@@ -563,7 +568,7 @@ export class CasperServiceByJsonRPC {
     }
   ): Promise<DeployResult> {
     console.warn(
-      'This method has been deprecated, please use sendTransaction instead'
+      'This method is deprecated and will be removed in the future release, please use sendTransaction method instead.'
     );
     this.checkDeploySize(signedDeploy);
 

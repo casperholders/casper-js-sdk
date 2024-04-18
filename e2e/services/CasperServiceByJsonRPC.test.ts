@@ -248,7 +248,7 @@ describe('CasperServiceByJsonRPC', () => {
     expect(balanceByUref.eq(balanceByPublicKey)).to.be;
   });
 
-  it('should transfer native token by session', async () => {
+  it('should transfer CSPR - account_put_deploy', async () => {
     // for native-transfers payment price is fixed
     const paymentAmount = 10000000000;
     const id = Date.now();
