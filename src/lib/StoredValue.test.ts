@@ -6,16 +6,17 @@ import { expect } from 'chai';
 
 describe('StoredValue', () => {
   const serializer = new TypedJSON(StoredValue);
-  it('should parse EntityKinds correctly', () => {
-    let smartContractEntityKind = '"SmartContract"';
-    let accountEntityKind = '{"Account":"account-hash-d83a21993aaa8cbc39e7597d91c4e444a204140e8032731ee40534cddfc8b438"}';
-    let systemEntityKindMint = '{"System":"Mint"}';
-    let systemEntityKindHandlePayment = '{"System":"HandlePayment"}';
-    let systemEntityKindStandardPayment = '{"System":"StandardPayment"}';
-    let systemEntityKindAuction = '{"System":"Auction"}';
-    
 
-  });
+  // TODO: Add tests for StoredValue
+  // it('should parse EntityKinds correctly', () => {
+  //   const smartContractEntityKind = '"SmartContract"';
+  //   const accountEntityKind =
+  //     '{"Account":"account-hash-d83a21993aaa8cbc39e7597d91c4e444a204140e8032731ee40534cddfc8b438"}';
+  //   const systemEntityKindMint = '{"System":"Mint"}';
+  //   const systemEntityKindHandlePayment = '{"System":"HandlePayment"}';
+  //   const systemEntityKindStandardPayment = '{"System":"StandardPayment"}';
+  //   const systemEntityKindAuction = '{"System":"Auction"}';
+  // });
 
   it('should parse Account stored value correctly', () => {
     const mockJson = {
