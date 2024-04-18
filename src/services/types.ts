@@ -154,8 +154,8 @@ export type TransformValue =
   | 'WriteContract'
   | 'WriteContractPackage'
   | {
-    WriteCLValue: WriteCLValue;
-  }
+      WriteCLValue: WriteCLValue;
+    }
   | { WriteDeployInfo: WriteDeployInfo }
   | { WriteTransfer: WriteTransfer }
   | { AddUInt512: string }
@@ -330,8 +330,8 @@ export interface NextEraValidatorV2 {
   weight: string;
 }
 export interface EraEndV2 {
-  equivocators: string[],
-  inactive_validators: string[],
+  equivocators: string[];
+  inactive_validators: string[];
   next_era_validator_weights: NextEraValidatorV2[];
   rewards: object; //TODO make this a map
   next_era_gas_price: number;
@@ -352,8 +352,8 @@ export interface BlockHeaderV2 {
   block_hash: string;
 }
 export interface TransactionHash {
-  Deploy: string | null
-  Version1: string | null
+  Deploy: string | null;
+  Version1: string | null;
 }
 
 export interface BlockBodyV2 {
@@ -363,7 +363,7 @@ export interface BlockBodyV2 {
   install_upgrade: TransactionHash;
   standard: TransactionHash[];
   rewarded_signatures: number[][];
-  hash: string,
+  hash: string;
 }
 
 export interface Version2Block {
@@ -403,7 +403,6 @@ export function getBlockHash(block: Block): string {
   }
   throw new Error('Got block with unknown structure.');
 }
-
 
 /** Interface describing JSON represented block related information */
 export interface JsonBlockWithSignatures {
