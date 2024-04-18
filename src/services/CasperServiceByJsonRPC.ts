@@ -32,7 +32,8 @@ import {
   getBlockHash,
   getHeight,
   EntityIdentifier,
-  AddressableEntity
+  AddressableEntity,
+  QueryGlobalStateResult
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -919,15 +920,23 @@ export class CasperServiceByJsonRPC {
     );
   }
 
+  /**
+   * Queries global state by block or state root hash.
+   * @param key key to query
+   * @param stateIdentifier state identifier
+   * @param path path to query
+   * @param props optional request props
+   * @returns
+   */
   public async queryGlobalState(
     key: string,
     stateIdentifier: StateIdentifier | null = null,
     path: string[] = [],
     props?: RpcRequestProps
-  ) {
+  ): Promise<QueryGlobalStateResult> {
     return this.client.request(
       {
-        method: 'info_get_chainspec',
+        method: 'query_global_state',
         params: [stateIdentifier, key, path]
       },
       props?.timeout

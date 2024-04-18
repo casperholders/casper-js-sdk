@@ -386,33 +386,34 @@ export interface BlockV2 {
   body: BlockBodyV2;
 }
 
-export interface Block {
-  Version1: BlockV1 | null;
-  Version2: BlockV2 | null;
-}
+export type Block =
+  | {
+      Version1: BlockV1;
+    }
+  | { Version2: BlockV2 };
 
 export function getStateRootHash(block: Block): string {
-  if (block.Version1) {
+  if ('Version1' in block) {
     return block.Version1.header.state_root_hash;
-  } else if (block.Version2) {
+  } else if ('Version2' in block) {
     return block.Version2.header.state_root_hash;
   }
   throw new Error('Got block with unknown structure.');
 }
 
 export function getHeight(block: Block): number {
-  if (block.Version1) {
+  if ('Version1' in block) {
     return block.Version1.header.height;
-  } else if (block.Version2) {
+  } else if ('Version2' in block) {
     return block.Version2.header.height;
   }
   throw new Error('Got block with unknown structure.');
 }
 
 export function getBlockHash(block: Block): string {
-  if (block.Version1) {
+  if ('Version1' in block) {
     return block.Version1.hash;
-  } else if (block.Version2) {
+  } else if ('Version2' in block) {
     return block.Version2.hash;
   }
   throw new Error('Got block with unknown structure.');
@@ -459,11 +460,13 @@ export interface AddressableEntity {
   message_topics: [];
 }
 
-export interface BlockHeader {
-  Version1: BlockHeaderV1;
-  Version2: BlockHeaderV2;
-}
+export type BlockHeader =
+  | {
+      Version1: BlockHeaderV1;
+    }
+  | { Version2: BlockHeaderV2 };
 
+/** TODO: Update */
 export type StoredValueJson = any;
 
 export interface QueryGlobalStateResult extends RpcResult {
