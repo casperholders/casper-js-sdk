@@ -91,6 +91,8 @@ export interface GetStatusResult extends GetPeersResult {
   };
   /** The status of syncing a forward block, if any. */
   block_sync: BlockSynchronizerStatus | null;
+
+  latest_switch_block_hash: string | null;
 }
 
 export interface GetChainSpecResult extends RpcResult {
