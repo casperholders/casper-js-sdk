@@ -918,4 +918,19 @@ export class CasperServiceByJsonRPC {
       props?.timeout
     );
   }
+
+  public async queryGlobalState(
+    key: string,
+    stateIdentifier: StateIdentifier | null = null,
+    path: string[] = [],
+    props?: RpcRequestProps
+  ) {
+    return this.client.request(
+      {
+        method: 'info_get_chainspec',
+        params: [stateIdentifier, key, path]
+      },
+      props?.timeout
+    );
+  }
 }

@@ -339,6 +339,19 @@ export interface EraEndV2 {
   next_era_gas_price: number;
 }
 
+export interface BlockHeaderV1 {
+  parent_hash: JsonBlockHash;
+  state_root_hash: string;
+  body_hash: string;
+  random_bit: boolean;
+  accumulated_seed: string;
+  era_end: EraEndV2 | null;
+  timestamp: string; //TODO this probably needs to be a class
+  era_id: number;
+  height: number;
+  protocol_version: string;
+}
+
 export interface BlockHeaderV2 {
   parent_hash: JsonBlockHash;
   state_root_hash: string;
@@ -351,7 +364,6 @@ export interface BlockHeaderV2 {
   height: number;
   protocol_version: string;
   current_gas_price: number;
-  block_hash: string;
 }
 export interface TransactionHash {
   Deploy: string | null;
@@ -445,4 +457,17 @@ export interface AddressableEntity {
   associated_keys: [];
   action_thresholds: [];
   message_topics: [];
+}
+
+export interface BlockHeader {
+  Version1: BlockHeaderV1;
+  Version2: BlockHeaderV2;
+}
+
+export type StoredValueJson = any;
+
+export interface QueryGlobalStateResult extends RpcResult {
+  block_header: BlockHeader | null;
+  stored_value: StoredValueJson;
+  merkle_proof: string;
 }

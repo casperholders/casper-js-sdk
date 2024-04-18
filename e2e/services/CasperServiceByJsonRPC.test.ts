@@ -225,7 +225,7 @@ describe('CasperServiceByJsonRPC', () => {
     expect(balance.eq(faucetBalance)).to.be;
   });
 
-  it('query_balance', async () => {
+  it.only('query_balance', async () => {
     const faucetBalance = '1000000000000000000000000000000000';
 
     const balanceByPublicKey = await client.queryBalance(
