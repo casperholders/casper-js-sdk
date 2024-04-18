@@ -320,7 +320,7 @@ export interface BlockBodyV1 {
   hash: JsonBlockHash;
 }
 
-export interface Version1Block {
+export interface BlockV1 {
   hash: JsonBlockHash;
   header: JsonHeader;
   proofs: string[];
@@ -368,15 +368,15 @@ export interface BlockBodyV2 {
   hash: string;
 }
 
-export interface Version2Block {
+export interface BlockV2 {
   hash: JsonBlockHash;
   header: BlockHeaderV2;
   body: BlockBodyV2;
 }
 
 export interface Block {
-  Version1: Version1Block | null;
-  Version2: Version2Block | null;
+  Version1: BlockV1 | null;
+  Version2: BlockV2 | null;
 }
 
 export function getStateRootHash(block: Block): string {
