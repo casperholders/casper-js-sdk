@@ -295,10 +295,10 @@ export class CasperServiceByJsonRPC {
         method: 'state_get_auction_info',
         params: blockHash
           ? [
-            {
-              Hash: blockHash
-            }
-          ]
+              {
+                Hash: blockHash
+              }
+            ]
           : []
       },
       props?.timeout
@@ -321,10 +321,10 @@ export class CasperServiceByJsonRPC {
         params:
           blockHeight >= 0
             ? [
-              {
-                Height: blockHeight
-              }
-            ]
+                {
+                  Height: blockHeight
+                }
+              ]
             : []
       },
       props?.timeout
@@ -523,7 +523,7 @@ export class CasperServiceByJsonRPC {
     if (size > oneMegaByte) {
       throw Error(
         `Deploy can not be send, because it's too large: ${size} bytes. ` +
-        `Max size is 1 megabyte.`
+          `Max size is 1 megabyte.`
       );
     }
   }
@@ -634,10 +634,10 @@ export class CasperServiceByJsonRPC {
         method: 'chain_get_block_transfers',
         params: blockHash
           ? [
-            {
-              Hash: blockHash
-            }
-          ]
+              {
+                Hash: blockHash
+              }
+            ]
           : []
       },
       props?.timeout
@@ -667,10 +667,10 @@ export class CasperServiceByJsonRPC {
         params: [
           blockHash
             ? [
-              {
-                Hash: blockHash
-              }
-            ]
+                {
+                  Hash: blockHash
+                }
+              ]
             : []
         ]
       },
@@ -726,10 +726,10 @@ export class CasperServiceByJsonRPC {
       params: [
         blockHash
           ? [
-            {
-              Hash: blockHash
-            }
-          ]
+              {
+                Hash: blockHash
+              }
+            ]
           : []
       ]
     });
@@ -755,10 +755,10 @@ export class CasperServiceByJsonRPC {
       params: [
         blockHeight !== undefined && blockHeight >= 0
           ? [
-            {
-              Height: blockHeight
-            }
-          ]
+              {
+                Height: blockHeight
+              }
+            ]
           : []
       ]
     });
