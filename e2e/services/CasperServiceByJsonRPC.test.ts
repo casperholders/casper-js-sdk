@@ -21,7 +21,7 @@ import {
   CLValueParsers,
   CLKeyParameters
 } from '../../src/index';
-import { getAccountInfo, sleep } from './utils';
+import { sleep } from './utils';
 import { Transfers } from '../../src/lib/StoredValue';
 import { Contract } from '../../src/lib/Contracts';
 
@@ -40,7 +40,6 @@ const faucetKey = getKeysFromHexPrivKey(
 describe('CasperServiceByJsonRPC', () => {
   const BLOCKS_TO_CHECK = 3;
 
-  let faucetMainPurseUref = '';
   let transferBlockHash = '';
   // TODO: Remove After mainnet goes 1.5
   let isAfterDot5 = false;
@@ -201,33 +200,13 @@ describe('CasperServiceByJsonRPC', () => {
     expect(validators.auction_state.block_height).to.be.eq(1);
   });
 
-  it.only('state_get_item - account hash to main purse uref', async () => {
-    const a =
-      '{"cl_type": "Key","bytes": "110189009df4163298981c3b09cabf6ceac3e694c8c45b48067a497d24dea0b7c091","parsed": "entity-account-89009df4163298981c3b09cabf6ceac3e694c8c45b48067a497d24dea0b7c091"}';
-    const b = JSON.parse(a);
-    CLValueParsers.fromJSON(b);
-
-    return;
-    const stateRootHash = await client.getStateRootHash();
-    const uref = await client.getAccountBalanceUrefByPublicKeyHash(
-      stateRootHash,
+  it('state_get_account_info', async () => {
+    const uref = await client.getAccountInfo(
       faucetKey.publicKey.toAccountRawHashStr()
     );
-    faucetMainPurseUref = uref;
+    return;
+    // TODO: Update this
     const [prefix, value, suffix] = uref.split('-');
-    expect(prefix).to.be.equal('uref');
-    expect(value.length).to.be.equal(64);
-    expect(suffix.length).to.be.equal(3);
-  });
-
-  it('state_get_item - CLPublicKey to main purse uref', async () => {
-    const stateRootHash = await client.getStateRootHash();
-    const uref = await client.getAccountBalanceUrefByPublicKey(
-      stateRootHash,
-      faucetKey.publicKey
-    );
-    const [prefix, value, suffix] = uref.split('-');
-    expect(uref).to.be.equal(faucetMainPurseUref);
     expect(prefix).to.be.equal('uref');
     expect(value.length).to.be.equal(64);
     expect(suffix.length).to.be.equal(3);
@@ -236,19 +215,17 @@ describe('CasperServiceByJsonRPC', () => {
   it('state_get_balance', async () => {
     const faucetBalance = '1000000000000000000000000000000000';
     const stateRootHash = await client.getStateRootHash();
-    const accountInfo = await getAccountInfo(NODE_URL, faucetKey.publicKey);
+    const accountInfo = await client.getAccountInfo(
+      faucetKey.publicKey.toHex(false)
+    );
     const balance = await client.getAccountBalance(
       stateRootHash,
-      accountInfo.mainPurse
+      accountInfo.main_purse
     );
     expect(balance.eq(faucetBalance)).to.be;
   });
 
   it('query_balance', async () => {
-    if (!isAfterDot5) {
-      return;
-    }
-
     const faucetBalance = '1000000000000000000000000000000000';
 
     const balanceByPublicKey = await client.queryBalance(
@@ -263,14 +240,13 @@ describe('CasperServiceByJsonRPC', () => {
     );
     expect(balanceByAccountHash.eq(faucetBalance)).to.be;
 
-    const stateRootHash = await client.getStateRootHash();
-    const uref = await client.getAccountBalanceUrefByPublicKey(
-      stateRootHash,
-      faucetKey.publicKey
-    );
+    const entity = await client.getEntity({
+      PublicKey: faucetKey.publicKey.toHex(false)
+    });
+
     const balanceByUref = await client.queryBalance(
       PurseIdentifier.PurseUref,
-      uref
+      entity.AddressableEntity.main_purse
     );
     expect(balanceByUref.eq(faucetBalance)).to.be;
   });

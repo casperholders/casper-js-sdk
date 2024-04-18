@@ -425,3 +425,24 @@ export interface ValidatorWeight {
   public_key: string;
   weight: string;
 }
+
+export type EntityIdentifier =
+  | {
+      PublicKey: string;
+    }
+  | {
+      AccountHash: string;
+    }
+  | { EntityAddr: string };
+
+export interface AddressableEntity {
+  protocol_version: string;
+  entity_kind: object;
+  package_hash: string;
+  byte_code_hash: string;
+  main_purse: string;
+  entry_points: [];
+  associated_keys: [];
+  action_thresholds: [];
+  message_topics: [];
+}

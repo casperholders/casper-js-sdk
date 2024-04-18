@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
 import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
@@ -29,7 +30,9 @@ import {
   GetChainSpecResult,
   StateIdentifier,
   getBlockHash,
-  getHeight
+  getHeight,
+  EntityIdentifier,
+  AddressableEntity
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -37,6 +40,7 @@ export { JSONRPCError } from '@open-rpc/client-js';
 export enum PurseIdentifier {
   MainPurseUnderPublicKey = 'main_purse_under_public_key',
   MainPurseUnderAccountHash = 'main_purse_under_account_hash',
+  MainPurseUnderEntityAddr = 'main_purse_under_entity_addr',
   PurseUref = 'purse_uref'
 }
 
@@ -332,43 +336,79 @@ export class CasperServiceByJsonRPC {
   }
 
   /**
-   * Get the reference to an account balance uref by an account's account hash, so it may be cached
-   * @param stateRootHash The state root hash at which the main purse URef will be queried
-   * @param accountHash The account hash of the account
+   * Returns legacy account information
+   * @param publicKeyOrAccountHash Formatted public key or account hash
+   * @param blockIdentifier BlockIdentifier
    * @param props optional request props
    * @returns The account's main purse URef
    */
-  public async getAccountBalanceUrefByPublicKeyHash(
-    stateRootHash: string,
-    accountHash: string,
+  public async getAccountInfo(
+    publicKeyOrAccountHash: string,
+    blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<string> {
-    const account = await this.getBlockState(
-      stateRootHash,
-      'account-hash-' + accountHash,
-      [],
-      props
-    ).then(res => res.Account!);
-    return account.mainPurse;
+  ): Promise<any> {
+    const params: any[] = [publicKeyOrAccountHash];
+
+    if (blockIdentifier) {
+      params.push(blockIdentifier);
+    } else {
+      params.push(null);
+    }
+    const account = await this.client.request(
+      {
+        method: 'state_get_account_info',
+        params: params
+      },
+      props?.timeout
+    );
+    return account;
+  }
+
+  /**
+   * Returns legacy account information
+   * @param publicKeyOrAccountHash Formatted public key or account hash
+   * @param blockIdentifier BlockIdentifier
+   * @param props optional request props
+   * @returns The account's main purse URef
+   */
+  public async getEntity(
+    entityIdentifier: EntityIdentifier,
+    blockIdentifier?: BlockIdentifier,
+    props?: RpcRequestProps
+  ): Promise<{ AddressableEntity: AddressableEntity }> {
+    const params: any[] = [entityIdentifier];
+
+    if (blockIdentifier) {
+      params.push(blockIdentifier);
+    } else {
+      params.push(null);
+    }
+    const { entity } = await this.client.request(
+      {
+        method: 'state_get_entity',
+        params: params
+      },
+      props?.timeout
+    );
+
+    return entity;
   }
 
   /**
    * Get the reference to an account balance uref by an account's public key, so it may be cached
-   * @param stateRootHash The state root hash at which the main purse URef will be queried
-   * @param publicKey The public key of the account
-   * @param props optional request props
+   * @param _stateRootHash The state root hash at which the main purse URef will be queried
+   * @param _publicKey The public key of the account
+   * @param _props optional request props
    * @returns The account's main purse URef
    * @see [getAccountBalanceUrefByPublicKeyHash](#L380)
    */
   public async getAccountBalanceUrefByPublicKey(
-    stateRootHash: string,
-    publicKey: CLPublicKey,
-    props?: RpcRequestProps
+    _stateRootHash: string,
+    _publicKey: CLPublicKey,
+    _props?: RpcRequestProps
   ): Promise<string> {
-    return this.getAccountBalanceUrefByPublicKeyHash(
-      stateRootHash,
-      encodeBase16(publicKey.toAccountHash()),
-      props
+    throw new Error(
+      'This method has been removed, please use getAccount or getEntity instead.'
     );
   }
 
@@ -507,6 +547,7 @@ export class CasperServiceByJsonRPC {
       return res;
     } else {
       const storedValueJson = res.stored_value;
+      console.log(storedValueJson);
       const serializer = new TypedJSON(StoredValue);
       const storedValue = serializer.parse(storedValueJson)!;
       return storedValue;

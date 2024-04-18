@@ -71,7 +71,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
   fromBytesWithRemainder(
     bytes: Uint8Array
   ): ResultAndRemainder<CLKey, CLErrorCodes> {
-    console.error("AAAA");
+    console.error('AAAA');
     if (bytes.length < 1) {
       return resultHelper<CLKey, CLErrorCodes>(
         Err(CLErrorCodes.EarlyEndOfStream)
@@ -79,7 +79,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     }
 
     const tag = bytes[0];
-console.error("tag: " + tag);
+    console.error('tag: ' + tag);
     if (tag === KeyTag.Hash) {
       const hashBytes = bytes.subarray(1);
       const {
@@ -117,8 +117,8 @@ console.error("tag: " + tag);
         return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
       }
     } else if (tag === KeyTag.Dictionary) {
-       console.error("Dictionary not implemented");
-       return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
+      console.error('Dictionary not implemented');
+      return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
     } else {
       return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
     }
