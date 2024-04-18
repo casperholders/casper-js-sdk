@@ -215,10 +215,11 @@ export interface GetDeployResult extends RpcResult {
   execution_result: ExecutionResult | undefined;
 }
 
-export interface BlockIdentifier {
-  Hash?: string;
-  Height?: number;
-}
+export type BlockIdentifier =
+  | {
+      Hash: string;
+    }
+  | { Height: number };
 
 export interface SpeculativeExecutionResult extends RpcResult {
   block_hash: string;

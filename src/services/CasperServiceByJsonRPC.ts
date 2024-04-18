@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
-import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
+import { TypedJSON } from 'typedjson';
 
 import { DeployUtil, encodeBase16, StoredValue } from '..';
 
@@ -38,26 +38,6 @@ export enum PurseIdentifier {
   MainPurseUnderAccountHash = 'main_purse_under_account_hash',
   MainPurseUnderEntityAddr = 'main_purse_under_entity_addr',
   PurseUref = 'purse_uref'
-}
-
-/** Object to represent era specific information */
-@jsonObject
-export class EraSummary {
-  /** The hash of the block when the era was encountered */
-  @jsonMember({ constructor: String, name: 'block_hash' })
-  blockHash: string;
-
-  /** The id of the era */
-  @jsonMember({ constructor: Number, name: 'era_id' })
-  eraId: number;
-
-  /** A `StoredValue` */
-  @jsonMember(() => ({ constructor: StoredValue, name: 'stored_value' }))
-  StoredValue: StoredValue;
-
-  /** The state root hash when the era was encountered */
-  @jsonMember({ constructor: String, name: 'state_root_hash' })
-  stateRootHash: string;
 }
 
 /** Interface describing the validators at a certain era */
@@ -693,61 +673,21 @@ export class CasperServiceByJsonRPC {
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
   public async getEraInfoBySwitchBlock(
-    blockHash?: string,
+    blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<EraSummary> {
-    const res = await this.client.request(
-      {
-        method: 'chain_get_era_info_by_switch_block',
-        params: [
-          blockHash
-            ? [
-                {
-                  Hash: blockHash
-                }
-              ]
-            : []
-        ]
-      },
-      props?.timeout
-    );
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
+  ) {
+    const params = [];
+    if (blockIdentifier) {
+      params.push(blockIdentifier);
     }
-  }
 
-  /**
-   * Retrieve era information by [switch block](https://docs.casperlabs.io/economics/consensus/#entry) height
-   * @param height The height of the switch block
-   * @param props optional request props
-   * @returns A `Promise` resolving to an `EraSummary` containing the era information
-   */
-  public async getEraInfoBySwitchBlockHeight(
-    height: number,
-    props?: RpcRequestProps
-  ): Promise<EraSummary> {
-    const res = await this.client.request(
+    return this.client.request(
       {
         method: 'chain_get_era_info_by_switch_block',
-        params: [
-          {
-            Height: height
-          }
-        ]
+        params
       },
       props?.timeout
     );
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
-    }
   }
 
   /**
@@ -755,55 +695,22 @@ export class CasperServiceByJsonRPC {
    * @param blockHash Hexadecimal block hash. If not provided, the last block added to the chain, known as the given node, will be used
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
-  public async getEraSummary(blockHash?: string): Promise<EraSummary> {
-    const res = await this.client.request({
-      method: 'chain_get_era_summary',
-      params: [
-        blockHash
-          ? [
-              {
-                Hash: blockHash
-              }
-            ]
-          : []
-      ]
-    });
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
+  public async getEraSummary(
+    blockIdentifier?: BlockIdentifier,
+    props?: RpcRequestProps
+  ) {
+    const params = [];
+    if (blockIdentifier) {
+      params.push(blockIdentifier);
     }
-  }
 
-  /**
-   * Retrieve era summary information by block height (if provided) or most recently added block
-   * @param blockHeight The height of the switch block
-   * @returns A `Promise` resolving to an `EraSummary` containing the era information
-   */
-  public async getEraSummaryByBlockHeight(
-    blockHeight?: number
-  ): Promise<EraSummary> {
-    const res = await this.client.request({
-      method: 'chain_get_era_summary',
-      params: [
-        blockHeight !== undefined && blockHeight >= 0
-          ? [
-              {
-                Height: blockHeight
-              }
-            ]
-          : []
-      ]
-    });
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
-    }
+    return this.client.request(
+      {
+        method: 'chain_get_era_summary',
+        params
+      },
+      props?.timeout
+    );
   }
 
   /**

@@ -7,7 +7,6 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 import {
   CasperServiceByJsonRPC,
-  EraSummary,
   PurseIdentifier,
   getBlockHash,
   getHeight
@@ -400,12 +399,12 @@ describe('CasperServiceByJsonRPC', () => {
   });
 
   it('chain_get_era_info_by_switch_block - by height', async () => {
-    const getEarliestSwitchBlock = async (): Promise<[number, EraSummary]> => {
+    const getEarliestSwitchBlock = async (): Promise<[number, any]> => {
       return new Promise(async resolve => {
         let height = 0;
         let summary;
         while (!summary) {
-          const era = await client.getEraInfoBySwitchBlockHeight(height);
+          const era = await client.getEraInfoBySwitchBlock({ Height: height });
           if (era) {
             height = height;
             summary = era;
