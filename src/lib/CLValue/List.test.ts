@@ -10,7 +10,8 @@ import {
   CLI32,
   CLI32Type,
   CLKey,
-  CLByteArray
+  CLByteArray,
+  KeyTag
 } from './index';
 
 describe('CLValue List implementation', () => {
@@ -253,7 +254,8 @@ describe('CLValue List implementation', () => {
           14,
           219
         ])
-      )
+      ),
+      KeyTag.Hash
     );
     const myList = new CLList([clKey, clKey, clKey]);
 

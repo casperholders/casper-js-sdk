@@ -91,6 +91,12 @@ export enum CLTypeTag {
   PublicKey = 22
 }
 
+// A number of bytes in most Key variants 
+export const KEY_DEFAULT_BYTE_LENGTH = 32;
+
+// The maximum length for a `dictionary_item_key`
+export const DICTIONARY_ITEM_KEY_MAX_LENGTH = 128;
+
 export const BOOL_TYPE = 'Bool';
 export const KEY_TYPE = 'Key';
 export const PUBLIC_KEY_TYPE = 'PublicKey';

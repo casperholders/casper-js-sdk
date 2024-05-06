@@ -48,7 +48,8 @@ import {
   CLMap,
   CLMapType,
   CLByteArray,
-  CLByteArrayType
+  CLByteArrayType,
+  KeyTag
 } from './index';
 
 export class CLTypeBuilder {
@@ -182,8 +183,8 @@ export class CLValueBuilder {
     return new CLString(val);
   };
 
-  static key = (val: CLKeyParameters): CLKey => {
-    return new CLKey(val);
+  static key = (val: CLKeyParameters, key: KeyTag): CLKey => {
+    return new CLKey(val, key);
   };
 
   static uref = (val: Uint8Array, accessRights: AccessRights): CLURef => {
