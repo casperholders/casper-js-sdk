@@ -46,22 +46,34 @@ export interface EraValidators {
   validator_weights: ValidatorWeight[];
 }
 
+export interface VestingSchedule {
+  initial_release_timestamp_millis: number;
+  locked_amounts: string[];
+}
+
 /** Interface describing a validator auction bid */
 export interface Bid {
+  validator_public_key: string;
   bonding_purse: string;
   staked_amount: string;
   delegation_rate: number;
+  vesting_schedule?: VestingSchedule;
   reward: string;
-  delegators: Delegators[];
+  delegators: DelegatorEntry[];
   inactive: boolean;
 }
 
+export interface DelegatorEntry {
+  delegator_public_key: string;
+  delegator: Delegators;
+}
 /** Interface describing a delegator */
 export interface Delegators {
-  bonding_purse: string;
-  delegatee: string;
+  delegator_public_key: string;
   staked_amount: string;
-  public_key: string;
+  bonding_purse: string;
+  validator_public_key: string;
+  vesting_schedule?: VestingSchedule;
 }
 
 /** Interface describing a delegator's information */
@@ -74,8 +86,12 @@ export interface DelegatorInfo {
 
 /** Interface describing a validator's auction bid */
 export interface ValidatorBid {
-  public_key: string;
-  bid: Bid;
+  validator_public_key: string;
+  bonding_purse: string;
+  staked_amount: string;
+  delegation_rate: number;
+  vesting_schedule?: VestingSchedule;
+  inactive: boolean;
 }
 
 /** Interface describing the state of a validator auction */
