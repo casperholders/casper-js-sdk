@@ -470,6 +470,121 @@ describe('StoredValue', () => {
       fail('StoredValue::Package is undefined');
     }
   });
+
+  it('should parse StoredValue::ByteCode', () => {
+    const mockJson = {
+      ByteCode: {
+        kind: 'V1CasperWasm',
+        bytes:
+          '576e5963614b79573379706f6d51644e574c4c4f673970774b3841736f745779576e5963614b79573379706f6d51644e574c4c4f673970774b3841736f745779576e5963614b79573379706f6d51644e574c4c4f673970774b3841736f745779'
+      }
+    };
+    const storedValue = serializer.parse(mockJson);
+    expect(storedValue?.ByteCode).not.to.be.undefined;
+    if (storedValue) {
+      const reserialized = JSON.parse(serializer.stringify(storedValue));
+      expect(reserialized).to.deep.eq(mockJson);
+    } else {
+      fail('StoredValue::ByteCode is undefined');
+    }
+  });
+
+  it('should parse StoredValue::MessageTopic', () => {
+    const mockJson = {
+      MessageTopic: { message_count: 555, blocktime: 1234567 }
+    };
+    const storedValue = serializer.parse(mockJson);
+    expect(storedValue?.MessageTopic).not.to.be.undefined;
+    if (storedValue) {
+      const reserialized = JSON.parse(serializer.stringify(storedValue));
+      expect(reserialized).to.deep.eq(mockJson);
+    } else {
+      fail('StoredValue::MessageTopic is undefined');
+    }
+  });
+
+  it('should parse StoredValue::Message', () => {
+    const mockJson = {
+      Message:
+        'message-checksum-3b0e23345fdf8f68aa9c782c5cbca666fe6017689ec31183d1106b0ebcaf6a57'
+    };
+    const storedValue = serializer.parse(mockJson);
+    expect(storedValue?.Message).not.to.be.undefined;
+    if (storedValue) {
+      const reserialized = JSON.parse(serializer.stringify(storedValue));
+      expect(reserialized).to.deep.eq(mockJson);
+    } else {
+      fail('StoredValue::Message is undefined');
+    }
+  });
+
+  it('should parse StoredValue::Reservation', () => {
+    const mockJson = {
+      Reservation: {
+        receipt:
+          'd57e0c864264631c418a24e75642180c10df14af91f80eb6adc15e55534bccbe',
+        reservation_kind: 6,
+        reservation_data:
+          'd2e2d25508244d394640db401df4b8cd39e3587b0b9db34a44f218d8263b1befab775155e0933c0bd0f8bca42e270f3e9c8ec0b7c8c70ac6097b17ca6c7c93a2eda228831907ff74d86985d845ed37b2567a9c2ce5dcbad40e4356'
+      }
+    };
+    const storedValue = serializer.parse(mockJson);
+    expect(storedValue?.Reservation).not.to.be.undefined;
+    if (storedValue) {
+      const reserialized = JSON.parse(serializer.stringify(storedValue));
+      expect(reserialized).to.deep.eq(mockJson);
+    } else {
+      fail('StoredValue::Reservation is undefined');
+    }
+  });
+
+  it('should parse StoredValue::EntryPoint::V1CasperVm', () => {
+    const mockJson = {
+      EntryPoint: {
+        V1CasperVm: {
+          name: 'xyz',
+          args: [
+            {
+              name: 'x',
+              cl_type: 'Key'
+            },
+            {
+              name: 'y',
+              cl_type: 'U128'
+            }
+          ],
+          ret: 'U512',
+          access: {
+            Groups: ['a1', 'b2', 'c3']
+          },
+          entry_point_type: 'Caller',
+          entry_point_payment: 'SelfOnward'
+        }
+      }
+    };
+    const storedValue = serializer.parse(mockJson);
+    expect(storedValue?.EntryPoint).not.to.be.undefined;
+    if (storedValue) {
+      const reserialized = JSON.parse(serializer.stringify(storedValue));
+      expect(reserialized).to.deep.eq(mockJson);
+    } else {
+      fail('StoredValue::EntryPoint is undefined');
+    }
+  });
+
+  it('should parse StoredValue::EntryPoint::V2CasperVm', () => {
+    const mockJson = {
+      EntryPoint: { V2CasperVm: { function_index: 167, flags: 555 } }
+    };
+    const storedValue = serializer.parse(mockJson);
+    expect(storedValue?.EntryPoint).not.to.be.undefined;
+    if (storedValue) {
+      const reserialized = JSON.parse(serializer.stringify(storedValue));
+      expect(reserialized).to.deep.eq(mockJson);
+    } else {
+      fail('StoredValue::EntryPoint is undefined');
+    }
+  });
 });
 
 describe('EntityKind', () => {
