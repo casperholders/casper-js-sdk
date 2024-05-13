@@ -65,10 +65,10 @@ export abstract class CLValue {
 export class CLValueParsers {
   static fromJSON(json: any): Result<CLValue, string> {
     const clType = matchTypeToCLType(json.cl_type);
-    console.error("A " + clType);
-    const uint8bytes = decodeBase16(json.bytes);
-    console.error("b " + uint8bytes);
-    const clEntity = CLValueParsers.fromBytes(uint8bytes, clType).unwrap();
+    const clEntity = CLValueParsers.fromBytes(
+      decodeBase16(json.bytes),
+      clType
+    ).unwrap();
     return Ok(clEntity as CLValue);
   }
 

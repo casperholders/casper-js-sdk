@@ -6,6 +6,7 @@ import {
   ValidatorBid,
   VestingSchedule
 } from '../services/CasperServiceByJsonRPC';
+import { EntryPointAccess, matchEntryPointAccess } from './EntryPointAccess';
 
 @jsonObject
 class NamedKey {
@@ -342,7 +343,8 @@ export class NamedCLTypeArg {
 
   @jsonMember({
     name: 'cl_type',
-    deserializer: json => matchTypeToCLType(json)
+    deserializer: json => matchTypeToCLType(json),
+    serializer: value => value.toJSON()
   })
   public clType: CLType;
 }
@@ -486,6 +488,93 @@ export enum PackageStatus {
   Unlocked = 'Unlocked'
 }
 
+export enum ByteCodeKind {
+  Empty = 'Empty',
+  V1CasperWasm = 'V1CasperWasm'
+}
+
+export enum EntryPointType {
+  Caller = 'Caller',
+  Called = 'Called',
+  Factory = 'Factory'
+}
+
+export enum EntryPointPayment {
+  Caller = 'Caller',
+  SelfOnly = 'SelfOnly',
+  SelfOnward = 'SelfOnward'
+}
+
+@jsonObject
+export class StoredValueEntryPointV2Json {
+  @jsonMember({ name: 'function_index', constructor: Number })
+  function_index: number;
+
+  @jsonMember({ name: 'flags', constructor: Number })
+  flags: number;
+}
+
+@jsonObject
+export class StoredValueEntryPointV1Json {
+  @jsonMember({ constructor: String })
+  name: string;
+
+  @jsonArrayMember(NamedCLTypeArg)
+  args: NamedCLTypeArg[];
+
+  @jsonMember({
+    deserializer: json => matchTypeToCLType(json),
+    serializer: value => value.toJSON()
+  })
+  public ret: CLType;
+
+  @jsonMember({ name: 'entry_point_type', constructor: String })
+  public entryPointType: EntryPointType;
+
+  @jsonMember({ name: 'entry_point_payment', constructor: String })
+  public entryPointPayment: EntryPointPayment;
+
+  @jsonMember({
+    deserializer: json => matchEntryPointAccess(json),
+    serializer: value => value.toJSON()
+  })
+  public access: EntryPointAccess;
+}
+
+@jsonObject
+export class EntryPointValueJson {
+  @jsonMember({ constructor: StoredValueEntryPointV1Json })
+  public V1CasperVm?: StoredValueEntryPointV1Json;
+  @jsonMember({ constructor: StoredValueEntryPointV2Json })
+  public V2CasperVm?: StoredValueEntryPointV2Json;
+}
+
+@jsonObject
+export class ReservationJson {
+  @jsonMember({ constructor: String })
+  receipt: string;
+  @jsonMember({ name: 'reservation_kind', constructor: Number })
+  reservationKind: number;
+  @jsonMember({ name: 'reservation_data', constructor: String })
+  reservationData: string;
+}
+
+@jsonObject
+export class MessageTopicSummaryJson {
+  @jsonMember({ name: 'message_count', constructor: Number })
+  public messageCount: number;
+  @jsonMember({ constructor: Number })
+  public blocktime: number;
+}
+
+@jsonObject
+export class ByteCodeJson {
+  @jsonMember({ constructor: String })
+  kind: ByteCodeKind;
+  @jsonMember({ constructor: String })
+  bytes: string;
+}
+
 @jsonObject
 export class PackageJson {
   @jsonArrayMember(EntityVersionEntry)
@@ -574,7 +663,7 @@ export class StoredValue {
 
   // A record of a transfer
   @jsonMember({ constructor: TransferJson })
-  public Transfer?: TransferJson;
+  public LegacyTransfer?: TransferJson;
 
   // A record of a deploy
   @jsonMember({ constructor: DeployInfoJson })
@@ -594,4 +683,19 @@ export class StoredValue {
 
   @jsonMember({ constructor: PackageJson })
   public Package?: PackageJson;
+
+  @jsonMember({ constructor: ByteCodeJson })
+  public ByteCode?: ByteCodeJson;
+
+  @jsonMember({ constructor: MessageTopicSummaryJson })
+  public MessageTopic?: MessageTopicSummaryJson;
+
+  @jsonMember({ constructor: String })
+  public Message?: string;
+
+  @jsonMember({ constructor: ReservationJson })
+  public Reservation?: ReservationJson;
+
+  @jsonMember({ constructor: EntryPointValueJson })
+  public EntryPoint?: EntryPointValueJson;
 }
