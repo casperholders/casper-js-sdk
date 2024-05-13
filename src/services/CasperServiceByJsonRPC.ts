@@ -28,7 +28,8 @@ import {
   EntityIdentifier,
   AddressableEntity,
   QueryGlobalStateResult,
-  GetBlockTransfersResult
+  GetBlockTransfersResult,
+  QueryBalanceDetailsResult
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -440,6 +441,45 @@ export class CasperServiceByJsonRPC {
         props?.timeout
       )
       .then(res => BigNumber.from(res.balance));
+  }
+
+  /**
+   * Returns balance details using a purse identifier and a state identifier
+   * @added casper-node 2.0
+   * @example
+   * ```ts
+   * const client = new CasperServiceByJsonRPC("http://localhost:11101/rpc");
+   * const balance = await client.queryBalanceDetails(PurseIdentifier.MainPurseUnderAccountHash, "account-hash-0909090909090909090909090909090909090909090909090909090909090909");
+   * ```
+   * @param purseIdentifierType purse type enum
+   * @param purseIdentifier purse identifier
+   * @param stateRootHash state root hash at which the block state will be queried
+   * @param props optional request props
+   * @returns balance details object
+   */
+  public async queryBalanceDetails(
+    purseIdentifierType: PurseIdentifier,
+    purseIdentifier: string,
+    stateIdentifier?: StateIdentifier,
+    props?: RpcRequestProps
+  ): Promise<QueryBalanceDetailsResult> {
+    const params: any[] = [];
+    if (stateIdentifier) {
+      params.push(stateIdentifier);
+    } else {
+      params.push(null);
+    }
+    params.push({
+      [purseIdentifierType]: purseIdentifier
+    });
+
+    return await this.client.request(
+      {
+        method: 'query_balance_details',
+        params
+      },
+      props?.timeout
+    );
   }
 
   /**

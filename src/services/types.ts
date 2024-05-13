@@ -536,3 +536,16 @@ export interface GetBlockTransfersResult extends RpcResult {
   block_hash: string;
   transfers: Transfer[];
 }
+
+export interface BalanceHold {
+  time: number;
+  amount: string;
+  proof: string;
+}
+
+export interface QueryBalanceDetailsResult extends RpcResult {
+  total_balance: string;
+  available_balance: string;
+  total_balance_proof: string;
+  holds: BalanceHold[];
+}
