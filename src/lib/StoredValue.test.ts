@@ -530,3 +530,62 @@ describe('EntityKind', () => {
     expect(entityKind?.SmartContract).to.eq('VmCasperV2');
   });
 });
+
+describe('EntityKind', () => {
+  const serializer = new TypedJSON(EntityKind);
+  it('should parse SystemEntityType: Mint correctly', () => {
+    const mockJson = {
+      System: 'Mint'
+    };
+    const entityKind = serializer.parse(mockJson);
+    expect(entityKind?.System).to.eq(SystemEntityType.Mint);
+  });
+
+  it('should parse SystemEntityType: Auction correctly', () => {
+    const mockJson = {
+      System: 'Auction'
+    };
+    const entityKind = serializer.parse(mockJson);
+    expect(entityKind?.System).to.eq(SystemEntityType.Auction);
+  });
+
+  it('should parse SystemEntityType: HandlePayment correctly', () => {
+    const mockJson = {
+      System: 'HandlePayment'
+    };
+    const entityKind = serializer.parse(mockJson);
+    expect(entityKind?.System).to.eq(SystemEntityType.HandlePayment);
+  });
+
+  it('should parse SystemEntityType: StandardPayment correctly', () => {
+    const mockJson = {
+      System: 'StandardPayment'
+    };
+    const entityKind = serializer.parse(mockJson);
+    expect(entityKind?.System).to.eq(SystemEntityType.StandardPayment);
+  });
+
+  it('should parse Account EntityKind correctly', () => {
+    const mockJson = {
+      Account: 'abcdefgh'
+    };
+    const entityKind = serializer.parse(mockJson);
+    expect(entityKind?.Account).to.eq('abcdefgh');
+  });
+
+  it('should parse SmartContract: VmCasperV1 correctly', () => {
+    const mockJson = {
+      SmartContract: 'VmCasperV1'
+    };
+    const entityKind = serializer.parse(mockJson);
+    expect(entityKind?.SmartContract).to.eq('VmCasperV1');
+  });
+
+  it('should parse SmartContract: VmCasperV2 correctly', () => {
+    const mockJson = {
+      SmartContract: 'VmCasperV2'
+    };
+    const entityKind = serializer.parse(mockJson);
+    expect(entityKind?.SmartContract).to.eq('VmCasperV2');
+  });
+});
