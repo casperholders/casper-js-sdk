@@ -364,7 +364,7 @@ export interface BlockHeaderV1 {
   random_bit: boolean;
   accumulated_seed: string;
   era_end: EraEndV2 | null;
-  timestamp: string; //TODO this probably needs to be a class
+  timestamp: string;
   era_id: number;
   height: number;
   protocol_version: string;
@@ -377,7 +377,7 @@ export interface BlockHeaderV2 {
   random_bit: boolean;
   accumulated_seed: string;
   era_end: EraEndV2 | null;
-  timestamp: string; //TODO this probably needs to be a class
+  timestamp: string;
   era_id: number;
   height: number;
   protocol_version: string;
