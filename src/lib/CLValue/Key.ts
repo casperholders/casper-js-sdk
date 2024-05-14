@@ -71,7 +71,6 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
   fromBytesWithRemainder(
     bytes: Uint8Array
   ): ResultAndRemainder<CLKey, CLErrorCodes> {
-    console.error('AAAA');
     if (bytes.length < 1) {
       return resultHelper<CLKey, CLErrorCodes>(
         Err(CLErrorCodes.EarlyEndOfStream)
@@ -79,7 +78,6 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     }
 
     const tag = bytes[0];
-    console.error('tag: ' + tag);
     if (tag === KeyTag.Hash) {
       const hashBytes = bytes.subarray(1);
       const {

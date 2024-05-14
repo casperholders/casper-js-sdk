@@ -5,7 +5,7 @@ import {
   GroupsEntryPointAccess,
   matchEntryPointAccess
 } from './EntryPointAccess';
-import { fail } from 'node:assert';
+import { fail } from 'assert';
 
 @jsonObject
 class UnderTest {
