@@ -71,9 +71,9 @@ describe('StoredValue', () => {
     expect(storedValue?.Account?.namedKeys[0].name).to.eq('contract_version');
   });
 
-  it('should parse Transfer stored value correctly', () => {
+  it('should parse LegacyTransfer stored value correctly', () => {
     const mockJson = {
-      Transfer: {
+      LegacyTransfer: {
         deploy_hash:
           'c5bed7511b23946a87c7237fceb55fe2f3a84ee28a41f3830f021711a1210047',
         from:
@@ -91,9 +91,9 @@ describe('StoredValue', () => {
     };
 
     const storedValue = serializer.parse(mockJson);
-    expect(storedValue?.Transfer).to.not.eq(undefined);
-    expect(storedValue?.Transfer?.deployHash).to.eq(
-      mockJson.Transfer.deploy_hash
+    expect(storedValue?.LegacyTransfer).to.not.eq(undefined);
+    expect(storedValue?.LegacyTransfer?.deployHash).to.eq(
+      mockJson.LegacyTransfer.deploy_hash
     );
   });
 
