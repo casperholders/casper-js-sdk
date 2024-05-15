@@ -59,17 +59,16 @@ export interface Bid {
   staked_amount: string;
   delegation_rate: number;
   vesting_schedule?: VestingSchedule;
-  reward: string;
   delegators: DelegatorEntry[];
   inactive: boolean;
 }
 
 export interface DelegatorEntry {
   delegator_public_key: string;
-  delegator: Delegators;
+  delegator: Delegator;
 }
 /** Interface describing a delegator */
-export interface Delegators {
+export interface Delegator {
   delegator_public_key: string;
   staked_amount: string;
   bonding_purse: string;
@@ -85,14 +84,9 @@ export interface DelegatorInfo {
   staked_amount: string;
 }
 
-/** Interface describing a validator's auction bid */
-export interface ValidatorBid {
-  validator_public_key: string;
-  bonding_purse: string;
-  staked_amount: string;
-  delegation_rate: number;
-  vesting_schedule?: VestingSchedule;
-  inactive: boolean;
+export interface BidEntry {
+  public_key: string;
+  bid: Bid;
 }
 
 /** Interface describing the state of a validator auction */
@@ -100,7 +94,7 @@ export interface AuctionState {
   state_root_hash: string;
   block_height: number;
   era_validators: EraValidators[];
-  bids: ValidatorBid[];
+  bids: BidEntry[];
 }
 
 /** Result interface describing validator information */
