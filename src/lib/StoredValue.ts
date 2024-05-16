@@ -1,11 +1,7 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import { CLValue, CLType, CLValueParsers, matchTypeToCLType } from './CLValue';
-import {
-  Bid,
-  ValidatorBid,
-  VestingSchedule
-} from '../services/CasperServiceByJsonRPC';
+import { Bid, VestingSchedule } from '../services/CasperServiceByJsonRPC';
 import { EntryPointAccess, matchEntryPointAccess } from './EntryPointAccess';
 
 @jsonObject
@@ -288,7 +284,7 @@ export class AddressableEntityJson {
   public byteCodeHash: string;
 
   @jsonMember({ name: 'main_purse', constructor: String })
-  public main_purse: string;
+  public mainPurse: string;
 
   @jsonArrayMember(AddressableEntityAssociatedKeyJson, {
     name: 'associated_keys'
@@ -581,13 +577,47 @@ export class PackageJson {
   public versions: EntityVersionEntry[];
 
   @jsonArrayMember(EntityVersionKey, { name: 'disabled_versions' })
-  public disabled_versions: EntityVersionKey[];
+  public disabledVersions: EntityVersionKey[];
 
   @jsonArrayMember(Group)
   public groups: Group[];
 
   @jsonMember({ name: 'lock_status', constructor: String })
   public lockStatus: PackageStatus;
+}
+
+@jsonObject
+export class ValidatorBid {
+  @jsonMember({ name: 'validator_public_key', constructor: String })
+  validatorPublicKey: string;
+
+  @jsonMember({ name: 'bonding_purse', constructor: String })
+  bondingPurse: string;
+
+  @jsonMember({ name: 'staked_amount', constructor: String })
+  stakedAmount: string;
+
+  @jsonMember({ name: 'delegation_rate', constructor: Number })
+  delegationRate: number;
+
+  @jsonMember({
+    name: 'vesting_schedule',
+    deserializer: json => {
+      //TODO this is very sub-optimal, but typedjson doesn't work with interface-defined json deserialization by default.
+      // We would have to copy the whole Bid structrure tree into a class to make it work out of the box
+      if (!json) return;
+      const str = JSON.stringify(json);
+      const bid: VestingSchedule = JSON.parse(str);
+      return bid;
+    },
+    serializer: value => {
+      if (!value) return;
+      return value;
+    }
+  })
+  vestingSchedule?: VestingSchedule;
+
+  inactive: boolean;
 }
 
 @jsonObject
