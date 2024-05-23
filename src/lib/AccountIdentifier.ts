@@ -18,19 +18,11 @@ export class PublicKey implements AccountIdentifier {
 
 export class AccountHash implements AccountIdentifier {
   private accountHash: string;
-  constructor(accountHash: string) {
-    this.accountHash = accountHash;
+  constructor(publicKey: CLPublicKey) {
+    this.accountHash = publicKey.toAccountHashStr();
   }
 
   toJSON(): string {
     return this.accountHash;
   }
-}
-
-export function accountHash(publicKey: CLPublicKey): AccountIdentifier {
-  return new AccountHash(publicKey.toAccountHashStr());
-}
-
-export function publicKey(key: string): AccountIdentifier {
-  return new PublicKey(key);
 }

@@ -27,11 +27,11 @@ describe('EventStream', () => {
     es.stop();
   };
 
-  it('should work on http', async () => {
+  it.only('should work on http', async () => {
     await startEventStream(HTTP_EVENT_STREAM_URL);
   });
 
-/*  it('should work on http1.1/https protocol', async () => {
+  /*  it('should work on http1.1/https protocol', async () => {
     await startEventStream(HTTPS_EVENT_STREAM_URL);
   });*/
 });

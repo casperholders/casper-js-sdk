@@ -25,7 +25,7 @@ import { sleep } from './utils';
 import { Contract } from '../../src/lib/Contracts';
 
 import { FAUCET_PRIV_KEY, NETWORK_NAME, NODE_URL } from '../config';
-import { accountHash } from '../../src/lib/AccountIdentifier';
+import { AccountHash } from '../../src/lib/AccountIdentifier';
 
 config();
 
@@ -202,7 +202,7 @@ describe('CasperServiceByJsonRPC', () => {
 
   it('state_get_account_info - should fail if fetching an account created after 2.x', async () => {
     await client
-      .getAccountInfo(accountHash(faucetKey.publicKey))
+      .getAccountInfo(new AccountHash(faucetKey.publicKey))
       .then(() => {
         assert.fail('client.getAccountInfo should throw an error.');
       })
