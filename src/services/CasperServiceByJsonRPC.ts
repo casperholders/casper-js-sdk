@@ -407,7 +407,6 @@ export class CasperServiceByJsonRPC {
       'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
     );
     const params = { state_root_hash: stateRootHash, purse_uref: purseUref };
-    console.error(`params: ${JSON.stringify(params)}`);
     return await this.client
       .request(
         {
