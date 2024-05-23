@@ -3,7 +3,13 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
 import { TypedJSON } from 'typedjson';
 
-import { DeployUtil, encodeBase16, StoredValue } from '..';
+import {
+  CLAccountHash,
+  CLPublicKey,
+  DeployUtil,
+  encodeBase16,
+  StoredValue
+} from '..';
 
 import ProviderTransport, {
   SafeEventEmitterProvider
@@ -32,7 +38,6 @@ import {
   QueryBalanceDetailsResult,
   AddressableEntityWrapper
 } from './types';
-import { AccountIdentifier } from '../lib/AccountIdentifier';
 
 export { JSONRPCError } from '@open-rpc/client-js';
 
@@ -336,12 +341,12 @@ export class CasperServiceByJsonRPC {
    * @returns The account's main purse URef
    */
   public async getAccountInfo(
-    accountIdentifier: AccountIdentifier,
+    accountIdentifier: CLPublicKey,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
   ): Promise<any> {
     const params: any = {
-      account_identifier: accountIdentifier.toJSON()
+      account_identifier: accountIdentifier.toAccountHashStr()
     };
     if (blockIdentifier) {
       params.block_identifier = blockIdentifier;

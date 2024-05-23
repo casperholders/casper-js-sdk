@@ -27,7 +27,7 @@ describe('EventStream', () => {
     es.stop();
   };
 
-  it.only('should work on http', async () => {
+  it('should work on http', async () => {
     await startEventStream(HTTP_EVENT_STREAM_URL);
   });
 
