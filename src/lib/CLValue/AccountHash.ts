@@ -63,7 +63,7 @@ export class CLAccountHash extends CLValue {
     return this.data;
   }
 
-  toHashStr(): string {
+  toFormattedStr(): string {
     const bytes = this.data;
     const hashHex = Buffer.from(bytes).toString('hex');
     return `account-hash-${hashHex}`;
