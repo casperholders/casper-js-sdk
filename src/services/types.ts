@@ -207,12 +207,16 @@ export type ExecutionResult =
   | { Version1: ExecutionResultV1 }
   | { Version2: ExecutionResultV2 };
 
-/** Result interface for a get-deploy call */
-export interface GetDeployResult extends RpcResult {
-  deploy: JsonDeploy;
+export interface ExecutionInfo {
   block_hash: string;
   block_height: number;
   execution_result: ExecutionResult | undefined;
+}
+
+/** Result interface for a get-deploy call */
+export interface GetDeployResult extends RpcResult {
+  deploy: JsonDeploy;
+  execution_info: ExecutionInfo | undefined;
 }
 
 export type BlockIdentifier =
@@ -364,7 +368,7 @@ export interface BlockHeaderV1 {
   random_bit: boolean;
   accumulated_seed: string;
   era_end: EraEndV2 | null;
-  timestamp: string; //TODO this probably needs to be a class
+  timestamp: string;
   era_id: number;
   height: number;
   protocol_version: string;
@@ -377,7 +381,7 @@ export interface BlockHeaderV2 {
   random_bit: boolean;
   accumulated_seed: string;
   era_end: EraEndV2 | null;
-  timestamp: string; //TODO this probably needs to be a class
+  timestamp: string;
   era_id: number;
   height: number;
   protocol_version: string;
@@ -468,8 +472,22 @@ export type Account =
 
 export type EntityIdentifier = Account | { EntityAddr: string };
 
+export interface NamedKey {
+  name: string;
+  key: string;
+}
+
+export interface AddressableEntityWrapper {
+  entity: AddressableEntity;
+  named_keys: NamedKey[];
+  /* TODO these fieolds need to be handled
+  entry_points: EntryPointValue[];
+  */
+}
+
 export interface AddressableEntity {
   protocol_version: string;
+  //TODO finish entity_kind
   entity_kind: object;
   package_hash: string;
   byte_code_hash: string;
@@ -535,4 +553,17 @@ export type Transfer =
 export interface GetBlockTransfersResult extends RpcResult {
   block_hash: string;
   transfers: Transfer[];
+}
+
+export interface BalanceHold {
+  time: number;
+  amount: string;
+  proof: string;
+}
+
+export interface QueryBalanceDetailsResult extends RpcResult {
+  total_balance: string;
+  available_balance: string;
+  total_balance_proof: string;
+  holds: BalanceHold[];
 }

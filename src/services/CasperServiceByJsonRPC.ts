@@ -3,7 +3,13 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
 import { TypedJSON } from 'typedjson';
 
-import { DeployUtil, encodeBase16, StoredValue } from '..';
+import {
+  CLAccountHash,
+  CLPublicKey,
+  DeployUtil,
+  encodeBase16,
+  StoredValue
+} from '..';
 
 import ProviderTransport, {
   SafeEventEmitterProvider
@@ -28,7 +34,10 @@ import {
   EntityIdentifier,
   AddressableEntity,
   QueryGlobalStateResult,
-  GetBlockTransfersResult
+  GetBlockTransfersResult,
+  QueryBalanceDetailsResult,
+  AddressableEntityWrapper,
+  TransactionHash
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -46,22 +55,33 @@ export interface EraValidators {
   validator_weights: ValidatorWeight[];
 }
 
+export interface VestingSchedule {
+  initial_release_timestamp_millis: number;
+  locked_amounts: string[];
+}
+
 /** Interface describing a validator auction bid */
 export interface Bid {
+  validator_public_key: string;
   bonding_purse: string;
   staked_amount: string;
   delegation_rate: number;
-  reward: string;
-  delegators: Delegators[];
+  vesting_schedule?: VestingSchedule;
+  delegators: DelegatorEntry[];
   inactive: boolean;
 }
 
+export interface DelegatorEntry {
+  delegator_public_key: string;
+  delegator: Delegator;
+}
 /** Interface describing a delegator */
-export interface Delegators {
-  bonding_purse: string;
-  delegatee: string;
+export interface Delegator {
+  delegator_public_key: string;
   staked_amount: string;
-  public_key: string;
+  bonding_purse: string;
+  validator_public_key: string;
+  vesting_schedule?: VestingSchedule;
 }
 
 /** Interface describing a delegator's information */
@@ -72,8 +92,7 @@ export interface DelegatorInfo {
   staked_amount: string;
 }
 
-/** Interface describing a validator's auction bid */
-export interface ValidatorBid {
+export interface BidEntry {
   public_key: string;
   bid: Bid;
 }
@@ -83,7 +102,7 @@ export interface AuctionState {
   state_root_hash: string;
   block_height: number;
   era_validators: EraValidators[];
-  bids: ValidatorBid[];
+  bids: BidEntry[];
 }
 
 /** Result interface describing validator information */
@@ -144,6 +163,31 @@ export class CasperServiceByJsonRPC {
     return await this.client.request(
       {
         method: 'info_get_deploy',
+        params
+      },
+      props?.timeout
+    );
+  }
+
+  /**
+   * Get information about a deploy using its hexadecimal hash
+   * @param deployHash Hex-encoded hash digest.
+   * @param finalizedApprovals Whether to return the deploy with the finalized approvals substituted. If `false` or omitted, returns the deploy with the approvals that were originally received by the node.
+   * @param props optional request props
+   * @returns A `Promise` that resolves to a `GetTransactionResult`
+   */
+  public async getTransactionInfo(
+    transaction_hash: TransactionHash,
+    finalizedApprovals?: boolean,
+    props?: RpcRequestProps
+  ): Promise<GetDeployResult> {
+    const params: any[] = [transaction_hash];
+    if (finalizedApprovals) {
+      params.push(finalizedApprovals);
+    }
+    return await this.client.request(
+      {
+        method: 'info_get_transaction',
         params
       },
       props?.timeout
@@ -323,24 +367,27 @@ export class CasperServiceByJsonRPC {
    * @returns The account's main purse URef
    */
   public async getAccountInfo(
-    publicKeyOrAccountHash: string,
+    accountIdentifier: CLPublicKey | CLAccountHash,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
   ): Promise<any> {
-    const params: any[] = [publicKeyOrAccountHash];
-
-    if (blockIdentifier) {
-      params.push(blockIdentifier);
-    } else {
-      params.push(null);
+    let identifier;
+    if (accountIdentifier instanceof CLPublicKey) {
+      identifier = accountIdentifier.toHex();
+    } else if (accountIdentifier instanceof CLAccountHash) {
+      identifier = accountIdentifier.toHashStr();
     }
-    const account = await this.client.request(
-      {
-        method: 'state_get_account_info',
-        params: params
-      },
-      props?.timeout
-    );
+    const params: any = {
+      account_identifier: identifier
+    };
+    if (blockIdentifier) {
+      params.block_identifier = blockIdentifier;
+    }
+    const payload = {
+      method: 'state_get_account_info',
+      params: params
+    };
+    const account = await this.client.request(payload, props?.timeout);
     return account;
   }
 
@@ -355,7 +402,8 @@ export class CasperServiceByJsonRPC {
     entityIdentifier: EntityIdentifier,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<{ AddressableEntity: AddressableEntity }> {
+    //TODO getEntity can also return LegacyAccount, needs to be handled
+  ): Promise<{ AddressableEntity: AddressableEntityWrapper }> {
     const params: any[] = [entityIdentifier];
 
     if (blockIdentifier) {
@@ -384,17 +432,18 @@ export class CasperServiceByJsonRPC {
    */
   public async getAccountBalance(
     stateRootHash: string,
-    balanceUref: string,
+    purseUref: string,
     props?: RpcRequestProps
   ): Promise<BigNumber> {
     console.warn(
       'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
     );
+    const params = { state_root_hash: stateRootHash, purse_uref: purseUref };
     return await this.client
       .request(
         {
           method: 'state_get_balance',
-          params: [stateRootHash, balanceUref]
+          params
         },
         props?.timeout
       )
@@ -440,6 +489,45 @@ export class CasperServiceByJsonRPC {
         props?.timeout
       )
       .then(res => BigNumber.from(res.balance));
+  }
+
+  /**
+   * Returns balance details using a purse identifier and a state identifier
+   * @added casper-node 2.0
+   * @example
+   * ```ts
+   * const client = new CasperServiceByJsonRPC("http://localhost:11101/rpc");
+   * const balance = await client.queryBalanceDetails(PurseIdentifier.MainPurseUnderAccountHash, "account-hash-0909090909090909090909090909090909090909090909090909090909090909");
+   * ```
+   * @param purseIdentifierType purse type enum
+   * @param purseIdentifier purse identifier
+   * @param stateRootHash state root hash at which the block state will be queried
+   * @param props optional request props
+   * @returns balance details object
+   */
+  public async queryBalanceDetails(
+    purseIdentifierType: PurseIdentifier,
+    purseIdentifier: string,
+    stateIdentifier?: StateIdentifier,
+    props?: RpcRequestProps
+  ): Promise<QueryBalanceDetailsResult> {
+    const params: any[] = [];
+    if (stateIdentifier) {
+      params.push(stateIdentifier);
+    } else {
+      params.push(null);
+    }
+    params.push({
+      [purseIdentifierType]: purseIdentifier
+    });
+
+    return await this.client.request(
+      {
+        method: 'query_balance_details',
+        params
+      },
+      props?.timeout
+    );
   }
 
   /**
@@ -589,16 +677,16 @@ export class CasperServiceByJsonRPC {
       const deployInfo = await this.getDeployInfo(deployHash);
 
       let successful = false;
+      const execution_result = deployInfo.execution_info?.execution_result;
 
-      if (!deployInfo.execution_result) {
+      if (!execution_result) {
         successful = false;
       } else {
-        if ('Version1' in deployInfo.execution_result) {
-          successful = !!deployInfo.execution_result.Version1.Success;
+        if ('Version1' in execution_result) {
+          successful = !!execution_result.Version1.Success;
         }
-        if ('Version2' in deployInfo.execution_result) {
-          successful =
-            deployInfo.execution_result.Version2.error_message === null;
+        if ('Version2' in execution_result) {
+          successful = execution_result.Version2.error_message === null;
         }
       }
 
@@ -672,14 +760,14 @@ export class CasperServiceByJsonRPC {
    * @param props optional request props
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
+  //TODO return of this function should be typed
   public async getEraInfoBySwitchBlock(
-    blockIdentifier?: BlockIdentifier,
+    blockIdentifier: BlockIdentifier,
     props?: RpcRequestProps
   ) {
-    const params = [];
-    if (blockIdentifier) {
-      params.push(blockIdentifier);
-    }
+    const params = {
+      block_identifier: blockIdentifier
+    };
 
     return this.client.request(
       {
