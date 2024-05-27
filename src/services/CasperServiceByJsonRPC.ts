@@ -3,7 +3,13 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
 import { TypedJSON } from 'typedjson';
 
-import { DeployUtil, encodeBase16, StoredValue } from '..';
+import {
+  CLAccountHash,
+  CLPublicKey,
+  DeployUtil,
+  encodeBase16,
+  StoredValue
+} from '..';
 
 import ProviderTransport, {
   SafeEventEmitterProvider
@@ -29,7 +35,8 @@ import {
   AddressableEntity,
   QueryGlobalStateResult,
   GetBlockTransfersResult,
-  QueryBalanceDetailsResult
+  QueryBalanceDetailsResult,
+  AddressableEntityWrapper
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -334,24 +341,21 @@ export class CasperServiceByJsonRPC {
    * @returns The account's main purse URef
    */
   public async getAccountInfo(
-    publicKeyOrAccountHash: string,
+    accountIdentifier: CLPublicKey,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
   ): Promise<any> {
-    const params: any[] = [publicKeyOrAccountHash];
-
+    const params: any = {
+      account_identifier: accountIdentifier.toAccountHashStr()
+    };
     if (blockIdentifier) {
-      params.push(blockIdentifier);
-    } else {
-      params.push(null);
+      params.block_identifier = blockIdentifier;
     }
-    const account = await this.client.request(
-      {
-        method: 'state_get_account_info',
-        params: params
-      },
-      props?.timeout
-    );
+    const payload = {
+      method: 'state_get_account_info',
+      params: params
+    };
+    const account = await this.client.request(payload, props?.timeout);
     return account;
   }
 
@@ -366,7 +370,8 @@ export class CasperServiceByJsonRPC {
     entityIdentifier: EntityIdentifier,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<{ AddressableEntity: AddressableEntity }> {
+    //TODO getEntity can also return LegacyAccount, needs to be handled
+  ): Promise<{ AddressableEntity: AddressableEntityWrapper }> {
     const params: any[] = [entityIdentifier];
 
     if (blockIdentifier) {
@@ -395,17 +400,18 @@ export class CasperServiceByJsonRPC {
    */
   public async getAccountBalance(
     stateRootHash: string,
-    balanceUref: string,
+    purseUref: string,
     props?: RpcRequestProps
   ): Promise<BigNumber> {
     console.warn(
       'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
     );
+    const params = { state_root_hash: stateRootHash, purse_uref: purseUref };
     return await this.client
       .request(
         {
           method: 'state_get_balance',
-          params: [stateRootHash, balanceUref]
+          params
         },
         props?.timeout
       )
@@ -548,6 +554,11 @@ export class CasperServiceByJsonRPC {
     path: string[],
     props?: RpcRequestProps
   ): Promise<StoredValue> {
+    const p = {
+      method: 'state_get_item',
+      params: [stateRootHash, key, path]
+    };
+    console.error(`P: ${JSON.stringify(p)}`);
     const res = await this.client.request(
       {
         method: 'state_get_item',
@@ -639,16 +650,16 @@ export class CasperServiceByJsonRPC {
       const deployInfo = await this.getDeployInfo(deployHash);
 
       let successful = false;
+      const execution_result = deployInfo.execution_info?.execution_result;
 
-      if (!deployInfo.execution_result) {
+      if (!execution_result) {
         successful = false;
       } else {
-        if ('Version1' in deployInfo.execution_result) {
-          successful = !!deployInfo.execution_result.Version1.Success;
+        if ('Version1' in execution_result) {
+          successful = !!execution_result.Version1.Success;
         }
-        if ('Version2' in deployInfo.execution_result) {
-          successful =
-            deployInfo.execution_result.Version2.error_message === null;
+        if ('Version2' in execution_result) {
+          successful = execution_result.Version2.error_message === null;
         }
       }
 
@@ -722,14 +733,14 @@ export class CasperServiceByJsonRPC {
    * @param props optional request props
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
+  //TODO return of this function should be typed
   public async getEraInfoBySwitchBlock(
-    blockIdentifier?: BlockIdentifier,
+    blockIdentifier: BlockIdentifier,
     props?: RpcRequestProps
   ) {
-    const params = [];
-    if (blockIdentifier) {
-      params.push(blockIdentifier);
-    }
+    const params = {
+      block_identifier: blockIdentifier
+    };
 
     return this.client.request(
       {

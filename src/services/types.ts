@@ -207,12 +207,16 @@ export type ExecutionResult =
   | { Version1: ExecutionResultV1 }
   | { Version2: ExecutionResultV2 };
 
-/** Result interface for a get-deploy call */
-export interface GetDeployResult extends RpcResult {
-  deploy: JsonDeploy;
+export interface ExecutionInfo {
   block_hash: string;
   block_height: number;
   execution_result: ExecutionResult | undefined;
+}
+
+/** Result interface for a get-deploy call */
+export interface GetDeployResult extends RpcResult {
+  deploy: JsonDeploy;
+  execution_info: ExecutionInfo | undefined;
 }
 
 export type BlockIdentifier =
@@ -468,8 +472,22 @@ export type Account =
 
 export type EntityIdentifier = Account | { EntityAddr: string };
 
+export interface NamedKey {
+  name: string;
+  key: string;
+}
+
+export interface AddressableEntityWrapper {
+  entity: AddressableEntity;
+  named_keys: NamedKey[];
+  /* TODO these fieolds need to be handled
+  entry_points: EntryPointValue[];
+  */
+}
+
 export interface AddressableEntity {
   protocol_version: string;
+  //TODO finish entity_kind
   entity_kind: object;
   package_hash: string;
   byte_code_hash: string;
