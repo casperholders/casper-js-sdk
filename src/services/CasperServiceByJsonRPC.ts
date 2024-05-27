@@ -36,7 +36,8 @@ import {
   QueryGlobalStateResult,
   GetBlockTransfersResult,
   QueryBalanceDetailsResult,
-  AddressableEntityWrapper
+  AddressableEntityWrapper,
+  TransactionHash
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -162,6 +163,31 @@ export class CasperServiceByJsonRPC {
     return await this.client.request(
       {
         method: 'info_get_deploy',
+        params
+      },
+      props?.timeout
+    );
+  }
+
+  /**
+   * Get information about a deploy using its hexadecimal hash
+   * @param deployHash Hex-encoded hash digest.
+   * @param finalizedApprovals Whether to return the deploy with the finalized approvals substituted. If `false` or omitted, returns the deploy with the approvals that were originally received by the node.
+   * @param props optional request props
+   * @returns A `Promise` that resolves to a `GetTransactionResult`
+   */
+  public async getTransactionInfo(
+    transaction_hash: TransactionHash,
+    finalizedApprovals?: boolean,
+    props?: RpcRequestProps
+  ): Promise<GetDeployResult> {
+    const params: any[] = [transaction_hash];
+    if (finalizedApprovals) {
+      params.push(finalizedApprovals);
+    }
+    return await this.client.request(
+      {
+        method: 'info_get_transaction',
         params
       },
       props?.timeout
@@ -341,12 +367,18 @@ export class CasperServiceByJsonRPC {
    * @returns The account's main purse URef
    */
   public async getAccountInfo(
-    accountIdentifier: CLPublicKey,
+    accountIdentifier: CLPublicKey | CLAccountHash,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
   ): Promise<any> {
+    let identifier;
+    if (accountIdentifier instanceof CLPublicKey) {
+      identifier = accountIdentifier.toHex();
+    } else if (accountIdentifier instanceof CLAccountHash) {
+      identifier = accountIdentifier.toHashStr();
+    }
     const params: any = {
-      account_identifier: accountIdentifier.toAccountHashStr()
+      account_identifier: identifier
     };
     if (blockIdentifier) {
       params.block_identifier = blockIdentifier;
@@ -554,11 +586,6 @@ export class CasperServiceByJsonRPC {
     path: string[],
     props?: RpcRequestProps
   ): Promise<StoredValue> {
-    const p = {
-      method: 'state_get_item',
-      params: [stateRootHash, key, path]
-    };
-    console.error(`P: ${JSON.stringify(p)}`);
     const res = await this.client.request(
       {
         method: 'state_get_item',

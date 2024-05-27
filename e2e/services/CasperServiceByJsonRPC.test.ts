@@ -19,7 +19,8 @@ import {
   CasperClient,
   CLValueBuilder,
   CLValueParsers,
-  CLKeyParameters
+  CLKeyParameters,
+  CLAccountHash
 } from '../../src/index';
 import { sleep } from './utils';
 import { Contract } from '../../src/lib/Contracts';

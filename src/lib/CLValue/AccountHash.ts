@@ -62,4 +62,10 @@ export class CLAccountHash extends CLValue {
   value(): Uint8Array {
     return this.data;
   }
+
+  toHashStr(): string {
+    const bytes = this.data;
+    const hashHex = Buffer.from(bytes).toString('hex');
+    return `account-hash-${hashHex}`;
+  }
 }
