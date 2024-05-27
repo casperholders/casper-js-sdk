@@ -23,4 +23,5 @@ describe('CLAccountHash', () => {
     expect(bytes).to.deep.eq(expectedBytes);
     expect(hash).to.deep.eq(expectedHash);
   });
+
 });

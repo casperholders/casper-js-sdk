@@ -4,6 +4,7 @@ import {
   CLValue,
   CLValueBytesParsers,
   CLType,
+  CLKeyVariant,
   CLErrorCodes,
   ResultAndRemainder,
   ToBytesResult,
@@ -42,8 +43,10 @@ export class CLAccountHashBytesParser extends CLValueBytesParsers {
   }
 }
 
+const ACCOUNT_HASH_PREFIX = 'account-hash';
+
 /** A cryptographic public key. */
-export class CLAccountHash extends CLValue {
+export class CLAccountHash extends CLValue implements CLKeyVariant {
   data: Uint8Array;
   /**
    * Constructs a new `AccountHash`.
@@ -66,6 +69,15 @@ export class CLAccountHash extends CLValue {
   toHashStr(): string {
     const bytes = this.data;
     const hashHex = Buffer.from(bytes).toString('hex');
-    return `account-hash-${hashHex}`;
+    return `${ACCOUNT_HASH_PREFIX}-${hashHex}`;
+  }
+
+  static fromHashStr(hashHex: string): CLAccountHash {
+    if (hashHex.startsWith(`${ACCOUNT_HASH_PREFIX}-`)) {
+      const formatedString = hashHex.replace(`${ACCOUNT_HASH_PREFIX}-`, '');
+      const bytes = Uint8Array.from(Buffer.from(formatedString, 'hex'));
+      return new CLAccountHash(bytes);
+    }
+    throw new Error(`Invalid string format. It needs to start with ${ACCOUNT_HASH_PREFIX}`);
   }
 }
