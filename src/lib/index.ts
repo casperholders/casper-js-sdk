@@ -1,6 +1,7 @@
 import { Result } from 'ts-results';
 import * as Contracts from './Contracts';
 import * as DeployUtil from './DeployUtil';
+import * as TransactionUtil from './TransactionUtil';
 import * as HDKeys from './CasperHDKeys';
 import * as Keys from './Keys';
 import * as Serialization from './Serialization';
@@ -12,4 +13,12 @@ export * from './CasperClient';
 export * from './SignedMessage';
 export * from './Conversions';
 
-export { Contracts, HDKeys, Keys, Serialization, DeployUtil, Result };
+export {
+  Contracts,
+  HDKeys,
+  Keys,
+  Serialization,
+  DeployUtil,
+  Result,
+  TransactionUtil
+};

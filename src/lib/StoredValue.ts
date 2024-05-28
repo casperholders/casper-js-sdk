@@ -1,8 +1,17 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
-import { CLValue, CLType, CLValueParsers, matchTypeToCLType } from './CLValue';
+import {
+  CLValue,
+  CLType,
+  CLValueParsers,
+  matchTypeToCLType,
+  ToBytesResult,
+  CLErrorCodes
+} from './CLValue';
 import { Bid, VestingSchedule } from '../services/CasperServiceByJsonRPC';
 import { EntryPointAccess, matchEntryPointAccess } from './EntryPointAccess';
+import { Err, Ok } from 'ts-results';
+import { toBytesU8 } from './ByteConverters';
 
 @jsonObject
 class NamedKey {
@@ -230,6 +239,17 @@ export enum TransactionRuntime {
   VmCasperV2 = 'VmCasperV2'
 }
 
+export const transactionRuntimeToBytes = (
+  runtime: TransactionRuntime
+): ToBytesResult => {
+  if (runtime == TransactionRuntime.VmCasperV1) {
+    return Ok(toBytesU8(0));
+  } else if (runtime == TransactionRuntime.VmCasperV2) {
+    return Ok(toBytesU8(1));
+  } else {
+    return Err(CLErrorCodes.UnknownValue);
+  }
+};
 @jsonObject
 export class EntityKind {
   @jsonMember({ constructor: String })
