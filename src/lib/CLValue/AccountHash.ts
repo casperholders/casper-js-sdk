@@ -11,7 +11,8 @@ import {
   resultHelper,
   ACCOUNT_HASH_TYPE,
   CLByteArrayType,
-  ACCOUNT_HASH_LENGTH
+  ACCOUNT_HASH_LENGTH,
+  KeyTag
 } from './index';
 
 // AccountHash is an alias, not a fully functional CLType so uses the same CLTypeTag as ByteArray
@@ -48,6 +49,7 @@ const ACCOUNT_HASH_PREFIX = 'account-hash';
 /** A cryptographic public key. */
 export class CLAccountHash extends CLValue implements CLKeyVariant {
   data: Uint8Array;
+  keyVariant: KeyTag;
   /**
    * Constructs a new `AccountHash`.
    *
@@ -66,18 +68,23 @@ export class CLAccountHash extends CLValue implements CLKeyVariant {
     return this.data;
   }
 
-  toHashStr(): string {
+  toStr(): string {
     const bytes = this.data;
-    const hashHex = Buffer.from(bytes).toString('hex');
-    return `${ACCOUNT_HASH_PREFIX}-${hashHex}`;
+    return Buffer.from(bytes).toString('hex');
   }
 
-  static fromHashStr(hashHex: string): CLAccountHash {
-    if (hashHex.startsWith(`${ACCOUNT_HASH_PREFIX}-`)) {
-      const formatedString = hashHex.replace(`${ACCOUNT_HASH_PREFIX}-`, '');
+  toFormattedStr(): string {
+    return `${ACCOUNT_HASH_PREFIX}-${this.toStr()}`;
+  }
+
+  static fromFormattedStr(hexStr: string): CLAccountHash {
+    if (hexStr.startsWith(`${ACCOUNT_HASH_PREFIX}-`)) {
+      const formatedString = hexStr.replace(`${ACCOUNT_HASH_PREFIX}-`, '');
       const bytes = Uint8Array.from(Buffer.from(formatedString, 'hex'));
       return new CLAccountHash(bytes);
     }
-    throw new Error(`Invalid string format. It needs to start with ${ACCOUNT_HASH_PREFIX}`);
+    throw new Error(
+      `Invalid string format. It needs to start with ${ACCOUNT_HASH_PREFIX}`
+    );
   }
 }

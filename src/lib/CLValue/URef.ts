@@ -4,8 +4,10 @@ import { Ok, Err } from 'ts-results';
 import {
   CLType,
   CLValue,
+  CLKeyVariant,
   CLValueBytesParsers,
   CLErrorCodes,
+  KeyTag,
   ResultAndRemainder,
   ToBytesResult,
   resultHelper,
@@ -73,7 +75,8 @@ export class CLURefBytesParser extends CLValueBytesParsers {
   }
 }
 
-export class CLURef extends CLValue {
+export class CLURef extends CLValue implements CLKeyVariant {
+  keyVariant: KeyTag.URef;
   data: Uint8Array;
   accessRights: AccessRights;
 
@@ -116,12 +119,15 @@ export class CLURef extends CLValue {
     return new CLURef(addr, accessRight);
   }
 
-  toFormattedStr(): string {
+  toStr(): string {
     return [
-      FORMATTED_STRING_PREFIX,
       encodeBase16(this.data),
       padNum(this.accessRights.toString(8), 3)
     ].join('-');
+  }
+
+  toFormattedStr(): string {
+    return [FORMATTED_STRING_PREFIX, this.toStr()].join('-');
   }
 
   toJSON(): string {

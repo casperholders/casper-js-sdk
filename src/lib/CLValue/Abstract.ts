@@ -62,11 +62,6 @@ export abstract class CLValue {
   }
 }
 
-export abstract class CLKeyVariant {
-  abstract toHashStr(): string;
-  abstract fromHashStr(): CLKey;
-}
-
 export class CLValueParsers {
   static fromJSON(json: any): Result<CLValue, string> {
     const clType = matchTypeToCLType(json.cl_type);

@@ -24,7 +24,7 @@ import {
   CLI64Type,
   CLKey,
   CLKeyType,
-  CLKeyParameters,
+  CLKeyVariant,
   CLUnit,
   CLUnitType,
   CLString,
@@ -183,7 +183,7 @@ export class CLValueBuilder {
     return new CLString(val);
   };
 
-  static key = (val: CLKeyParameters, key: KeyTag): CLKey => {
+  static key = (val: CLKeyVariant, key: KeyTag): CLKey => {
     return new CLKey(val, key);
   };
 
