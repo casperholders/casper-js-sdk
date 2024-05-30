@@ -76,7 +76,7 @@ export class CLURefBytesParser extends CLValueBytesParsers {
 }
 
 export class CLURef extends CLValue implements CLKeyVariant {
-  keyVariant: KeyTag.URef;
+  keyVariant = KeyTag.URef;
   data: Uint8Array;
   accessRights: AccessRights;
 

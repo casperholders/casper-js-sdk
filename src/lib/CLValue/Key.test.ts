@@ -7,7 +7,8 @@ import {
   AccessRights,
   CLAccountHash,
   CLByteArray,
-  KeyTag
+  KeyTag,
+  Hash
 } from './index';
 import { decodeBase16 } from '../Conversions';
 
@@ -16,7 +17,7 @@ describe('CLKey', () => {
     '2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a';
 
   it('Create with (CLByteArray) and test .value() / isHash()', () => {
-    const byteArr = new CLByteArray(new Uint8Array([21, 31]));
+    const byteArr = new Hash(new Uint8Array([21, 31]));
     const myKey = new CLKey(byteArr, KeyTag.Hash);
 
     expect(myKey.value()).to.be.deep.eq(byteArr);
@@ -28,7 +29,7 @@ describe('CLKey', () => {
       decodeBase16(urefAddr),
       AccessRights.READ_ADD_WRITE
     );
-    const myKey = new CLKey(uref, KeyTag.URef);
+    const myKey = new CLKey(uref);
     expect(myKey.value()).to.deep.eq(uref);
     expect(myKey.isURef()).to.be.eq(true);
   });
@@ -43,7 +44,7 @@ describe('CLKey', () => {
 
   it('toBytes() / fromBytes() with CLByteArray', () => {
     const arr8 = Uint8Array.from(Array(32).fill(42));
-    const byteArr = new CLByteArray(arr8);
+    const byteArr = new Hash(arr8);
     const expectedBytes = Uint8Array.from([
       1,
       42,
@@ -103,7 +104,7 @@ describe('CLKey', () => {
   });
 
   it('toJSON() / fromJSON() with CLByteArray', () => {
-    const byteArr = new CLByteArray(new Uint8Array([21, 31]));
+    const byteArr = new Hash(new Uint8Array([21, 31]));
     const myKey = new CLKey(byteArr, KeyTag.Hash);
     const json = CLValueParsers.toJSON(myKey).unwrap();
     const expectedJson = JSON.parse('{"bytes":"01151f","cl_type":"Key"}');
@@ -170,11 +171,11 @@ describe('CLKey', () => {
   it('toBytes() with invalid data', () => {
     // @ts-ignore
     const badFn = () => CLValueParsers.toBytes(new CLKey([1, 2, 3]));
-    expect(badFn).to.throw('Provided parameter is not a valid CLValue');
+    expect(badFn).to.throw('Unknown byte types');
   });
 
   it('Should be able to return proper value by calling .clType()', () => {
-    const arr8 = new CLByteArray(new Uint8Array([21, 31]));
+    const arr8 = new Hash(new Uint8Array([21, 31]));
     const myKey = new CLKey(arr8, KeyTag.Hash);
 
     expect(myKey.clType().toString()).to.be.eq('Key');

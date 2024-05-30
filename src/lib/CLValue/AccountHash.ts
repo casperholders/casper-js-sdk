@@ -49,7 +49,8 @@ const ACCOUNT_HASH_PREFIX = 'account-hash';
 /** A cryptographic public key. */
 export class CLAccountHash extends CLValue implements CLKeyVariant {
   data: Uint8Array;
-  keyVariant: KeyTag;
+  keyVariant = KeyTag.Account;
+  prefix = ACCOUNT_HASH_PREFIX;
   /**
    * Constructs a new `AccountHash`.
    *

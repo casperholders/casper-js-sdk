@@ -11,7 +11,8 @@ import {
   Keys,
   AccessRights,
   decodeBase16,
-  KeyTag
+  KeyTag,
+  Hash
 } from '..';
 import { toBytesNumber, toBytesDeployHash } from './ByteConverters';
 
@@ -243,7 +244,7 @@ describe(`numbers' toBytes`, () => {
 
   it('should serialize/deserialize Hash variant of Key correctly', () => {
     const keyHash = CLValueBuilder.key(
-      CLValueBuilder.byteArray(Uint8Array.from(Array(32).fill(42))),
+      new Hash(Uint8Array.from(Array(32).fill(42))),
       KeyTag.Hash
     );
     // prettier-ignore

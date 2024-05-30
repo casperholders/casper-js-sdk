@@ -20,6 +20,8 @@ import {
   CLValueParsers,
   CLPublicKey,
   resultHelper,
+  HashParser,
+  Hash
   // PUBLIC_KEY_TYPE,
   // ACCOUNT_HASH_TYPE,
   // BYTE_ARRAY_TYPE,
@@ -34,13 +36,28 @@ export class CLKeyType extends CLType {
 
 export class CLKeyBytesParser extends CLValueBytesParsers {
   toBytes(value: CLKey): ToBytesResult {
-    return Ok(
-      concat([
-        Uint8Array.from([value.keyTag]),
-
-        // CLValueParsers.toBytes(value.data as CLValue).unwrap()
-      ])
-    );
+    if (value.isAccount()) {
+      return Ok(
+        concat([
+          Uint8Array.from([KeyTag.Account]),
+          new CLAccountHashBytesParser()
+            .toBytes(value.data as CLAccountHash)
+            .unwrap()
+        ])
+      );
+    }
+    if (value.isHash()) {
+      return Ok(concat([Uint8Array.from([KeyTag.Hash]), value.data.data]));
+    }
+    if (value.isURef()) {
+      return Ok(
+        concat([
+          Uint8Array.from([KeyTag.URef]),
+          CLValueParsers.toBytes(value.data as CLURef).unwrap()
+        ])
+      );
+    }
+    throw new Error('Unknown byte types');
   }
 
   fromBytesWithRemainder(
@@ -52,37 +69,45 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
       );
     }
 
-    const tag = bytes[0] as KeyTag;
-    const remainderBytes = bytes.subarray(1);
-    const remainderBytesLength = KEY_DEFAULT_BYTE_LENGTH;
-    let parser: CLValueBytesParsers;
-    let innerType;
-    switch (tag) {
-      case KeyTag.Account:
-        parser = new CLAccountHashBytesParser();
-        break;
-      case KeyTag.Hash:
-        parser = new CLByteArrayBytesParser();
-        innerType = new CLByteArrayType(remainderBytesLength);
-        break;
-      case KeyTag.URef:
-        parser = new CLURefBytesParser();
-        break;
-      default:
-        throw Error('Unknown Key variant - unable to parse');
-    }
+    const tag = bytes[0];
 
-    const {
-      result: parseResult,
-      remainder: parseRemainder
-    } = parser.fromBytesWithRemainder(remainderBytes, innerType);
-
-    if (parseResult.ok) {
-      const res = parseResult.val as unknown as CLKeyVariant;
-      const key = new CLKey(res, tag);
-      return resultHelper(Ok(key), parseRemainder);
+    if (tag === KeyTag.Hash) {
+      const hashBytes = bytes.subarray(1);
+      const { result, remainder } = HashParser.fromBytesWithRemainder(
+        hashBytes
+      );
+      if (result.ok) {
+        const key = new CLKey(result.val);
+        return resultHelper(Ok(key), remainder);
+      } else {
+        return resultHelper<CLKey, CLErrorCodes>(Err(result.val));
+      }
+    } else if (tag === KeyTag.URef) {
+      const {
+        result: urefResult,
+        remainder: urefRemainder
+      } = new CLURefBytesParser().fromBytesWithRemainder(bytes.subarray(1));
+      if (urefResult.ok) {
+        const key = new CLKey(urefResult.val);
+        return resultHelper(Ok(key), urefRemainder);
+      } else {
+        return resultHelper<CLKey, CLErrorCodes>(Err(urefResult.val));
+      }
+    } else if (tag === KeyTag.Account) {
+      const {
+        result: accountHashResult,
+        remainder: accountHashRemainder
+      } = new CLAccountHashBytesParser().fromBytesWithRemainder(
+        bytes.subarray(1)
+      );
+      if (accountHashResult.ok) {
+        const key = new CLKey(accountHashResult.val);
+        return resultHelper(Ok(key), accountHashRemainder);
+      } else {
+        return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
+      }
     } else {
-      return resultHelper<CLKey, CLErrorCodes>(Err(parseResult.val));
+      return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
     }
   }
 }
@@ -97,7 +122,7 @@ export class CLKey extends CLValue {
   data: CLKeyVariant;
   keyTag: KeyTag;
 
-  constructor(v: CLKeyVariant, keyTag: KeyTag) {
+  constructor(v: CLKeyVariant, keyTag?: KeyTag) {
     super();
     this.keyTag === keyTag;
     this.data = v;
@@ -115,15 +140,15 @@ export class CLKey extends CLValue {
     return this.data.toString();
   }
 
-  // isHash(): boolean {
-  //   return this.data.clType().linksTo === BYTE_ARRAY_TYPE;
-  // }
+  isHash(): boolean {
+    return this.data.keyVariant === KeyTag.Hash;
+  }
 
-  // isURef(): boolean {
-  //   return this.data.clType().linksTo === UREF_TYPE;
-  // }
+  isURef(): boolean {
+    return this.data.keyVariant === KeyTag.URef;
+  }
 
-  // isAccount(): boolean {
-  //   return this.data.clType().linksTo === ACCOUNT_HASH_TYPE;
-  // }
+  isAccount(): boolean {
+    return this.data.keyVariant === KeyTag.Account;
+  }
 }
