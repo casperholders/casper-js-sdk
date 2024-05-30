@@ -6,8 +6,6 @@ import {
   CLURef,
   AccessRights,
   CLAccountHash,
-  CLByteArray,
-  KeyTag,
   Hash
 } from './index';
 import { decodeBase16 } from '../Conversions';

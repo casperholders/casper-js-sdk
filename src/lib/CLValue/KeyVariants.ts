@@ -1,4 +1,4 @@
-import { Ok, Err } from 'ts-results';
+import { Ok } from 'ts-results';
 import {
   KeyTag,
   ResultAndRemainder,

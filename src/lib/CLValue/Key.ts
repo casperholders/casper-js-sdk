@@ -5,7 +5,6 @@ import {
   CLType,
   CLValue,
   CLKeyVariant,
-  CLByteArray,
   CLURef,
   CLURefBytesParser,
   CLAccountHash,
@@ -16,7 +15,6 @@ import {
   ToBytesResult,
   CLValueBytesParsers,
   CLValueParsers,
-  CLPublicKey,
   resultHelper,
   HashParser,
 } from './index';

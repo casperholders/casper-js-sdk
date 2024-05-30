@@ -11,7 +11,6 @@ import {
   Keys,
   AccessRights,
   decodeBase16,
-  KeyTag,
   Hash
 } from '..';
 import { toBytesNumber, toBytesDeployHash } from './ByteConverters';

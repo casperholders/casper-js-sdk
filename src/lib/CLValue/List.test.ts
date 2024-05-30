@@ -11,7 +11,6 @@ import {
   CLI32Type,
   CLKey,
   Hash,
-  KeyTag
 } from './index';
 
 describe('CLValue List implementation', () => {

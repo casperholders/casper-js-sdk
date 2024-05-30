@@ -49,7 +49,6 @@ import {
   CLMapType,
   CLByteArray,
   CLByteArrayType,
-  KeyTag
 } from './index';
 
 export class CLTypeBuilder {
