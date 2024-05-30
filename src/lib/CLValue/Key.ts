@@ -6,8 +6,6 @@ import {
   CLValue,
   CLKeyVariant,
   CLByteArray,
-  CLByteArrayType,
-  CLByteArrayBytesParser,
   CLURef,
   CLURefBytesParser,
   CLAccountHash,
@@ -21,13 +19,8 @@ import {
   CLPublicKey,
   resultHelper,
   HashParser,
-  Hash
-  // PUBLIC_KEY_TYPE,
-  // ACCOUNT_HASH_TYPE,
-  // BYTE_ARRAY_TYPE,
-  // UREF_TYPE
 } from './index';
-import { KEY_TYPE, CLTypeTag, KEY_DEFAULT_BYTE_LENGTH } from './constants';
+import { KEY_TYPE, CLTypeTag } from './constants';
 
 export class CLKeyType extends CLType {
   linksTo = KEY_TYPE;
@@ -112,19 +105,11 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
   }
 }
 
-export type CLKeyParameters =
-  | CLByteArray
-  | CLURef
-  | CLAccountHash
-  | CLPublicKey;
-
 export class CLKey extends CLValue {
   data: CLKeyVariant;
-  keyTag: KeyTag;
 
-  constructor(v: CLKeyVariant, keyTag?: KeyTag) {
+  constructor(v: CLKeyVariant) {
     super();
-    this.keyTag === keyTag;
     this.data = v;
   }
 

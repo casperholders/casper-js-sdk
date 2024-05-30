@@ -183,8 +183,8 @@ export class CLValueBuilder {
     return new CLString(val);
   };
 
-  static key = (val: CLKeyVariant, key: KeyTag): CLKey => {
-    return new CLKey(val, key);
+  static key = (val: CLKeyVariant): CLKey => {
+    return new CLKey(val);
   };
 
   static uref = (val: Uint8Array, accessRights: AccessRights): CLURef => {

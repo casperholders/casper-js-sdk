@@ -179,16 +179,14 @@ describe(`numbers' toBytes`, () => {
     const validBytes = decodeBase16(
       '022a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a07'
     );
-    const bytes = CLValueParsers.toBytes(
-      CLValueBuilder.key(clVal, KeyTag.URef)
-    ).unwrap();
+    const bytes = CLValueParsers.toBytes(CLValueBuilder.key(clVal)).unwrap();
 
     expect(bytes).to.deep.eq(validBytes);
 
     const uref = CLURef.fromFormattedStr(
       'uref-d93dfedfc13180a0ea188841e64e0a1af718a733216e7fae4909dface372d2b0-007'
     );
-    const clVal2 = CLValueBuilder.key(uref, KeyTag.URef);
+    const clVal2 = CLValueBuilder.key(uref);
     const validBytes2 = CLValueParsers.toBytes(clVal2).unwrap();
 
     expect(validBytes2).to.deep.eq(
@@ -244,8 +242,7 @@ describe(`numbers' toBytes`, () => {
 
   it('should serialize/deserialize Hash variant of Key correctly', () => {
     const keyHash = CLValueBuilder.key(
-      new Hash(Uint8Array.from(Array(32).fill(42))),
-      KeyTag.Hash
+      new Hash(Uint8Array.from(Array(32).fill(42)))
     );
     // prettier-ignore
     const expectedBytes = Uint8Array.from([
@@ -259,8 +256,7 @@ describe(`numbers' toBytes`, () => {
 
   it('should serialize/deserialize Account variant of Key correctly', () => {
     const keyAccount = CLValueBuilder.key(
-      new CLAccountHash(Uint8Array.from(Array(32).fill(42))),
-      KeyTag.Account
+      new CLAccountHash(Uint8Array.from(Array(32).fill(42)))
     );
     // prettier-ignore
     const expectedBytes = Uint8Array.from([

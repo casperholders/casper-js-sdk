@@ -18,7 +18,7 @@ describe('CLKey', () => {
 
   it('Create with (CLByteArray) and test .value() / isHash()', () => {
     const byteArr = new Hash(new Uint8Array([21, 31]));
-    const myKey = new CLKey(byteArr, KeyTag.Hash);
+    const myKey = new CLKey(byteArr)
 
     expect(myKey.value()).to.be.deep.eq(byteArr);
     expect(myKey.isHash()).to.be.eq(true);
@@ -37,7 +37,7 @@ describe('CLKey', () => {
   it('Create with (CLAccountHash) and test .value() isAccount()', () => {
     const arr8 = new Uint8Array([21, 31]);
     const myHash = new CLAccountHash(arr8);
-    const myKey = new CLKey(myHash, KeyTag.Account);
+    const myKey = new CLKey(myHash);
     expect(myKey.value()).to.deep.eq(myHash);
     expect(myKey.isAccount()).to.be.eq(true);
   });
@@ -80,7 +80,7 @@ describe('CLKey', () => {
       42,
       42
     ]);
-    const myKey = new CLKey(byteArr, KeyTag.Hash);
+    const myKey = new CLKey(byteArr);
     const bytes = CLValueParsers.toBytes(myKey).unwrap();
     const fromExpectedBytes = CLValueParsers.fromBytes(
       bytes,
@@ -93,7 +93,7 @@ describe('CLKey', () => {
   it('toBytes() / fromBytes() with CLAccountHash', () => {
     const hash = new CLAccountHash(Uint8Array.from(Array(32).fill(42)));
     const expectedBytes = Uint8Array.from([0, ...Array(32).fill(42)]);
-    const myKey = new CLKey(hash, KeyTag.Hash);
+    const myKey = new CLKey(hash);
     const bytes = CLValueParsers.toBytes(myKey).unwrap();
     const fromExpectedBytes = CLValueParsers.fromBytes(
       bytes,
@@ -105,7 +105,7 @@ describe('CLKey', () => {
 
   it('toJSON() / fromJSON() with CLByteArray', () => {
     const byteArr = new Hash(new Uint8Array([21, 31]));
-    const myKey = new CLKey(byteArr, KeyTag.Hash);
+    const myKey = new CLKey(byteArr);
     const json = CLValueParsers.toJSON(myKey).unwrap();
     const expectedJson = JSON.parse('{"bytes":"01151f","cl_type":"Key"}');
 
@@ -117,7 +117,7 @@ describe('CLKey', () => {
 
   it('toJSON() / fromJSON() with CLAccountHash', () => {
     const hash = new CLAccountHash(Uint8Array.from(Array(32).fill(42)));
-    const myKey = new CLKey(hash, KeyTag.Account);
+    const myKey = new CLKey(hash);
     const json = CLValueParsers.toJSON(myKey).unwrap();
     const expectedJson = JSON.parse(
       '{"bytes":"002a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a","cl_type":"Key"}'
@@ -139,7 +139,7 @@ describe('CLKey', () => {
       decodeBase16(urefAddr),
       AccessRights.READ_ADD_WRITE
     );
-    const myKey = new CLKey(uref, KeyTag.URef);
+    const myKey = new CLKey(uref);
     const bytes = CLValueParsers.toBytes(myKey).unwrap();
     const fromExpectedBytes = CLValueParsers.fromBytes(
       bytes,
@@ -156,7 +156,7 @@ describe('CLKey', () => {
       decodeBase16(urefAddr),
       AccessRights.READ_ADD_WRITE
     );
-    const myKey = new CLKey(uref, KeyTag.URef);
+    const myKey = new CLKey(uref);
     const json = CLValueParsers.toJSON(myKey).unwrap();
     const expectedJson = JSON.parse(
       '{"bytes":"022a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a07","cl_type":"Key"}'
@@ -176,7 +176,7 @@ describe('CLKey', () => {
 
   it('Should be able to return proper value by calling .clType()', () => {
     const arr8 = new Hash(new Uint8Array([21, 31]));
-    const myKey = new CLKey(arr8, KeyTag.Hash);
+    const myKey = new CLKey(arr8);
 
     expect(myKey.clType().toString()).to.be.eq('Key');
   });
