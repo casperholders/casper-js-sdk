@@ -62,6 +62,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
 
     const tag = bytes[0];
 
+    // TODO: Use switch
     if (tag === KeyTag.Hash) {
       const hashBytes = bytes.subarray(1);
       const { result, remainder } = HashParser.fromBytesWithRemainder(
