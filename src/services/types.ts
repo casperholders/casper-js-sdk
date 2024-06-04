@@ -91,6 +91,8 @@ export interface GetStatusResult extends GetPeersResult {
   };
   /** The status of syncing a forward block, if any. */
   block_sync: BlockSynchronizerStatus | null;
+
+  latest_switch_block_hash: string | null;
 }
 
 export interface GetChainSpecResult extends RpcResult {
@@ -178,28 +180,50 @@ interface ExecutionResultBody {
   effect: Effect;
 }
 
-/** Result interface for an execution result */
-export interface ExecutionResult {
-  Success?: ExecutionResultBody;
-  Failure?: ExecutionResultBody;
-}
-
 /** Result interface for a JSON execution result */
 export interface JsonExecutionResult {
   block_hash: JsonBlockHash;
   result: ExecutionResult;
 }
 
+export interface ExecutionResultV1 {
+  Success?: ExecutionResultBody;
+  Failure?: ExecutionResultBody;
+}
+
+export interface ExecutionResultV2 {
+  initiator: any;
+  /** If error_message is null, the execution was successful */
+  error_message: string | null;
+  limit: string;
+  consumed: string;
+  cost: string;
+  payment: { source: string }[];
+  transfers: any[];
+  effect: Effect;
+}
+
+export type ExecutionResult =
+  | { Version1: ExecutionResultV1 }
+  | { Version2: ExecutionResultV2 };
+
+export interface ExecutionInfo {
+  block_hash: string;
+  block_height: number;
+  execution_result: ExecutionResult | undefined;
+}
+
 /** Result interface for a get-deploy call */
 export interface GetDeployResult extends RpcResult {
   deploy: JsonDeploy;
-  execution_results: JsonExecutionResult[];
+  execution_info: ExecutionInfo | undefined;
 }
 
-export interface BlockIdentifier {
-  Hash?: string;
-  Height?: number;
-}
+export type BlockIdentifier =
+  | {
+      Hash: string;
+    }
+  | { Height: number };
 
 export interface SpeculativeExecutionResult extends RpcResult {
   block_hash: string;
@@ -208,7 +232,7 @@ export interface SpeculativeExecutionResult extends RpcResult {
 
 /** Result interface for a get-block call */
 export interface GetBlockResult extends RpcResult {
-  block: JsonBlock | null;
+  block_with_signatures: JsonBlockWithSignatures | null;
 }
 
 /** Result interface for a account_put_deploy call */
@@ -305,11 +329,123 @@ export interface JsonHeader {
   protocol_version: string;
 }
 
-/** Interface describing JSON represented block related information */
-export interface JsonBlock {
+/** Interface describing JSON represented block proof */
+export interface Proof {
+  public_key: string;
+  signature: string;
+}
+
+export interface BlockBodyV1 {
+  proposer: string;
+  deploy_hashes: JsonDeployHash[];
+  transfer_hashes: JsonDeployHash[];
+  hash: JsonBlockHash;
+}
+
+export interface BlockV1 {
   hash: JsonBlockHash;
   header: JsonHeader;
   proofs: string[];
+  body: BlockBodyV1;
+}
+
+export interface NextEraValidatorV2 {
+  validator: string;
+  weight: string;
+}
+export interface EraEndV2 {
+  equivocators: string[];
+  inactive_validators: string[];
+  next_era_validator_weights: NextEraValidatorV2[];
+  rewards: object; //TODO make this a map
+  next_era_gas_price: number;
+}
+
+export interface BlockHeaderV1 {
+  parent_hash: JsonBlockHash;
+  state_root_hash: string;
+  body_hash: string;
+  random_bit: boolean;
+  accumulated_seed: string;
+  era_end: EraEndV2 | null;
+  timestamp: string;
+  era_id: number;
+  height: number;
+  protocol_version: string;
+}
+
+export interface BlockHeaderV2 {
+  parent_hash: JsonBlockHash;
+  state_root_hash: string;
+  body_hash: string;
+  random_bit: boolean;
+  accumulated_seed: string;
+  era_end: EraEndV2 | null;
+  timestamp: string;
+  era_id: number;
+  height: number;
+  protocol_version: string;
+  current_gas_price: number;
+}
+export type TransactionHash =
+  | {
+      Deploy: string;
+    }
+  | { Version1: string };
+
+export interface BlockBodyV2 {
+  proposer: string;
+  mint: TransactionHash[];
+  auction: TransactionHash[];
+  install_upgrade: TransactionHash;
+  standard: TransactionHash[];
+  rewarded_signatures: number[][];
+  hash: string;
+}
+
+export interface BlockV2 {
+  hash: JsonBlockHash;
+  header: BlockHeaderV2;
+  body: BlockBodyV2;
+}
+
+export type Block =
+  | {
+      Version1: BlockV1;
+    }
+  | { Version2: BlockV2 };
+
+export function getStateRootHash(block: Block): string {
+  if ('Version1' in block) {
+    return block.Version1.header.state_root_hash;
+  } else if ('Version2' in block) {
+    return block.Version2.header.state_root_hash;
+  }
+  throw new Error('Got block with unknown structure.');
+}
+
+export function getHeight(block: Block): number {
+  if ('Version1' in block) {
+    return block.Version1.header.height;
+  } else if ('Version2' in block) {
+    return block.Version2.header.height;
+  }
+  throw new Error('Got block with unknown structure.');
+}
+
+export function getBlockHash(block: Block): string {
+  if ('Version1' in block) {
+    return block.Version1.hash;
+  } else if ('Version2' in block) {
+    return block.Version2.hash;
+  }
+  throw new Error('Got block with unknown structure.');
+}
+
+/** Interface describing JSON represented block related information */
+export interface JsonBlockWithSignatures {
+  block: Block;
+  proofs: Proof[];
 }
 
 /** Interface describing auction bidding information */
@@ -324,4 +460,110 @@ export interface BidInfo {
 export interface ValidatorWeight {
   public_key: string;
   weight: string;
+}
+
+export type Account =
+  | {
+      PublicKey: string;
+    }
+  | {
+      AccountHash: string;
+    };
+
+export type EntityIdentifier = Account | { EntityAddr: string };
+
+export interface NamedKey {
+  name: string;
+  key: string;
+}
+
+export interface AddressableEntityWrapper {
+  entity: AddressableEntity;
+  named_keys: NamedKey[];
+  /* TODO these fieolds need to be handled
+  entry_points: EntryPointValue[];
+  */
+}
+
+export interface AddressableEntity {
+  protocol_version: string;
+  //TODO finish entity_kind
+  entity_kind: object;
+  package_hash: string;
+  byte_code_hash: string;
+  main_purse: string;
+  entry_points: [];
+  associated_keys: [];
+  action_thresholds: [];
+  message_topics: [];
+}
+
+export type BlockHeader =
+  | {
+      Version1: BlockHeaderV1;
+    }
+  | { Version2: BlockHeaderV2 };
+
+/** TODO: Update */
+export type StoredValueJson = any;
+
+export interface QueryGlobalStateResult extends RpcResult {
+  block_header: BlockHeader | null;
+  stored_value: StoredValueJson;
+  merkle_proof: string;
+}
+
+export interface TransferV1 {
+  deploy_hash: string;
+  /** account hash as a formatted string */
+  from: string;
+  /** account hash as a formatted string */
+  to: string | null;
+  /** source uref */
+  source: string;
+  /** target uref */
+  target: string;
+  amount: string;
+  gas: string;
+  id: number | null;
+}
+
+export interface TransferV2 {
+  transaction_hash: TransactionHash;
+  from: Account;
+  /** account hash as a formatted string */
+  to: string | null;
+  /** source uref */
+  source: string;
+  /** target uref */
+  target: string;
+  amount: string;
+  gas: string;
+  id: number | null;
+}
+
+export type Transfer =
+  | {
+      Version1: TransferV1;
+    }
+  | {
+      Version2: TransferV2;
+    };
+
+export interface GetBlockTransfersResult extends RpcResult {
+  block_hash: string;
+  transfers: Transfer[];
+}
+
+export interface BalanceHold {
+  time: number;
+  amount: string;
+  proof: string;
+}
+
+export interface QueryBalanceDetailsResult extends RpcResult {
+  total_balance: string;
+  available_balance: string;
+  total_balance_proof: string;
+  holds: BalanceHold[];
 }

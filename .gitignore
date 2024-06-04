@@ -10,3 +10,8 @@ node_modules
 .DS_Store
 
 .env
+
+.turbo/
+.yarn/
+coverage/
+packages/

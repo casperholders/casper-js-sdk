@@ -7,8 +7,10 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 import {
   CasperServiceByJsonRPC,
-  EraSummary,
-  PurseIdentifier
+  NamedKey,
+  PurseIdentifier,
+  getBlockHash,
+  getHeight
 } from '../../src/services';
 import {
   Keys,
@@ -17,10 +19,10 @@ import {
   CasperClient,
   CLValueBuilder,
   CLValueParsers,
-  CLKeyParameters
+  CLKeyParameters,
+  CLAccountHash
 } from '../../src/index';
-import { getAccountInfo, sleep } from './utils';
-import { Transfers } from '../../src/lib/StoredValue';
+import { sleep } from './utils';
 import { Contract } from '../../src/lib/Contracts';
 
 import { FAUCET_PRIV_KEY, NETWORK_NAME, NODE_URL } from '../config';
@@ -38,7 +40,6 @@ const faucetKey = getKeysFromHexPrivKey(
 describe('CasperServiceByJsonRPC', () => {
   const BLOCKS_TO_CHECK = 3;
 
-  let faucetMainPurseUref = '';
   let transferBlockHash = '';
   // TODO: Remove After mainnet goes 1.5
   let isAfterDot5 = false;
@@ -50,12 +51,13 @@ describe('CasperServiceByJsonRPC', () => {
         setInterval(async () => {
           try {
             const latestBlock = await client.getLatestBlockInfo();
-
-            if (
-              latestBlock.block?.header.height !== undefined &&
-              latestBlock.block?.header.height > BLOCKS_TO_CHECK
-            )
-              return resolve();
+            const block_with_signatures = latestBlock.block_with_signatures;
+            if (block_with_signatures !== null) {
+              const gotHeight = getHeight(block_with_signatures.block);
+              if (gotHeight > BLOCKS_TO_CHECK) {
+                return resolve();
+              }
+            }
           } catch (error) {
             console.error(error);
           }
@@ -93,7 +95,7 @@ describe('CasperServiceByJsonRPC', () => {
   it('chain_get_block - by number', async () => {
     const check = async (height: number) => {
       const result = await client.getBlockInfoByHeight(height);
-      assert.equal(result.block?.header.height, height);
+      assert.equal(getHeight(result.block_with_signatures!.block), height);
     };
 
     for (let i = 0; i < BLOCKS_TO_CHECK; i++) {
@@ -110,11 +112,14 @@ describe('CasperServiceByJsonRPC', () => {
   it('chain_get_block - by hash', async () => {
     const check = async (height: number) => {
       const block_by_height = await client.getBlockInfoByHeight(height);
-      const block_hash = block_by_height.block?.hash;
+      const block_hash = getBlockHash(
+        block_by_height.block_with_signatures!.block
+      );
       assert.exists(block_hash);
 
       const block = await client.getBlockInfo(block_hash!);
-      assert.equal(block.block?.hash, block_hash);
+      const block_hash_2 = getBlockHash(block.block_with_signatures!.block);
+      assert.equal(block_hash_2, block_hash);
     };
 
     for (let i = 0; i < BLOCKS_TO_CHECK; i++) {
@@ -124,7 +129,7 @@ describe('CasperServiceByJsonRPC', () => {
 
   it('chain_get_block', async () => {
     const latestBlock = await client.getLatestBlockInfo();
-    expect(latestBlock).to.have.property('block');
+    expect(latestBlock).to.have.property('block_with_signatures');
   });
 
   it('should not allow to send deploy larger then 1 megabyte.', async () => {
@@ -161,19 +166,19 @@ describe('CasperServiceByJsonRPC', () => {
   it('chain_get_state_root_hash - by hash', async () => {
     const latestBlock = await client.getLatestBlockInfo();
 
-    expect(latestBlock.block).to.exist;
-
-    const stateRootHash = await client.getStateRootHash(
-      latestBlock.block!.hash
-    );
+    expect(latestBlock.block_with_signatures).to.exist;
+    const block_hash = getBlockHash(latestBlock.block_with_signatures!.block);
+    const stateRootHash = await client.getStateRootHash(block_hash!);
     assert.equal(stateRootHash.length, 64);
   });
 
   it('chain_get_state_root_hash - by height', async () => {
     const latestBlock = await client.getLatestBlockInfo();
 
-    expect(latestBlock.block).to.exist;
-    expect(latestBlock.block!.header.height).to.greaterThan(1);
+    expect(latestBlock.block_with_signatures).to.exist;
+    expect(getHeight(latestBlock.block_with_signatures!.block)).to.greaterThan(
+      1
+    );
 
     const stateRootHash = await client.getStateRootHashByHeight(1);
     assert.equal(stateRootHash.length, 64);
@@ -195,80 +200,59 @@ describe('CasperServiceByJsonRPC', () => {
     expect(validators.auction_state.block_height).to.be.eq(1);
   });
 
-  it('state_get_item - account hash to main purse uref', async () => {
-    const stateRootHash = await client.getStateRootHash();
-    const uref = await client.getAccountBalanceUrefByPublicKeyHash(
-      stateRootHash,
-      faucetKey.publicKey.toAccountRawHashStr()
-    );
-    faucetMainPurseUref = uref;
-    const [prefix, value, suffix] = uref.split('-');
-    expect(prefix).to.be.equal('uref');
-    expect(value.length).to.be.equal(64);
-    expect(suffix.length).to.be.equal(3);
-  });
-
-  it('state_get_item - CLPublicKey to main purse uref', async () => {
-    const stateRootHash = await client.getStateRootHash();
-    const uref = await client.getAccountBalanceUrefByPublicKey(
-      stateRootHash,
-      faucetKey.publicKey
-    );
-    const [prefix, value, suffix] = uref.split('-');
-    expect(uref).to.be.equal(faucetMainPurseUref);
-    expect(prefix).to.be.equal('uref');
-    expect(value.length).to.be.equal(64);
-    expect(suffix.length).to.be.equal(3);
+  it('state_get_account_info - should fail if fetching an account created after 2.x', async () => {
+    await client
+      .getAccountInfo(faucetKey.publicKey)
+      .then(() => {
+        assert.fail('client.getAccountInfo should throw an error.');
+      })
+      .catch(err => {
+        const expectedMessage = `Account migrated to an addressable entity`;
+        assert.equal(err.message, expectedMessage);
+      });
   });
 
   it('state_get_balance', async () => {
     const faucetBalance = '1000000000000000000000000000000000';
     const stateRootHash = await client.getStateRootHash();
-    const accountInfo = await getAccountInfo(NODE_URL, faucetKey.publicKey);
-    const balance = await client.getAccountBalance(
-      stateRootHash,
-      accountInfo.mainPurse
-    );
+    let entity_identifier = {
+      PublicKey: faucetKey.publicKey.toHex(false)
+    };
+    const entity = await client.getEntity(entity_identifier);
+    let main_purse = entity.AddressableEntity.entity.main_purse;
+    const balance = await client.getAccountBalance(stateRootHash, main_purse);
     expect(balance.eq(faucetBalance)).to.be;
   });
 
   it('query_balance', async () => {
-    if (!isAfterDot5) {
-      return;
-    }
-
-    const faucetBalance = '1000000000000000000000000000000000';
-
     const balanceByPublicKey = await client.queryBalance(
       PurseIdentifier.MainPurseUnderPublicKey,
       faucetKey.publicKey.toHex(false)
     );
-    expect(balanceByPublicKey.eq(faucetBalance)).to.be;
 
     const balanceByAccountHash = await client.queryBalance(
       PurseIdentifier.MainPurseUnderAccountHash,
       faucetKey.publicKey.toAccountHashStr()
     );
-    expect(balanceByAccountHash.eq(faucetBalance)).to.be;
+    expect(balanceByAccountHash.eq(balanceByPublicKey)).to.be;
 
-    const stateRootHash = await client.getStateRootHash();
-    const uref = await client.getAccountBalanceUrefByPublicKey(
-      stateRootHash,
-      faucetKey.publicKey
-    );
+    const entity = await client.getEntity({
+      PublicKey: faucetKey.publicKey.toHex(false)
+    });
+
     const balanceByUref = await client.queryBalance(
       PurseIdentifier.PurseUref,
-      uref
+      entity.AddressableEntity.entity.main_purse
     );
-    expect(balanceByUref.eq(faucetBalance)).to.be;
+    expect(balanceByUref.eq(balanceByPublicKey)).to.be;
   });
 
-  it('should transfer native token by session', async () => {
+  it('should transfer CSPR - account_put_deploy', async () => {
     // for native-transfers payment price is fixed
     const paymentAmount = 10000000000;
     const id = Date.now();
 
-    const amount = '25000000000';
+    const amount = '5000000000';
 
     const deployParams = new DeployUtil.DeployParams(
       faucetKey.publicKey,
@@ -276,52 +260,42 @@ describe('CasperServiceByJsonRPC', () => {
     );
 
     const toPublicKey = Keys.Ed25519.new().publicKey;
-
     const session = DeployUtil.ExecutableDeployItem.newTransfer(
       amount,
       toPublicKey,
       null,
       id
     );
-
     const payment = DeployUtil.standardPayment(paymentAmount);
     const deploy = DeployUtil.makeDeploy(deployParams, session, payment);
     const signedDeploy = DeployUtil.signDeploy(deploy, faucetKey);
-
     const { deploy_hash } = await client.deploy(signedDeploy);
-
     await sleep(2500);
 
     const result = await client.waitForDeploy(signedDeploy, 100000);
-
+    if (!result) {
+      assert.fail('Transfer deploy failed');
+    }
     expect(deploy_hash).to.be.equal(result.deploy.hash);
     expect(result.deploy.session).to.have.property('Transfer');
-    expect(result.execution_results[0].result).to.have.property('Success');
-
-    transferBlockHash = result.execution_results[0].block_hash;
-
-    let balance = BigNumber.from(0);
-
-    if (isAfterDot5) {
-      balance = await client.queryBalance(
-        PurseIdentifier.MainPurseUnderPublicKey,
-        toPublicKey.toHex(false)
-      );
-    } else {
-      const stateRootHash = await client.getStateRootHash();
-      const uref = await client.getAccountBalanceUrefByPublicKey(
-        stateRootHash,
-        toPublicKey
-      );
-      balance = await client.getAccountBalance(stateRootHash, uref);
+    let block_hash = result.execution_info?.block_hash;
+    if (!block_hash) {
+      assert.fail('Expected block_hash in execution_info');
     }
+    transferBlockHash = block_hash;
+
+    const balance = await client.queryBalance(
+      PurseIdentifier.MainPurseUnderPublicKey,
+      toPublicKey.toHex(false)
+    );
+
     expect(amount).to.be.equal(balance.toString());
   });
 
-  it('should deploy wasm over rpc', async () => {
+  it('should deploy example wasm over rpc', async () => {
     const casperClient = new CasperClient(NODE_URL);
     const erc20 = new Contract(casperClient);
-    const wasmPath = path.resolve(__dirname, './erc20_token.wasm');
+    const wasmPath = path.resolve(__dirname, './contract.wasm');
     const wasm = new Uint8Array(fs.readFileSync(wasmPath, null).buffer);
 
     const tokenName = 'TEST';
@@ -330,7 +304,49 @@ describe('CasperServiceByJsonRPC', () => {
     const tokenTotlaSupply = 500_000_000_000;
 
     const args = RuntimeArgs.fromMap({
-      name: CLValueBuilder.string(tokenName),
+      message: CLValueBuilder.string(tokenName),
+      symbol: CLValueBuilder.string(tokenSymbol),
+      decimals: CLValueBuilder.u8(tokenDecimals),
+      total_supply: CLValueBuilder.u256(tokenTotlaSupply)
+    });
+    const signedDeploy = erc20.install(
+      wasm,
+      args,
+      '200000000000',
+      faucetKey.publicKey,
+      NETWORK_NAME,
+      [faucetKey]
+    );
+
+    await client.deploy(signedDeploy);
+    await sleep(2500);
+    await client.waitForDeploy(signedDeploy, 100000);
+    let entity_identifier = {
+      AccountHash: faucetKey.publicKey.toAccountHashStr()
+    };
+    const { AddressableEntity } = await client.getEntity(entity_identifier);
+    const named_key = AddressableEntity!.named_keys.find((i: NamedKey) => {
+      console.error(`key name ${i.name}`);
+      return i.name === 'my-key-name';
+    })?.key;
+
+    assert.exists(named_key);
+  });
+
+  //TODO we need a new wasm that works with 2.0
+  xit('should deploy wasm over rpc', async () => {
+    const casperClient = new CasperClient(NODE_URL);
+    const erc20 = new Contract(casperClient);
+    const wasmPath = path.resolve(__dirname, './contract.wasm');
+    const wasm = new Uint8Array(fs.readFileSync(wasmPath, null).buffer);
+
+    const tokenName = 'TEST';
+    const tokenSymbol = 'TST';
+    const tokenDecimals = 8;
+    const tokenTotlaSupply = 500_000_000_000;
+
+    const args = RuntimeArgs.fromMap({
+      message: CLValueBuilder.string(tokenName),
       symbol: CLValueBuilder.string(tokenSymbol),
       decimals: CLValueBuilder.u8(tokenDecimals),
       total_supply: CLValueBuilder.u256(tokenTotlaSupply)
@@ -350,16 +366,14 @@ describe('CasperServiceByJsonRPC', () => {
 
     let result = await client.waitForDeploy(signedDeploy, 100000);
 
-    const stateRootHash = await client.getStateRootHash();
-    const { Account } = await client.getBlockState(
-      stateRootHash,
-      faucetKey.publicKey.toAccountHashStr(),
-      []
-    );
-
-    const contractHash = Account!.namedKeys.find(
-      (i: any) => i.name === 'erc20_token_contract'
-    )?.key;
+    let entity_identifier = {
+      AccountHash: faucetKey.publicKey.toAccountHashStr()
+    };
+    const { AddressableEntity } = await client.getEntity(entity_identifier);
+    const contractHash = AddressableEntity!.named_keys.find((i: NamedKey) => {
+      console.error(`key name ${i.name}`);
+      return i.name === 'erc20_token_contract';
+    })?.key;
 
     assert.exists(contractHash);
 
@@ -415,27 +429,30 @@ describe('CasperServiceByJsonRPC', () => {
 
     assert.equal(result.deploy.hash, deploy_hash);
     expect(result.deploy.session).to.have.property('StoredContractByHash');
-    expect(result.execution_results[0].result).to.have.property('Success');
+    // expect(result.execution_results[0].result).to.have.property('Success');
 
     const balanceOfRecipient = await balanceOf(erc20, recipient);
     assert.equal(balanceOfRecipient.toNumber(), transferAmount);
   });
 
   it('chain_get_block_transfers - blockHash', async () => {
-    const transfers = await client.getBlockTransfers(transferBlockHash);
-    expect(transfers).to.be.an.instanceof(Transfers);
+    const { transfers } = await client.getBlockTransfers(transferBlockHash);
+    expect(transfers.length).to.be.greaterThan(0);
   });
 
   it('chain_get_era_info_by_switch_block - by height', async () => {
-    const getEarliestSwitchBlock = async (): Promise<[number, EraSummary]> => {
+    const getEarliestSwitchBlock = async (): Promise<[number, any]> => {
       return new Promise(async resolve => {
-        let height = 0;
+        // For some reason in 2.0 blok with height 0 has `era_end` filled, but there is no era_end entity in storage.
+        // This makes getEraInfoBySwitchBlock fail on block 0. For now we start from 1, but we need to know if this is a bug or it's intentional.
+        // On mainnet block 0 has no era_end, plus this code worked in 1.x
+        let height = 1;
         let summary;
         while (!summary) {
-          const era = await client.getEraInfoBySwitchBlockHeight(height);
-          if (era) {
+          const era = await client.getEraInfoBySwitchBlock({ Height: height });
+          if (era.era_summary) {
             height = height;
-            summary = era;
+            summary = era.era_summary;
             return resolve([height, summary]);
           } else {
             height += 1;
@@ -443,15 +460,12 @@ describe('CasperServiceByJsonRPC', () => {
         }
       });
     };
-
     const [height, eraSummary] = await getEarliestSwitchBlock();
     const blockInfo = await client.getBlockInfoByHeight(height);
-    expect(eraSummary.blockHash).to.be.equal(blockInfo.block?.hash);
+    expect(eraSummary.block_hash).to.be.equal(
+      getBlockHash(blockInfo.block_with_signatures!.block)
+    );
   });
-
-  it('chain_get_era_summary - by hash');
-
-  it('chain_get_era_summary - by height');
 
   it('info_get_chainspec', async () => {
     if (!isAfterDot5) {

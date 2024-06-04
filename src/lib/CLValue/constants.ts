@@ -9,10 +9,30 @@ export enum CLErrorCodes {
   UnknownValue = 'Unknown value'
 }
 
-export enum KeyVariant {
-  Account,
-  Hash,
-  URef
+export enum KeyTag {
+  Account = 0,
+  Hash = 1,
+  URef = 2,
+  Transfer = 3,
+  DeployInfo = 4,
+  EraInfo = 5,
+  Balance = 6,
+  Bid = 7,
+  Withdraw = 8,
+  Dictionary = 9,
+  SystemEntityRegistry = 10,
+  EraSummary = 11,
+  Unbond = 12,
+  ChainspecRegistry = 13,
+  ChecksumRegistry = 14,
+  BidAddr = 15,
+  Package = 16,
+  AddressableEntity = 17,
+  ByteCode = 18,
+  Message = 19,
+  NamedKey = 20,
+  BlockMessageCount = 21,
+  BalanceHold = 22
 }
 
 /**

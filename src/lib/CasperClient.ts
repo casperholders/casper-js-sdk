@@ -1,12 +1,9 @@
-import { BigNumber } from '@ethersproject/bignumber';
-
 import {
   BlockIdentifier,
   CasperServiceByJsonRPC,
   GetDeployResult
 } from '../services';
-import { DeployUtil, Keys, CLPublicKey } from './index';
-import { encodeBase16 } from './Conversions';
+import { DeployUtil, Keys } from './index';
 import { Deploy, DeployParams, ExecutableDeployItem } from './DeployUtil';
 import { AsymmetricKey, SignatureAlgorithm } from './Keys';
 import { Secp256K1HDKey, Ed25519HDKey, CasperHDKey } from './CasperHDKeys';
@@ -228,51 +225,6 @@ export class CasperClient {
   }
 
   /**
-   * Get the CSPR balance of an account using its public key
-   * @param publicKey CLPublicKey representation of an account's public key
-   * @returns Promise that resolves to the balance of the account
-   */
-  public async balanceOfByPublicKey(
-    publicKey: CLPublicKey
-  ): Promise<BigNumber> {
-    return this.balanceOfByAccountHash(encodeBase16(publicKey.toAccountHash()));
-  }
-
-  /**
-   * Get the CSPR balance of an account using its account hash
-   * @param accountHashStr The account's account hash as a hexadecimal string
-   * @returns Promise that resolves to the balance of the account
-   */
-  public async balanceOfByAccountHash(
-    accountHashStr: string
-  ): Promise<BigNumber> {
-    try {
-      const stateRootHash = await this.nodeClient
-        .getLatestBlockInfo()
-        .then(it => it.block?.header.state_root_hash);
-      // Find the balance Uref and cache it if we don't have it.
-      if (!stateRootHash) {
-        return BigNumber.from(0);
-      }
-      const balanceUref = await this.nodeClient.getAccountBalanceUrefByPublicKeyHash(
-        stateRootHash,
-        accountHashStr
-      );
-
-      if (!balanceUref) {
-        return BigNumber.from(0);
-      }
-
-      return await this.nodeClient.getAccountBalance(
-        stateRootHash,
-        balanceUref
-      );
-    } catch (e) {
-      return BigNumber.from(0);
-    }
-  }
-
-  /**
    * Get deploy details using a deploy's transaction hash
    * @param deployHash The hexadecimal string representation of the deploy hash
    * @returns Tuple of Deploy and raw RPC response
@@ -285,29 +237,5 @@ export class CasperClient {
       .then((result: GetDeployResult) => {
         return [DeployUtil.deployFromJson(result).unwrap(), result];
       });
-  }
-
-  /**
-   * Get the main purse uref for the specified publicKey
-   * @param publicKey The public key of the account
-   * @returns A Promise resolving to a hexadecimal string representation of the account's main purse uref
-   */
-  public async getAccountMainPurseUref(
-    publicKey: CLPublicKey
-  ): Promise<string | null> {
-    const stateRootHash = await this.nodeClient
-      .getLatestBlockInfo()
-      .then(it => it.block?.header.state_root_hash);
-
-    if (!stateRootHash) {
-      return null;
-    }
-
-    const balanceUref = await this.nodeClient.getAccountBalanceUrefByPublicKeyHash(
-      stateRootHash,
-      encodeBase16(publicKey.toAccountHash())
-    );
-
-    return balanceUref;
   }
 }

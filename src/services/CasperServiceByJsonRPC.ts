@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
-import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
+import { TypedJSON } from 'typedjson';
 
 import {
+  CLAccountHash,
+  CLPublicKey,
   DeployUtil,
   encodeBase16,
-  CLPublicKey,
-  StoredValue,
-  Transfers
+  StoredValue
 } from '..';
 
 import ProviderTransport, {
@@ -27,7 +28,16 @@ import {
   SpeculativeExecutionResult,
   BlockIdentifier,
   GetChainSpecResult,
-  StateIdentifier
+  StateIdentifier,
+  getBlockHash,
+  getHeight,
+  EntityIdentifier,
+  AddressableEntity,
+  QueryGlobalStateResult,
+  GetBlockTransfersResult,
+  QueryBalanceDetailsResult,
+  AddressableEntityWrapper,
+  TransactionHash
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -35,27 +45,8 @@ export { JSONRPCError } from '@open-rpc/client-js';
 export enum PurseIdentifier {
   MainPurseUnderPublicKey = 'main_purse_under_public_key',
   MainPurseUnderAccountHash = 'main_purse_under_account_hash',
+  MainPurseUnderEntityAddr = 'main_purse_under_entity_addr',
   PurseUref = 'purse_uref'
-}
-
-/** Object to represent era specific information */
-@jsonObject
-export class EraSummary {
-  /** The hash of the block when the era was encountered */
-  @jsonMember({ constructor: String, name: 'block_hash' })
-  blockHash: string;
-
-  /** The id of the era */
-  @jsonMember({ constructor: Number, name: 'era_id' })
-  eraId: number;
-
-  /** A `StoredValue` */
-  @jsonMember(() => ({ constructor: StoredValue, name: 'stored_value' }))
-  StoredValue: StoredValue;
-
-  /** The state root hash when the era was encountered */
-  @jsonMember({ constructor: String, name: 'state_root_hash' })
-  stateRootHash: string;
 }
 
 /** Interface describing the validators at a certain era */
@@ -64,22 +55,33 @@ export interface EraValidators {
   validator_weights: ValidatorWeight[];
 }
 
+export interface VestingSchedule {
+  initial_release_timestamp_millis: number;
+  locked_amounts: string[];
+}
+
 /** Interface describing a validator auction bid */
 export interface Bid {
+  validator_public_key: string;
   bonding_purse: string;
   staked_amount: string;
   delegation_rate: number;
-  reward: string;
-  delegators: Delegators[];
+  vesting_schedule?: VestingSchedule;
+  delegators: DelegatorEntry[];
   inactive: boolean;
 }
 
+export interface DelegatorEntry {
+  delegator_public_key: string;
+  delegator: Delegator;
+}
 /** Interface describing a delegator */
-export interface Delegators {
-  bonding_purse: string;
-  delegatee: string;
+export interface Delegator {
+  delegator_public_key: string;
   staked_amount: string;
-  public_key: string;
+  bonding_purse: string;
+  validator_public_key: string;
+  vesting_schedule?: VestingSchedule;
 }
 
 /** Interface describing a delegator's information */
@@ -90,8 +92,7 @@ export interface DelegatorInfo {
   staked_amount: string;
 }
 
-/** Interface describing a validator's auction bid */
-export interface ValidatorBid {
+export interface BidEntry {
   public_key: string;
   bid: Bid;
 }
@@ -101,7 +102,7 @@ export interface AuctionState {
   state_root_hash: string;
   block_height: number;
   era_validators: EraValidators[];
-  bids: ValidatorBid[];
+  bids: BidEntry[];
 }
 
 /** Result interface describing validator information */
@@ -144,12 +145,16 @@ export class CasperServiceByJsonRPC {
    * @param finalizedApprovals Whether to return the deploy with the finalized approvals substituted. If `false` or omitted, returns the deploy with the approvals that were originally received by the node.
    * @param props optional request props
    * @returns A `Promise` that resolves to a `GetDeployResult`
+   * @deprecated use `getTransactionInfo` method
    */
   public async getDeployInfo(
     deployHash: string,
     finalizedApprovals?: boolean,
     props?: RpcRequestProps
   ): Promise<GetDeployResult> {
+    console.warn(
+      'This method is deprecated and will be removed in the future release, please use getTransactionInfo method instead.'
+    );
     const params: any[] = [deployHash];
     if (finalizedApprovals) {
       params.push(finalizedApprovals);
@@ -158,6 +163,31 @@ export class CasperServiceByJsonRPC {
     return await this.client.request(
       {
         method: 'info_get_deploy',
+        params
+      },
+      props?.timeout
+    );
+  }
+
+  /**
+   * Get information about a deploy using its hexadecimal hash
+   * @param deployHash Hex-encoded hash digest.
+   * @param finalizedApprovals Whether to return the deploy with the finalized approvals substituted. If `false` or omitted, returns the deploy with the approvals that were originally received by the node.
+   * @param props optional request props
+   * @returns A `Promise` that resolves to a `GetTransactionResult`
+   */
+  public async getTransactionInfo(
+    transaction_hash: TransactionHash,
+    finalizedApprovals?: boolean,
+    props?: RpcRequestProps
+  ): Promise<GetDeployResult> {
+    const params: any[] = [transaction_hash];
+    if (finalizedApprovals) {
+      params.push(finalizedApprovals);
+    }
+    return await this.client.request(
+      {
+        method: 'info_get_transaction',
         params
       },
       props?.timeout
@@ -187,10 +217,12 @@ export class CasperServiceByJsonRPC {
         props?.timeout
       )
       .then((res: GetBlockResult) => {
-        if (
-          res.block !== null &&
-          res.block.hash.toLowerCase() !== blockHash.toLowerCase()
-        ) {
+        const block_with_signatures = res.block_with_signatures;
+        if (block_with_signatures === null) {
+          return res;
+        }
+        const gotBlockHash = getBlockHash(block_with_signatures.block);
+        if (gotBlockHash.toLowerCase() !== blockHash.toLowerCase()) {
           throw new Error('Returned block does not have a matching hash.');
         }
         return res;
@@ -220,7 +252,12 @@ export class CasperServiceByJsonRPC {
         props?.timeout
       )
       .then((res: GetBlockResult) => {
-        if (res.block !== null && res.block.header.height !== height) {
+        const block_with_signatures = res.block_with_signatures;
+        if (block_with_signatures === null) {
+          return res;
+        }
+        const gotHeight = getHeight(block_with_signatures.block);
+        if (gotHeight !== height) {
           throw new Error('Returned block does not have a matching height.');
         }
         return res;
@@ -323,44 +360,66 @@ export class CasperServiceByJsonRPC {
   }
 
   /**
-   * Get the reference to an account balance uref by an account's account hash, so it may be cached
-   * @param stateRootHash The state root hash at which the main purse URef will be queried
-   * @param accountHash The account hash of the account
+   * Returns legacy account information
+   * @param publicKeyOrAccountHash Formatted public key or account hash
+   * @param blockIdentifier BlockIdentifier
    * @param props optional request props
    * @returns The account's main purse URef
    */
-  public async getAccountBalanceUrefByPublicKeyHash(
-    stateRootHash: string,
-    accountHash: string,
+  public async getAccountInfo(
+    accountIdentifier: CLPublicKey | CLAccountHash,
+    blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<string> {
-    const account = await this.getBlockState(
-      stateRootHash,
-      'account-hash-' + accountHash,
-      [],
-      props
-    ).then(res => res.Account!);
-    return account.mainPurse;
+  ): Promise<any> {
+    let identifier;
+    if (accountIdentifier instanceof CLPublicKey) {
+      identifier = accountIdentifier.toHex();
+    } else if (accountIdentifier instanceof CLAccountHash) {
+      identifier = accountIdentifier.toFormattedStr();
+    }
+    const params: any = {
+      account_identifier: identifier
+    };
+    if (blockIdentifier) {
+      params.block_identifier = blockIdentifier;
+    }
+    const payload = {
+      method: 'state_get_account_info',
+      params: params
+    };
+    const account = await this.client.request(payload, props?.timeout);
+    return account;
   }
 
   /**
-   * Get the reference to an account balance uref by an account's public key, so it may be cached
-   * @param stateRootHash The state root hash at which the main purse URef will be queried
-   * @param publicKey The public key of the account
+   * Returns legacy account information
+   * @param publicKeyOrAccountHash Formatted public key or account hash
+   * @param blockIdentifier BlockIdentifier
    * @param props optional request props
    * @returns The account's main purse URef
-   * @see [getAccountBalanceUrefByPublicKeyHash](#L380)
    */
-  public async getAccountBalanceUrefByPublicKey(
-    stateRootHash: string,
-    publicKey: CLPublicKey,
+  public async getEntity(
+    entityIdentifier: EntityIdentifier,
+    blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<string> {
-    return this.getAccountBalanceUrefByPublicKeyHash(
-      stateRootHash,
-      encodeBase16(publicKey.toAccountHash()),
-      props
+    //TODO getEntity can also return LegacyAccount, needs to be handled
+  ): Promise<{ AddressableEntity: AddressableEntityWrapper }> {
+    const params: any[] = [entityIdentifier];
+
+    if (blockIdentifier) {
+      params.push(blockIdentifier);
+    } else {
+      params.push(null);
+    }
+    const { entity } = await this.client.request(
+      {
+        method: 'state_get_entity',
+        params: params
+      },
+      props?.timeout
     );
+
+    return entity;
   }
 
   /**
@@ -373,17 +432,18 @@ export class CasperServiceByJsonRPC {
    */
   public async getAccountBalance(
     stateRootHash: string,
-    balanceUref: string,
+    purseUref: string,
     props?: RpcRequestProps
   ): Promise<BigNumber> {
     console.warn(
       'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
     );
+    const params = { state_root_hash: stateRootHash, purse_uref: purseUref };
     return await this.client
       .request(
         {
           method: 'state_get_balance',
-          params: [stateRootHash, balanceUref]
+          params
         },
         props?.timeout
       )
@@ -429,6 +489,45 @@ export class CasperServiceByJsonRPC {
         props?.timeout
       )
       .then(res => BigNumber.from(res.balance));
+  }
+
+  /**
+   * Returns balance details using a purse identifier and a state identifier
+   * @added casper-node 2.0
+   * @example
+   * ```ts
+   * const client = new CasperServiceByJsonRPC("http://localhost:11101/rpc");
+   * const balance = await client.queryBalanceDetails(PurseIdentifier.MainPurseUnderAccountHash, "account-hash-0909090909090909090909090909090909090909090909090909090909090909");
+   * ```
+   * @param purseIdentifierType purse type enum
+   * @param purseIdentifier purse identifier
+   * @param stateRootHash state root hash at which the block state will be queried
+   * @param props optional request props
+   * @returns balance details object
+   */
+  public async queryBalanceDetails(
+    purseIdentifierType: PurseIdentifier,
+    purseIdentifier: string,
+    stateIdentifier?: StateIdentifier,
+    props?: RpcRequestProps
+  ): Promise<QueryBalanceDetailsResult> {
+    const params: any[] = [];
+    if (stateIdentifier) {
+      params.push(stateIdentifier);
+    } else {
+      params.push(null);
+    }
+    params.push({
+      [purseIdentifierType]: purseIdentifier
+    });
+
+    return await this.client.request(
+      {
+        method: 'query_balance_details',
+        params
+      },
+      props?.timeout
+    );
   }
 
   /**
@@ -498,6 +597,7 @@ export class CasperServiceByJsonRPC {
       return res;
     } else {
       const storedValueJson = res.stored_value;
+      console.log(storedValueJson);
       const serializer = new TypedJSON(StoredValue);
       const storedValue = serializer.parse(storedValueJson)!;
       return storedValue;
@@ -524,6 +624,7 @@ export class CasperServiceByJsonRPC {
    * @param signedDeploy A signed `Deploy` object to be sent to a node
    * @param props optional request props
    * @remarks A deploy must not exceed 1 megabyte
+   * @deprecated use `sendTransaction` method
    */
   public async deploy(
     signedDeploy: DeployUtil.Deploy,
@@ -535,6 +636,9 @@ export class CasperServiceByJsonRPC {
       checkApproval?: boolean;
     }
   ): Promise<DeployResult> {
+    console.warn(
+      'This method is deprecated and will be removed in the future release, please use sendTransaction method instead.'
+    );
     this.checkDeploySize(signedDeploy);
 
     const { checkApproval = false } = props ?? {};
@@ -571,7 +675,22 @@ export class CasperServiceByJsonRPC {
       const deployHash =
         typeof deploy === 'string' ? deploy : encodeBase16(deploy.hash);
       const deployInfo = await this.getDeployInfo(deployHash);
-      if (deployInfo.execution_results.length > 0) {
+
+      let successful = false;
+      const execution_result = deployInfo.execution_info?.execution_result;
+
+      if (!execution_result) {
+        successful = false;
+      } else {
+        if ('Version1' in execution_result) {
+          successful = !!execution_result.Version1.Success;
+        }
+        if ('Version2' in execution_result) {
+          successful = execution_result.Version2.error_message === null;
+        }
+      }
+
+      if (successful) {
         clearTimeout(timer);
         return deployInfo;
       } else {
@@ -619,8 +738,8 @@ export class CasperServiceByJsonRPC {
   public async getBlockTransfers(
     blockHash?: string,
     props?: RpcRequestProps
-  ): Promise<Transfers> {
-    const res = await this.client.request(
+  ): Promise<GetBlockTransfersResult> {
+    return this.client.request(
       {
         method: 'chain_get_block_transfers',
         params: blockHash
@@ -633,13 +752,6 @@ export class CasperServiceByJsonRPC {
       },
       props?.timeout
     );
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(Transfers);
-      const storedValue = serializer.parse(res)!;
-      return storedValue;
-    }
   }
 
   /**
@@ -648,62 +760,22 @@ export class CasperServiceByJsonRPC {
    * @param props optional request props
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
+  //TODO return of this function should be typed
   public async getEraInfoBySwitchBlock(
-    blockHash?: string,
+    blockIdentifier: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<EraSummary> {
-    const res = await this.client.request(
-      {
-        method: 'chain_get_era_info_by_switch_block',
-        params: [
-          blockHash
-            ? [
-                {
-                  Hash: blockHash
-                }
-              ]
-            : []
-        ]
-      },
-      props?.timeout
-    );
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
-    }
-  }
+  ) {
+    const params = {
+      block_identifier: blockIdentifier
+    };
 
-  /**
-   * Retrieve era information by [switch block](https://docs.casperlabs.io/economics/consensus/#entry) height
-   * @param height The height of the switch block
-   * @param props optional request props
-   * @returns A `Promise` resolving to an `EraSummary` containing the era information
-   */
-  public async getEraInfoBySwitchBlockHeight(
-    height: number,
-    props?: RpcRequestProps
-  ): Promise<EraSummary> {
-    const res = await this.client.request(
+    return this.client.request(
       {
         method: 'chain_get_era_info_by_switch_block',
-        params: [
-          {
-            Height: height
-          }
-        ]
+        params
       },
       props?.timeout
     );
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
-    }
   }
 
   /**
@@ -711,55 +783,22 @@ export class CasperServiceByJsonRPC {
    * @param blockHash Hexadecimal block hash. If not provided, the last block added to the chain, known as the given node, will be used
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
-  public async getEraSummary(blockHash?: string): Promise<EraSummary> {
-    const res = await this.client.request({
-      method: 'chain_get_era_summary',
-      params: [
-        blockHash
-          ? [
-              {
-                Hash: blockHash
-              }
-            ]
-          : []
-      ]
-    });
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
+  public async getEraSummary(
+    blockIdentifier?: BlockIdentifier,
+    props?: RpcRequestProps
+  ) {
+    const params = [];
+    if (blockIdentifier) {
+      params.push(blockIdentifier);
     }
-  }
 
-  /**
-   * Retrieve era summary information by block height (if provided) or most recently added block
-   * @param blockHeight The height of the switch block
-   * @returns A `Promise` resolving to an `EraSummary` containing the era information
-   */
-  public async getEraSummaryByBlockHeight(
-    blockHeight?: number
-  ): Promise<EraSummary> {
-    const res = await this.client.request({
-      method: 'chain_get_era_summary',
-      params: [
-        blockHeight !== undefined && blockHeight >= 0
-          ? [
-              {
-                Height: blockHeight
-              }
-            ]
-          : []
-      ]
-    });
-    if (res.error) {
-      return res;
-    } else {
-      const serializer = new TypedJSON(EraSummary);
-      const storedValue = serializer.parse(res.era_summary)!;
-      return storedValue;
-    }
+    return this.client.request(
+      {
+        method: 'chain_get_era_summary',
+        params
+      },
+      props?.timeout
+    );
   }
 
   /**
@@ -864,6 +903,29 @@ export class CasperServiceByJsonRPC {
     return await this.client.request(
       {
         method: 'info_get_chainspec'
+      },
+      props?.timeout
+    );
+  }
+
+  /**
+   * Queries global state by block or state root hash.
+   * @param key key to query
+   * @param stateIdentifier state identifier
+   * @param path path to query
+   * @param props optional request props
+   * @returns
+   */
+  public async queryGlobalState(
+    key: string,
+    stateIdentifier: StateIdentifier | null = null,
+    path: string[] = [],
+    props?: RpcRequestProps
+  ): Promise<QueryGlobalStateResult> {
+    return this.client.request(
+      {
+        method: 'query_global_state',
+        params: [stateIdentifier, key, path]
       },
       props?.timeout
     );

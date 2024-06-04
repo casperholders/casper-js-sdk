@@ -14,7 +14,7 @@ import {
   CLAccountHash,
   CLAccountHashBytesParser,
   CLErrorCodes,
-  KeyVariant,
+  KeyTag,
   ResultAndRemainder,
   ToBytesResult,
   CLValueBytesParsers,
@@ -39,7 +39,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     if (value.isAccount()) {
       return Ok(
         concat([
-          Uint8Array.from([KeyVariant.Account]),
+          Uint8Array.from([KeyTag.Account]),
           new CLAccountHashBytesParser()
             .toBytes(value.data as CLAccountHash)
             .unwrap()
@@ -49,7 +49,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     if (value.isHash()) {
       return Ok(
         concat([
-          Uint8Array.from([KeyVariant.Hash]),
+          Uint8Array.from([KeyTag.Hash]),
           new CLByteArrayBytesParser()
             .toBytes(value.data as CLByteArray)
             .unwrap()
@@ -59,7 +59,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     if (value.isURef()) {
       return Ok(
         concat([
-          Uint8Array.from([KeyVariant.URef]),
+          Uint8Array.from([KeyTag.URef]),
           CLValueParsers.toBytes(value.data as CLURef).unwrap()
         ])
       );
@@ -78,8 +78,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     }
 
     const tag = bytes[0];
-
-    if (tag === KeyVariant.Hash) {
+    if (tag === KeyTag.Hash) {
       const hashBytes = bytes.subarray(1);
       const {
         result: hashResult,
@@ -91,7 +90,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
       const hash = hashResult.unwrap();
       const key = new CLKey(hash);
       return resultHelper(Ok(key), hashRemainder);
-    } else if (tag === KeyVariant.URef) {
+    } else if (tag === KeyTag.URef) {
       const {
         result: urefResult,
         remainder: urefRemainder
@@ -102,7 +101,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
       } else {
         return resultHelper<CLKey, CLErrorCodes>(Err(urefResult.val));
       }
-    } else if (tag === KeyVariant.Account) {
+    } else if (tag === KeyTag.Account) {
       const {
         result: accountHashResult,
         remainder: accountHashRemainder
@@ -115,6 +114,9 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
       } else {
         return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
       }
+    } else if (tag === KeyTag.Dictionary) {
+      console.error('Dictionary not implemented');
+      return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
     } else {
       return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
     }
