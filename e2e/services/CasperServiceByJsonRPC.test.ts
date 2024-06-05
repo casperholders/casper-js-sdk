@@ -258,11 +258,10 @@ describe('CasperServiceByJsonRPC', () => {
     expect(balanceByUref.eq(balanceByPublicKey)).to.be;
   });
 
-  it.only('should transfer CSPR - account_put_transaction', async () => {
+  it('should transfer CSPR - account_put_transaction', async () => {
     // for native-transfers payment price is fixed
     const paymentAmount = 10000000000;
     const id = Date.now();
-    //    const amount = '5000000000';
 
     let initiatorAddr = InitiatorAddr.fromPublicKey(faucetKey.publicKey);
     const ttl = 1000000;
@@ -276,7 +275,6 @@ describe('CasperServiceByJsonRPC', () => {
 
     const toPublicKey = Keys.Ed25519.new().publicKey;
     let runtimeArgs = RuntimeArgs.fromMap({
-      //"source"
       target: toPublicKey,
       amount: CLValueBuilder.u512(paymentAmount),
       id: CLValueBuilder.option(Some(new CLU64(id)), new CLU64Type())
@@ -296,7 +294,7 @@ describe('CasperServiceByJsonRPC', () => {
       transaction,
       faucetKey
     );
-    const res = await client.transaction(signedTransaction);
+    await client.transaction(signedTransaction);
     await sleep(2500);
     const result = await client.waitForTransaction(signedTransaction, 100000);
     if (!result) {
