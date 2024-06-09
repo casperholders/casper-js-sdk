@@ -119,19 +119,19 @@ export class CLURef extends CLValue implements CLKeyVariant {
     return new CLURef(addr, accessRight);
   }
 
-  toStr(): string {
+  toString(): string {
     return [
       encodeBase16(this.data),
       padNum(this.accessRights.toString(8), 3)
     ].join('-');
   }
 
-  toFormattedStr(): string {
-    return [FORMATTED_STRING_PREFIX, this.toStr()].join('-');
+  toFormattedString(): string {
+    return [FORMATTED_STRING_PREFIX, this.toString()].join('-');
   }
 
   toJSON(): string {
-    return this.toFormattedStr();
+    return this.toFormattedString();
   }
 
   clType(): CLType {

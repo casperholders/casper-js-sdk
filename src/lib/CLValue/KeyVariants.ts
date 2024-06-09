@@ -3,7 +3,8 @@ import {
   KeyTag,
   ResultAndRemainder,
   resultHelper,
-  CLErrorCodes
+  CLErrorCodes,
+  CLValueBytesParsers
 } from './index';
 import { decodeBase16, encodeBase16 } from '../Conversions';
 
@@ -12,7 +13,6 @@ import { decodeBase16, encodeBase16 } from '../Conversions';
 //  - internal type creator
 //  - stores data
 //  - serialize when inside a Key
-//  - normally do not serialize as normal CLValue eg. using CLValueParsers.fromBytes
 export abstract class CLKeyVariant {
   abstract keyVariant: KeyTag;
   abstract data: Uint8Array;
@@ -21,9 +21,11 @@ export abstract class CLKeyVariant {
     return this.data;
   }
 
-  abstract toStr(): string;
-  abstract toFormattedStr(): string;
-  static fromFormattedStr(hexStr: string): CLKeyVariant {
+  abstract toString(): string;
+
+  abstract toFormattedString(): string;
+
+  static fromFormattedString(hexStr: string): CLKeyVariant {
     throw Error(
       `Trying to deserialize KeyVariant - unknown string provided: ${hexStr}`
     );
@@ -32,7 +34,7 @@ export abstract class CLKeyVariant {
 
 export const HASH_PREFIX = 'hash';
 export const TRANSFER_PREFIX = 'transfer';
-export const DEPLOY_INFO_PREFIX = '
+export const DEPLOY_HASH_PREFIX = 'deploy-hash';
 
 const KEY_HASH_LENGTH = 32;
 
@@ -55,12 +57,12 @@ export class Hash implements CLKeyVariant {
     return this.data;
   }
 
-  toStr() {
+  toString() {
     return encodeBase16(this.data);
   }
 
-  toFormattedStr() {
-    return `${HASH_PREFIX}-${this.toStr()}`;
+  toFormattedString() {
+    return `${HASH_PREFIX}-${this.toString()}`;
   }
 
   static fromFormattedStr(input: string): Hash {
@@ -85,12 +87,12 @@ export class TransferAddr implements CLKeyVariant {
     return this.data;
   }
 
-  toStr() {
+  toString() {
     return encodeBase16(this.data);
   }
 
-  toFormattedStr() {
-    return `${TRANSFER_PREFIX}-${this.toStr()}`;
+  toFormattedString() {
+    return `${TRANSFER_PREFIX}-${this.toString()}`;
   }
 
   static fromFormattedStr(input: string): Hash {
@@ -107,11 +109,32 @@ export class TransferAddr implements CLKeyVariant {
 
 export class DeployHash implements CLKeyVariant {
   keyVariant = KeyTag.DeployInfo;
-  prefix = TRANSFER_PREFIX;
+  prefix = DEPLOY_HASH_PREFIX;
 
   constructor(public data: Uint8Array) {}
 
   value(): any {
     return this.data;
   }
+
+  toString() {
+    return encodeBase16(this.data);
+  }
+
+  toFormattedString() {
+    return `${DEPLOY_HASH_PREFIX}-${this.toString()}`;
+  }
+
+  static fromFormattedStr(input: string): DeployHash {
+    if (!input.startsWith(`${DEPLOY_HASH_PREFIX}-`)) {
+      throw new Error(`Prefix is not ${DEPLOY_HASH_PREFIX}`);
+    }
+
+    const hashStr = input.substring(`${DEPLOY_HASH_PREFIX}-`.length + 1);
+    const hashBytes = decodeBase16(hashStr);
+
+    return new DeployHash(hashBytes);
+  }
 }
+
+

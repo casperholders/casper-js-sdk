@@ -69,16 +69,16 @@ export class CLAccountHash extends CLValue implements CLKeyVariant {
     return this.data;
   }
 
-  toStr(): string {
+  toString(): string {
     const bytes = this.data;
     return Buffer.from(bytes).toString('hex');
   }
 
-  toFormattedStr(): string {
-    return `${ACCOUNT_HASH_PREFIX}-${this.toStr()}`;
+  toFormattedString(): string {
+    return `${ACCOUNT_HASH_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedStr(hexStr: string): CLAccountHash {
+  static fromFormattedString(hexStr: string): CLAccountHash {
     if (hexStr.startsWith(`${ACCOUNT_HASH_PREFIX}-`)) {
       const formatedString = hexStr.replace(`${ACCOUNT_HASH_PREFIX}-`, '');
       const bytes = Uint8Array.from(Buffer.from(formatedString, 'hex'));
