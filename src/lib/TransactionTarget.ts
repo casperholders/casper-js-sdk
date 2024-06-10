@@ -4,7 +4,7 @@ import { TransactionInvocationTarget } from './TransactionInvocationTarget';
 import { ToBytes, ToBytesResult } from './CLValue';
 import { Ok } from 'ts-results';
 import { concat } from '@ethersproject/bytes';
-import { toBytesArrayU8, toBytesString, toBytesU8 } from './ByteConverters';
+import { toBytesArrayU8, toBytesU8 } from './ByteConverters';
 import { byteArrayJsonDeserializer, byteArrayJsonSerializer } from './Common';
 
 export interface TransactionTarget extends ToBytes {

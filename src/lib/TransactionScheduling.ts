@@ -1,4 +1,3 @@
-import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
 import { ToBytes, ToBytesResult } from './CLValue';
 import { Ok } from 'ts-results';
 import { toBytesU64, toBytesU8 } from './ByteConverters';

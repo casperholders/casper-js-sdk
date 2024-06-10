@@ -1,11 +1,6 @@
-import { Some } from 'ts-results';
-import { CLPublicKey, CLU64, CLU64Type, CLValueBuilder } from './CLValue';
+import { CLPublicKey } from './CLValue';
 import { RuntimeArgs } from './RuntimeArgs';
-import {
-  Transaction,
-  TransactionCategoryMint,
-  TransactionV1Body
-} from './TransactionUtil';
+import { TransactionCategoryMint, TransactionV1Body } from './TransactionUtil';
 import { byteHash } from './ByteConverters';
 import { expect } from 'chai';
 import { Native } from './TransactionTarget';
@@ -44,24 +39,11 @@ describe('TransactionUtil', () => {
   const expectedBodyHash =
     '7d963698c7464204e91e1b1b4ead647a9e85e64dbf5573b2180216214d155724';
   it('should calculate body has correctly', () => {
-    const paymentAmount = 10000000000;
-    const id = 1717417611160;
-    const initiatorPublicKey = CLPublicKey.fromHex(
+    CLPublicKey.fromHex(
       '01ae0a8ba1e0d2c96eaa84de63d4051396147ed30aeba6919b01952c833e0814b8',
       false
     );
-    const toPublicKey = CLPublicKey.fromHex(
-      '012706c89fdca5419f573464abba1583d6c6c268548769e582683cd794b2998696',
-      false
-    );
-    const args2 = RuntimeArgs.fromMap({
-      //"source"
-      target: toPublicKey,
-      amount: CLValueBuilder.u512(paymentAmount),
-      id: CLValueBuilder.option(Some(new CLU64(id)), new CLU64Type())
-    });
     const serializer = new TypedJSON(RuntimeArgs);
-    const q = serializer.toPlainJson(args2);
     const args = serializer.parse(mockArgs)!;
 
     const transactionTarget = new Native();

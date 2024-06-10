@@ -1,4 +1,3 @@
-import { jsonMember, jsonObject } from 'typedjson';
 import {
   CLAccountHash,
   CLErrorCodes,
@@ -8,7 +7,7 @@ import {
 } from './CLValue';
 import { Err, Ok } from 'ts-results';
 import { concat } from '@ethersproject/bytes';
-import { toBytesString, toBytesU8 } from './ByteConverters';
+import { toBytesU8 } from './ByteConverters';
 
 const PUBLIC_KEY_TAG = 0;
 const ACCOUNT_HASH_TAG = 1;

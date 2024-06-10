@@ -1,6 +1,6 @@
 import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
 import { expect } from 'chai';
-import assert, { fail } from 'assert';
+import assert from 'assert';
 import { TransactionTarget, matchTransactionTarget } from './TransactionTarget';
 
 @jsonObject

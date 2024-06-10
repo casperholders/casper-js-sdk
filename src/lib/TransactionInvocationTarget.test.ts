@@ -1,6 +1,6 @@
-import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
+import { TypedJSON } from 'typedjson';
 import { expect } from 'chai';
-import assert, { fail } from 'assert';
+import assert from 'assert';
 import { TransactionInvocationTarget } from './TransactionInvocationTarget';
 
 const expectedBytesForByHash = [
