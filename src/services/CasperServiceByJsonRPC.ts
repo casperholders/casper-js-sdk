@@ -7,6 +7,7 @@ import {
   CLAccountHash,
   CLPublicKey,
   DeployUtil,
+  TransactionUtil,
   encodeBase16,
   StoredValue
 } from '..';
@@ -37,7 +38,9 @@ import {
   GetBlockTransfersResult,
   QueryBalanceDetailsResult,
   AddressableEntityWrapper,
-  TransactionHash
+  TransactionHash,
+  TransactionResult,
+  GetTransactionResult
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -113,6 +116,7 @@ export interface ValidatorsInfoResult extends RpcResult {
 
 /** JSON RPC service for interacting with Casper nodes */
 export class CasperServiceByJsonRPC {
+  oneMegaByte = 1048576;
   /** JSON RPC client */
   protected client: Client;
 
@@ -180,7 +184,7 @@ export class CasperServiceByJsonRPC {
     transaction_hash: TransactionHash,
     finalizedApprovals?: boolean,
     props?: RpcRequestProps
-  ): Promise<GetDeployResult> {
+  ): Promise<GetTransactionResult> {
     const params: any[] = [transaction_hash];
     if (finalizedApprovals) {
       params.push(finalizedApprovals);
@@ -609,9 +613,22 @@ export class CasperServiceByJsonRPC {
    * @param deploy deploy to check size.
    */
   public checkDeploySize(deploy: DeployUtil.Deploy) {
-    const oneMegaByte = 1048576;
     const size = DeployUtil.deploySizeInBytes(deploy);
-    if (size > oneMegaByte) {
+    if (size > this.oneMegaByte) {
+      throw Error(
+        `Deploy can not be send, because it's too large: ${size} bytes. ` +
+          `Max size is 1 megabyte.`
+      );
+    }
+  }
+
+  /**
+   * Check deploy size and throws error if deploy size exceeds 1 Mbytes.
+   * @param deploy deploy to check size.
+   */
+  public checkTransactionSize(transaction: TransactionUtil.Transaction) {
+    const size = transaction.sizeInBytes();
+    if (size > this.oneMegaByte) {
       throw Error(
         `Deploy can not be send, because it's too large: ${size} bytes. ` +
           `Max size is 1 megabyte.`
@@ -653,6 +670,78 @@ export class CasperServiceByJsonRPC {
       },
       props?.timeout
     );
+  }
+
+  /**
+   * Deploys a provided signed deploy
+   * @param signedTransaction A signed `Transaction` object to be sent to a node
+   * @param props optional request props
+   * @remarks A deploy must not exceed 1 megabyte
+   */
+  public async transaction(
+    signedTransaction: TransactionUtil.Transaction,
+    props?: RpcRequestProps & {
+      /**
+       * Throws error for unsigned deploy if true
+       * @default false
+       */
+      checkApproval?: boolean;
+    }
+  ): Promise<TransactionResult> {
+    this.checkTransactionSize(signedTransaction);
+
+    const { checkApproval = false } = props ?? {};
+    if (checkApproval && !signedTransaction.hasApprovals()) {
+      throw new Error('Required signed transaction');
+    }
+    const params = [
+      TransactionUtil.transactionToJson(signedTransaction).transaction
+    ];
+    return await this.client.request(
+      {
+        method: 'account_put_transaction',
+        params: params
+      },
+      props?.timeout
+    );
+  }
+
+  public async waitForTransaction(
+    transaction: TransactionUtil.Transaction,
+    timeout = 60000
+  ) {
+    const sleep = (ms: number) => {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    };
+    const timer = setTimeout(() => {
+      throw new Error('Timeout');
+    }, timeout);
+    while (true) {
+      const transactionHash = transaction.getTransactionHash();
+      const transactionInfo = await this.getTransactionInfo(transactionHash);
+
+      let successful = false;
+      const execution_result = transactionInfo.execution_info?.execution_result;
+
+      if (!execution_result) {
+        successful = false;
+      } else {
+        if ('Version1' in execution_result) {
+          //Technically Transaction should never have Version1 execution result
+          successful = !!execution_result.Version1.Success;
+        }
+        if ('Version2' in execution_result) {
+          successful = execution_result.Version2.error_message === null;
+        }
+      }
+
+      if (successful) {
+        clearTimeout(timer);
+        return transactionInfo;
+      } else {
+        await sleep(400);
+      }
+    }
   }
 
   /**

@@ -20,12 +20,23 @@ import {
   CLValueBuilder,
   CLValueParsers,
   CLKeyParameters,
-  CLAccountHash
+  CLAccountHash,
+  TransactionUtil,
+  CLPublicKey,
+  CLU64,
+  CLU64Type,
+  encodeBase16
 } from '../../src/index';
 import { sleep } from './utils';
 import { Contract } from '../../src/lib/Contracts';
 
 import { FAUCET_PRIV_KEY, NETWORK_NAME, NODE_URL } from '../config';
+import { PricingMode } from '../../src/lib/TransactionUtil';
+import { Native, TransactionTarget } from '../../src/lib/TransactionTarget';
+import { Transfer } from '../../src/lib/TransactionEntryPoint';
+import { Standard } from '../../src/lib/TransactionScheduling';
+import { InitiatorAddr } from '../../src/lib/InitiatorAddr';
+import { Some } from 'ts-results';
 
 config();
 
@@ -247,6 +258,65 @@ describe('CasperServiceByJsonRPC', () => {
     expect(balanceByUref.eq(balanceByPublicKey)).to.be;
   });
 
+  it('should transfer CSPR - account_put_transaction', async () => {
+    // for native-transfers payment price is fixed
+    const paymentAmount = 10000000000;
+    const id = Date.now();
+
+    let initiatorAddr = InitiatorAddr.fromPublicKey(faucetKey.publicKey);
+    const ttl = 1000000;
+    const transactionParams = new TransactionUtil.Version1Params(
+      initiatorAddr,
+      Date.now(),
+      ttl,
+      NETWORK_NAME,
+      PricingMode.fromFixed(100)
+    );
+
+    const toPublicKey = Keys.Ed25519.new().publicKey;
+    let runtimeArgs = RuntimeArgs.fromMap({
+      target: toPublicKey,
+      amount: CLValueBuilder.u512(paymentAmount),
+      id: CLValueBuilder.option(Some(new CLU64(id)), new CLU64Type())
+    });
+    let transactionTarget = new Native();
+    let transactionEntryPoint = new Transfer();
+    let transactionScheduling = new Standard();
+    let transaction = TransactionUtil.makeV1Transaction(
+      transactionParams,
+      runtimeArgs,
+      transactionTarget,
+      transactionEntryPoint,
+      transactionScheduling
+    );
+
+    const signedTransaction = TransactionUtil.signTransaction(
+      transaction,
+      faucetKey
+    );
+    await client.transaction(signedTransaction);
+    await sleep(2500);
+    const result = await client.waitForTransaction(signedTransaction, 100000);
+    if (!result) {
+      assert.fail('Transfer deploy failed');
+    }
+    expect(encodeBase16(signedTransaction.Version1!.hash)).to.be.equal(
+      result.transaction.Version1.hash
+    );
+    let block_hash = result.execution_info?.block_hash;
+    if (!block_hash) {
+      assert.fail('Expected block_hash in execution_info');
+    }
+    transferBlockHash = block_hash;
+
+    const balance = await client.queryBalance(
+      PurseIdentifier.MainPurseUnderPublicKey,
+      toPublicKey.toHex(false)
+    );
+
+    expect('' + paymentAmount).to.be.equal(balance.toString());
+  });
+
   it('should transfer CSPR - account_put_deploy', async () => {
     // for native-transfers payment price is fixed
     const paymentAmount = 10000000000;
@@ -326,7 +396,6 @@ describe('CasperServiceByJsonRPC', () => {
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
     const named_key = AddressableEntity!.named_keys.find((i: NamedKey) => {
-      console.error(`key name ${i.name}`);
       return i.name === 'my-key-name';
     })?.key;
 
@@ -371,7 +440,6 @@ describe('CasperServiceByJsonRPC', () => {
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
     const contractHash = AddressableEntity!.named_keys.find((i: NamedKey) => {
-      console.error(`key name ${i.name}`);
       return i.name === 'erc20_token_contract';
     })?.key;
 
