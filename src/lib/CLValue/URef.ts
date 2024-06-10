@@ -11,7 +11,8 @@ import {
   ResultAndRemainder,
   ToBytesResult,
   resultHelper,
-  padNum
+  padNum,
+  UREF_PREFIX
 } from './index';
 import { UREF_TYPE, CLTypeTag } from './constants';
 import { decodeBase16, encodeBase16 } from '../Conversions';
@@ -40,12 +41,11 @@ export class CLURefType extends CLType {
   tag = CLTypeTag.URef;
 }
 
-const FORMATTED_STRING_PREFIX = 'uref';
 /**
  * Length of [[URef]] address field.
  * @internal
  */
-const UREF_ADDR_LENGTH = 32;
+export const UREF_ADDR_LENGTH = 32;
 /**
  * Length of [[ACCESS_RIGHT]] field.
  * @internal
@@ -102,12 +102,12 @@ export class CLURef extends CLValue implements CLKeyVariant {
   /**
    * Parses a casper-client supported string formatted argument into a `URef`.
    */
-  static fromFormattedStr(input: string): CLURef {
-    if (!input.startsWith(`${FORMATTED_STRING_PREFIX}-`)) {
+  static fromFormattedString(input: string): CLURef {
+    if (!input.startsWith(`${UREF_PREFIX}-`)) {
       throw new Error("Prefix is not 'uref-'");
     }
     const parts = input
-      .substring(`${FORMATTED_STRING_PREFIX}-`.length)
+      .substring(`${UREF_PREFIX}-`.length)
       .split('-', 2);
     if (parts.length !== 2) {
       throw new Error('No access rights as suffix');
@@ -127,7 +127,7 @@ export class CLURef extends CLValue implements CLKeyVariant {
   }
 
   toFormattedString(): string {
-    return [FORMATTED_STRING_PREFIX, this.toString()].join('-');
+    return [UREF_PREFIX, this.toString()].join('-');
   }
 
   toJSON(): string {

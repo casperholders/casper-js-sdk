@@ -12,6 +12,7 @@ import {
   ACCOUNT_HASH_TYPE,
   CLByteArrayType,
   ACCOUNT_HASH_LENGTH,
+  ACCOUNT_HASH_PREFIX,
   KeyTag
 } from './index';
 
@@ -43,8 +44,6 @@ export class CLAccountHashBytesParser extends CLValueBytesParsers {
     return resultHelper(Ok(accountHash), bytes.subarray(ACCOUNT_HASH_LENGTH));
   }
 }
-
-const ACCOUNT_HASH_PREFIX = 'account-hash';
 
 /** A cryptographic public key. */
 export class CLAccountHash extends CLValue implements CLKeyVariant {
