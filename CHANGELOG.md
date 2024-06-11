@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   ### Removed
  -->
 
-## [3.0.0-rc1] - 2024-06-11
+## [3.0.0-rc0] - 2024-06-11
 
 ## Added
 
