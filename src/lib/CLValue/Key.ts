@@ -99,18 +99,22 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
           concat([Uint8Array.from([KeyTag.Dictionary]), value.data.data])
         );
       case KeyTag.SystemEntityRegistry:
+        // TODO: Add padding to 32
         return Ok(
           concat([Uint8Array.from([KeyTag.SystemEntityRegistry]), value.data.data])
         );
       case KeyTag.EraSummary:
+        // TODO: Add padding to 32
         return Ok(
           concat([Uint8Array.from([KeyTag.EraSummary]), value.data.data])
         );
       case KeyTag.ChainspecRegistry:
+        // TODO: Add padding to 32
         return Ok(
           concat([Uint8Array.from([KeyTag.ChainspecRegistry]), value.data.data])
         );
       case KeyTag.ChecksumRegistry:
+        // TODO: Add padding to 32
         return Ok(
           concat([Uint8Array.from([KeyTag.ChecksumRegistry]), value.data.data])
         );
