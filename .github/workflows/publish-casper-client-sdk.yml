@@ -31,8 +31,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmjs.org'
-    - run: npm install
-    - uses: JS-DevTools/npm-publish@v3
+    - name: Install and Build 🔧 
+      run: |
+        npm install
+        npm build
+    - name: Publish 
+      uses: JS-DevTools/npm-publish@v3
       with:
         token: ${{ secrets.NPM_TOKEN }}
         tag: ${{ env.release_tag }}
