@@ -13,6 +13,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   ### Removed
  -->
 
+## [3.0.0-rc1] - 2024-06-11
+
+## Added
+
+- Condor functionalities added
+
 ## [2.15.5] - 2024-04-18
 
 ### Fixed
