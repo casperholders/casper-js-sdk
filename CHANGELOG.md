@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [3.0.0-rc00] - 2024-06-11
 
+This release candidate is compatible with [#node RC2](https://github.com/casper-network/casper-node/tree/release-2.0.0-rc2)
+
 ## Added
 
 - `CLAccountHash` now has `toFormattedStr()` and `fromFormattedStr(hexStr: string)` methods
