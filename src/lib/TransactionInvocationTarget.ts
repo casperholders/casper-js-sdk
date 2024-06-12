@@ -8,7 +8,7 @@ import {
   byteArrayJsonSerializer,
   undefinedSafeByteArrayJsonDeserializer,
   undefinedSafeByteArrayJsonSerializer
-} from './Common';
+} from './SerializationUtils';
 
 const INVOCABLE_ENTITY_TAG = 0;
 const INVOCABLE_ENTITY_ALIAS_TAG = 1;

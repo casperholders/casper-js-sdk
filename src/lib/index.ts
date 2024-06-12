@@ -5,6 +5,12 @@ import * as TransactionUtil from './TransactionUtil';
 import * as HDKeys from './CasperHDKeys';
 import * as Keys from './Keys';
 import * as Serialization from './Serialization';
+import * as TransactionEntryPoint from './TransactionEntryPoint';
+import * as TransactionInvocationTarget from './TransactionInvocationTarget';
+import * as TransactionScheduling from './TransactionScheduling';
+import * as TransactionTarget from './TransactionTarget';
+import * as InitiatorAddr from './InitiatorAddr';
+import * as SerializationUtils from './SerializationUtils';
 export * from './Signer';
 export * from './CLValue';
 export * from './StoredValue';
@@ -20,5 +26,11 @@ export {
   Serialization,
   DeployUtil,
   Result,
-  TransactionUtil
+  TransactionUtil,
+  TransactionEntryPoint,
+  TransactionInvocationTarget,
+  TransactionScheduling,
+  TransactionTarget,
+  InitiatorAddr,
+  SerializationUtils
 };

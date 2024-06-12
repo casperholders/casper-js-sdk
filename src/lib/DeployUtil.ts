@@ -50,7 +50,9 @@ import {
   desRA,
   humanizerTTL,
   serRA
-} from './Common';
+} from './SerializationUtils';
+
+export { Approval } from './SerializationUtils';
 
 /**
  * An object containing a unique address constructed from the `transferId` of a `Deploy`

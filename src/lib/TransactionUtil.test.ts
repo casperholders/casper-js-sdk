@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { Native } from './TransactionTarget';
 import { Transfer } from './TransactionEntryPoint';
 import { Standard } from './TransactionScheduling';
-import { byteArrayJsonSerializer } from './Common';
+import { byteArrayJsonSerializer } from './SerializationUtils';
 import { TypedJSON } from 'typedjson';
 
 const mockArgs = {

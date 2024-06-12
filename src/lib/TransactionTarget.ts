@@ -5,7 +5,10 @@ import { ToBytes, ToBytesResult } from './CLValue';
 import { Ok } from 'ts-results';
 import { concat } from '@ethersproject/bytes';
 import { toBytesArrayU8, toBytesU8 } from './ByteConverters';
-import { byteArrayJsonDeserializer, byteArrayJsonSerializer } from './Common';
+import {
+  byteArrayJsonDeserializer,
+  byteArrayJsonSerializer
+} from './SerializationUtils';
 
 export interface TransactionTarget extends ToBytes {
   toJSON(): unknown;
