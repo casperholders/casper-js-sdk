@@ -20,9 +20,7 @@ import {
   CLValueBuilder,
   CLValueParsers,
   CLKeyParameters,
-  CLAccountHash,
   TransactionUtil,
-  CLPublicKey,
   CLU64,
   CLU64Type,
   encodeBase16
@@ -32,7 +30,7 @@ import { Contract } from '../../src/lib/Contracts';
 
 import { FAUCET_PRIV_KEY, NETWORK_NAME, NODE_URL } from '../config';
 import { PricingMode } from '../../src/lib/TransactionUtil';
-import { Native, TransactionTarget } from '../../src/lib/TransactionTarget';
+import { Native } from '../../src/lib/TransactionTarget';
 import { Transfer } from '../../src/lib/TransactionEntryPoint';
 import { Standard } from '../../src/lib/TransactionScheduling';
 import { InitiatorAddr } from '../../src/lib/InitiatorAddr';
@@ -270,7 +268,7 @@ describe('CasperServiceByJsonRPC', () => {
       Date.now(),
       ttl,
       NETWORK_NAME,
-      PricingMode.fromFixed(100)
+      PricingMode.buildFixed(100)
     );
 
     const toPublicKey = Keys.Ed25519.new().publicKey;

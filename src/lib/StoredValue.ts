@@ -165,8 +165,6 @@ export class BidKindDelegator {
   @jsonMember({
     name: 'vesting_schedule',
     deserializer: json => {
-      //TODO this is very sub-optimal, but typedjson doesn't work with interface-defined json deserialization by default.
-      // We would have to copy the whole Bid structrure tree into a class to make it work out of the box
       if (!json) return;
       const str = JSON.stringify(json);
       const bid: VestingSchedule = JSON.parse(str);
@@ -607,7 +605,7 @@ export class PackageJson {
 }
 
 @jsonObject
-export class ValidatorBid {
+export class ValidatorBidJson {
   @jsonMember({ name: 'validator_public_key', constructor: String })
   validatorPublicKey: string;
 
@@ -623,8 +621,6 @@ export class ValidatorBid {
   @jsonMember({
     name: 'vesting_schedule',
     deserializer: json => {
-      //TODO this is very sub-optimal, but typedjson doesn't work with interface-defined json deserialization by default.
-      // We would have to copy the whole Bid structrure tree into a class to make it work out of the box
       if (!json) return;
       const str = JSON.stringify(json);
       const bid: VestingSchedule = JSON.parse(str);
@@ -644,8 +640,6 @@ export class ValidatorBid {
 export class BidKindJson {
   @jsonMember({
     deserializer: json => {
-      //TODO this is very sub-optimal, but typedjson doesn't work with interface-defined json deserialization by default.
-      // We would have to copy the whole Bid structrure tree into a class to make it work out of the box
       if (!json) return;
       const str = JSON.stringify(json);
       const bid: Bid = JSON.parse(str);
@@ -660,11 +654,9 @@ export class BidKindJson {
 
   @jsonMember({
     deserializer: json => {
-      //TODO this is very sub-optimal, but typedjson doesn't work with interface-defined json deserialization by default.
-      // We would have to copy the whole Bid structrure tree into a class to make it work out of the box
       if (!json) return;
       const str = JSON.stringify(json);
-      const bid: ValidatorBid = JSON.parse(str);
+      const bid: ValidatorBidJson = JSON.parse(str);
       return bid;
     },
     serializer: value => {
@@ -672,7 +664,7 @@ export class BidKindJson {
       return value;
     }
   })
-  Validator?: ValidatorBid;
+  Validator?: ValidatorBidJson;
 
   @jsonMember({ constructor: BidKindDelegator })
   Delegator?: BidKindDelegator;

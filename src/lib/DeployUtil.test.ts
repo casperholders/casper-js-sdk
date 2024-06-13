@@ -3,7 +3,7 @@ import { Keys, DeployUtil, CLValueBuilder } from '.';
 import { StoredContractByHash } from './DeployUtil';
 import { TypedJSON } from 'typedjson';
 import { DEFAULT_DEPLOY_TTL } from '../constants';
-import { dehumanizerTTL, humanizerTTL } from './Common';
+import { dehumanizerTTL, humanizerTTL } from './SerializationUtils';
 
 const testDeploy = () => {
   const senderKey = Keys.Ed25519.new();

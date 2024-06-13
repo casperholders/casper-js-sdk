@@ -559,7 +559,7 @@ export type Transfer =
       Version2: TransferV2;
     };
 
-export interface GetBlockTransfersResult extends RpcResult {
+export interface Transfers extends RpcResult {
   block_hash: string;
   transfers: Transfer[];
 }

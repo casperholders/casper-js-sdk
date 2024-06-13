@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
-import { TypedJSON } from 'typedjson';
+import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
 
 import {
   CLAccountHash,
@@ -33,9 +33,8 @@ import {
   getBlockHash,
   getHeight,
   EntityIdentifier,
-  AddressableEntity,
   QueryGlobalStateResult,
-  GetBlockTransfersResult,
+  Transfers,
   QueryBalanceDetailsResult,
   AddressableEntityWrapper,
   TransactionHash,
@@ -50,6 +49,30 @@ export enum PurseIdentifier {
   MainPurseUnderAccountHash = 'main_purse_under_account_hash',
   MainPurseUnderEntityAddr = 'main_purse_under_entity_addr',
   PurseUref = 'purse_uref'
+}
+
+/** Object to represent era specific information */
+@jsonObject
+export class EraSummary {
+  /** The hash of the block when the era was encountered */
+  @jsonMember({ constructor: String, name: 'block_hash' })
+  blockHash: string;
+
+  /** The id of the era */
+  @jsonMember({ constructor: Number, name: 'era_id' })
+  eraId: number;
+
+  /** A `StoredValue` */
+  @jsonMember(() => ({ constructor: StoredValue, name: 'stored_value' }))
+  StoredValue: StoredValue;
+
+  /** The state root hash when the era was encountered */
+  @jsonMember({ constructor: String, name: 'state_root_hash' })
+  stateRootHash: string;
+
+  /** The merke proof */
+  @jsonMember({ constructor: String, name: ' merkle_proof' })
+  merkleProof: string;
 }
 
 /** Interface describing the validators at a certain era */
@@ -95,7 +118,8 @@ export interface DelegatorInfo {
   staked_amount: string;
 }
 
-export interface BidEntry {
+/** Interface describing a validator's auction bid */
+export interface ValidatorBid {
   public_key: string;
   bid: Bid;
 }
@@ -105,7 +129,7 @@ export interface AuctionState {
   state_root_hash: string;
   block_height: number;
   era_validators: EraValidators[];
-  bids: BidEntry[];
+  bids: ValidatorBid[];
 }
 
 /** Result interface describing validator information */
@@ -406,7 +430,6 @@ export class CasperServiceByJsonRPC {
     entityIdentifier: EntityIdentifier,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-    //TODO getEntity can also return LegacyAccount, needs to be handled
   ): Promise<{ AddressableEntity: AddressableEntityWrapper }> {
     const params: any[] = [entityIdentifier];
 
@@ -442,12 +465,11 @@ export class CasperServiceByJsonRPC {
     console.warn(
       'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
     );
-    const params = { state_root_hash: stateRootHash, purse_uref: purseUref };
     return await this.client
       .request(
         {
           method: 'state_get_balance',
-          params
+          params: { state_root_hash: stateRootHash, purse_uref: purseUref }
         },
         props?.timeout
       )
@@ -601,7 +623,6 @@ export class CasperServiceByJsonRPC {
       return res;
     } else {
       const storedValueJson = res.stored_value;
-      console.log(storedValueJson);
       const serializer = new TypedJSON(StoredValue);
       const storedValue = serializer.parse(storedValueJson)!;
       return storedValue;
@@ -827,7 +848,7 @@ export class CasperServiceByJsonRPC {
   public async getBlockTransfers(
     blockHash?: string,
     props?: RpcRequestProps
-  ): Promise<GetBlockTransfersResult> {
+  ): Promise<Transfers> {
     return this.client.request(
       {
         method: 'chain_get_block_transfers',
@@ -849,11 +870,10 @@ export class CasperServiceByJsonRPC {
    * @param props optional request props
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
-  //TODO return of this function should be typed
   public async getEraInfoBySwitchBlock(
     blockIdentifier: BlockIdentifier,
     props?: RpcRequestProps
-  ) {
+  ): Promise<EraSummary> {
     const params = {
       block_identifier: blockIdentifier
     };
@@ -875,7 +895,7 @@ export class CasperServiceByJsonRPC {
   public async getEraSummary(
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ) {
+  ): Promise<EraSummary> {
     const params = [];
     if (blockIdentifier) {
       params.push(blockIdentifier);

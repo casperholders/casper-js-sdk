@@ -11,6 +11,7 @@ class UnderTest {
   })
   public a: InitiatorAddr;
 }
+
 describe('InitiatorAddr', () => {
   const serializer = new TypedJSON(UnderTest);
   it('should parse InitiatorAddr::PublicKey correctly', () => {
