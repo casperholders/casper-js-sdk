@@ -10,8 +10,8 @@ export abstract class CasperHDKey<AsymmetricKey> {
   static readonly bip44Index = 506;
 
   constructor(
-    private seed: Uint8Array,
-    private signatureAlorithm: SignatureAlgorithm
+    public seed: Uint8Array,
+    public signatureAlgorithm: SignatureAlgorithm
   ) {}
 
   // see https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#path-levels
@@ -54,8 +54,11 @@ export abstract class CasperHDKey<AsymmetricKey> {
    * @param mnemonic word array
    * @returns relevant `Uint8Array`
    */
-  public static mnemonicToSeed(mnemonic: string): Uint8Array {
-    return bip39.mnemonicToEntropy(mnemonic, CasperHDKey.getWordlist());
+  public static mnemonicToSeed(
+    mnemonic: string,
+    passphrase?: string
+  ): Uint8Array {
+    return bip39.mnemonicToSeedSync(mnemonic, passphrase);
   }
 
   /**
@@ -89,20 +92,6 @@ export abstract class CasperHDKey<AsymmetricKey> {
    */
   public static getDefaultWordlist(): string[] {
     return engWordlist;
-  }
-
-  /**
-   * Returns SignatureAlgorithm
-   */
-  public get signatureAlgorithm(): SignatureAlgorithm {
-    return this.signatureAlorithm;
-  }
-
-  /**
-   * Returns current wallet's mnemonic
-   */
-  public get mnemonic(): string {
-    return bip39.entropyToMnemonic(this.seed, CasperHDKey.getWordlist());
   }
 
   /**

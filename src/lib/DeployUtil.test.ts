@@ -1,12 +1,9 @@
 import { expect, assert } from 'chai';
 import { Keys, DeployUtil, CLValueBuilder } from '.';
-import {
-  humanizerTTL,
-  dehumanizerTTL,
-  StoredContractByHash
-} from './DeployUtil';
+import { StoredContractByHash } from './DeployUtil';
 import { TypedJSON } from 'typedjson';
 import { DEFAULT_DEPLOY_TTL } from '../constants';
+import { dehumanizerTTL, humanizerTTL } from './SerializationUtils';
 
 const testDeploy = () => {
   const senderKey = Keys.Ed25519.new();
@@ -35,7 +32,7 @@ const testDeploy = () => {
 describe('DeployUtil', () => {
   it('should stringify/parse DeployHeader correctly', function() {
     const ed25519Key = Keys.Ed25519.new();
-    const deployHeader = new DeployUtil.DeployHeader(
+    const deployHeader = DeployUtil.DeployHeader.build(
       ed25519Key.publicKey,
       123456,
       654321,
@@ -351,7 +348,7 @@ describe('DeployUtil', () => {
     const transferAmount = 10;
     const transferId = 34;
 
-    const uniqAddress = new DeployUtil.UniqAddress(
+    const uniqAddress = DeployUtil.UniqAddress.build(
       recipientKey.publicKey,
       transferId
     );
@@ -404,7 +401,7 @@ describe('DeployUtil', () => {
     const transferId = '80172309';
     const transferIdHex = '0x04c75515';
 
-    const uniqAddress = new DeployUtil.UniqAddress(
+    const uniqAddress = DeployUtil.UniqAddress.build(
       recipientKey.publicKey,
       transferId
     );

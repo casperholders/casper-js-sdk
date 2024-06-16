@@ -213,6 +213,10 @@ export interface ExecutionInfo {
   execution_result: ExecutionResult | undefined;
 }
 
+export interface GetTransactionResult extends RpcResult {
+  transaction: any;
+  execution_info: ExecutionInfo | undefined;
+}
 /** Result interface for a get-deploy call */
 export interface GetDeployResult extends RpcResult {
   deploy: JsonDeploy;
@@ -238,6 +242,11 @@ export interface GetBlockResult extends RpcResult {
 /** Result interface for a account_put_deploy call */
 export interface DeployResult extends RpcResult {
   deploy_hash: string;
+}
+
+export interface TransactionResult extends RpcResult {
+  Deploy?: string;
+  Version1?: string;
 }
 
 export type JsonBlockHash = string;
@@ -550,7 +559,7 @@ export type Transfer =
       Version2: TransferV2;
     };
 
-export interface GetBlockTransfersResult extends RpcResult {
+export interface Transfers extends RpcResult {
   block_hash: string;
   transfers: Transfer[];
 }

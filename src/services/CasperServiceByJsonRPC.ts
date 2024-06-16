@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
-import { TypedJSON } from 'typedjson';
+import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
 
 import {
   CLAccountHash,
   CLPublicKey,
   DeployUtil,
+  TransactionUtil,
   encodeBase16,
   StoredValue
 } from '..';
@@ -32,12 +33,13 @@ import {
   getBlockHash,
   getHeight,
   EntityIdentifier,
-  AddressableEntity,
   QueryGlobalStateResult,
-  GetBlockTransfersResult,
+  Transfers,
   QueryBalanceDetailsResult,
   AddressableEntityWrapper,
-  TransactionHash
+  TransactionHash,
+  TransactionResult,
+  GetTransactionResult
 } from './types';
 
 export { JSONRPCError } from '@open-rpc/client-js';
@@ -47,6 +49,30 @@ export enum PurseIdentifier {
   MainPurseUnderAccountHash = 'main_purse_under_account_hash',
   MainPurseUnderEntityAddr = 'main_purse_under_entity_addr',
   PurseUref = 'purse_uref'
+}
+
+/** Object to represent era specific information */
+@jsonObject
+export class EraSummary {
+  /** The hash of the block when the era was encountered */
+  @jsonMember({ constructor: String, name: 'block_hash' })
+  blockHash: string;
+
+  /** The id of the era */
+  @jsonMember({ constructor: Number, name: 'era_id' })
+  eraId: number;
+
+  /** A `StoredValue` */
+  @jsonMember(() => ({ constructor: StoredValue, name: 'stored_value' }))
+  StoredValue: StoredValue;
+
+  /** The state root hash when the era was encountered */
+  @jsonMember({ constructor: String, name: 'state_root_hash' })
+  stateRootHash: string;
+
+  /** The merke proof */
+  @jsonMember({ constructor: String, name: ' merkle_proof' })
+  merkleProof: string;
 }
 
 /** Interface describing the validators at a certain era */
@@ -92,7 +118,8 @@ export interface DelegatorInfo {
   staked_amount: string;
 }
 
-export interface BidEntry {
+/** Interface describing a validator's auction bid */
+export interface ValidatorBid {
   public_key: string;
   bid: Bid;
 }
@@ -102,7 +129,7 @@ export interface AuctionState {
   state_root_hash: string;
   block_height: number;
   era_validators: EraValidators[];
-  bids: BidEntry[];
+  bids: ValidatorBid[];
 }
 
 /** Result interface describing validator information */
@@ -113,6 +140,7 @@ export interface ValidatorsInfoResult extends RpcResult {
 
 /** JSON RPC service for interacting with Casper nodes */
 export class CasperServiceByJsonRPC {
+  oneMegaByte = 1048576;
   /** JSON RPC client */
   protected client: Client;
 
@@ -180,7 +208,7 @@ export class CasperServiceByJsonRPC {
     transaction_hash: TransactionHash,
     finalizedApprovals?: boolean,
     props?: RpcRequestProps
-  ): Promise<GetDeployResult> {
+  ): Promise<GetTransactionResult> {
     const params: any[] = [transaction_hash];
     if (finalizedApprovals) {
       params.push(finalizedApprovals);
@@ -402,7 +430,6 @@ export class CasperServiceByJsonRPC {
     entityIdentifier: EntityIdentifier,
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-    //TODO getEntity can also return LegacyAccount, needs to be handled
   ): Promise<{ AddressableEntity: AddressableEntityWrapper }> {
     const params: any[] = [entityIdentifier];
 
@@ -438,12 +465,11 @@ export class CasperServiceByJsonRPC {
     console.warn(
       'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
     );
-    const params = { state_root_hash: stateRootHash, purse_uref: purseUref };
     return await this.client
       .request(
         {
           method: 'state_get_balance',
-          params
+          params: { state_root_hash: stateRootHash, purse_uref: purseUref }
         },
         props?.timeout
       )
@@ -597,7 +623,6 @@ export class CasperServiceByJsonRPC {
       return res;
     } else {
       const storedValueJson = res.stored_value;
-      console.log(storedValueJson);
       const serializer = new TypedJSON(StoredValue);
       const storedValue = serializer.parse(storedValueJson)!;
       return storedValue;
@@ -609,9 +634,22 @@ export class CasperServiceByJsonRPC {
    * @param deploy deploy to check size.
    */
   public checkDeploySize(deploy: DeployUtil.Deploy) {
-    const oneMegaByte = 1048576;
     const size = DeployUtil.deploySizeInBytes(deploy);
-    if (size > oneMegaByte) {
+    if (size > this.oneMegaByte) {
+      throw Error(
+        `Deploy can not be send, because it's too large: ${size} bytes. ` +
+          `Max size is 1 megabyte.`
+      );
+    }
+  }
+
+  /**
+   * Check deploy size and throws error if deploy size exceeds 1 Mbytes.
+   * @param deploy deploy to check size.
+   */
+  public checkTransactionSize(transaction: TransactionUtil.Transaction) {
+    const size = transaction.sizeInBytes();
+    if (size > this.oneMegaByte) {
       throw Error(
         `Deploy can not be send, because it's too large: ${size} bytes. ` +
           `Max size is 1 megabyte.`
@@ -653,6 +691,78 @@ export class CasperServiceByJsonRPC {
       },
       props?.timeout
     );
+  }
+
+  /**
+   * Deploys a provided signed deploy
+   * @param signedTransaction A signed `Transaction` object to be sent to a node
+   * @param props optional request props
+   * @remarks A deploy must not exceed 1 megabyte
+   */
+  public async transaction(
+    signedTransaction: TransactionUtil.Transaction,
+    props?: RpcRequestProps & {
+      /**
+       * Throws error for unsigned deploy if true
+       * @default false
+       */
+      checkApproval?: boolean;
+    }
+  ): Promise<TransactionResult> {
+    this.checkTransactionSize(signedTransaction);
+
+    const { checkApproval = false } = props ?? {};
+    if (checkApproval && !signedTransaction.hasApprovals()) {
+      throw new Error('Required signed transaction');
+    }
+    const params = [
+      TransactionUtil.transactionToJson(signedTransaction).transaction
+    ];
+    return await this.client.request(
+      {
+        method: 'account_put_transaction',
+        params: params
+      },
+      props?.timeout
+    );
+  }
+
+  public async waitForTransaction(
+    transaction: TransactionUtil.Transaction,
+    timeout = 60000
+  ) {
+    const sleep = (ms: number) => {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    };
+    const timer = setTimeout(() => {
+      throw new Error('Timeout');
+    }, timeout);
+    while (true) {
+      const transactionHash = transaction.getTransactionHash();
+      const transactionInfo = await this.getTransactionInfo(transactionHash);
+
+      let successful = false;
+      const execution_result = transactionInfo.execution_info?.execution_result;
+
+      if (!execution_result) {
+        successful = false;
+      } else {
+        if ('Version1' in execution_result) {
+          //Technically Transaction should never have Version1 execution result
+          successful = !!execution_result.Version1.Success;
+        }
+        if ('Version2' in execution_result) {
+          successful = execution_result.Version2.error_message === null;
+        }
+      }
+
+      if (successful) {
+        clearTimeout(timer);
+        return transactionInfo;
+      } else {
+        await sleep(400);
+      }
+    }
   }
 
   /**
@@ -738,7 +848,7 @@ export class CasperServiceByJsonRPC {
   public async getBlockTransfers(
     blockHash?: string,
     props?: RpcRequestProps
-  ): Promise<GetBlockTransfersResult> {
+  ): Promise<Transfers> {
     return this.client.request(
       {
         method: 'chain_get_block_transfers',
@@ -760,11 +870,10 @@ export class CasperServiceByJsonRPC {
    * @param props optional request props
    * @returns A `Promise` resolving to an `EraSummary` containing the era information
    */
-  //TODO return of this function should be typed
   public async getEraInfoBySwitchBlock(
     blockIdentifier: BlockIdentifier,
     props?: RpcRequestProps
-  ) {
+  ): Promise<EraSummary> {
     const params = {
       block_identifier: blockIdentifier
     };
@@ -786,7 +895,7 @@ export class CasperServiceByJsonRPC {
   public async getEraSummary(
     blockIdentifier?: BlockIdentifier,
     props?: RpcRequestProps
-  ) {
+  ): Promise<EraSummary> {
     const params = [];
     if (blockIdentifier) {
       params.push(blockIdentifier);

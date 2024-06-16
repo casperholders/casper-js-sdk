@@ -25,13 +25,17 @@ describe('CLAccountHash', () => {
   });
 
   it('Dealing with formatted strings', () => {
-    const hashStr = 'account-hash-9fb3803b335f14b083b97400e57d5c8e8ad0ec5859a51225b6611e34357c8d77';
+    const hashStr =
+      'account-hash-9fb3803b335f14b083b97400e57d5c8e8ad0ec5859a51225b6611e34357c8d77';
 
     const fromStr = CLAccountHash.fromFormattedStr(hashStr);
 
     expect(fromStr.toFormattedStr()).to.eq(hashStr);
 
-    const badFn = () => CLAccountHash.fromFormattedStr('9fb3803b335f14b083b97400e57d5c8e8ad0ec5859a51225b6611e34357c8d77');
+    const badFn = () =>
+      CLAccountHash.fromFormattedStr(
+        '9fb3803b335f14b083b97400e57d5c8e8ad0ec5859a51225b6611e34357c8d77'
+      );
     expect(badFn).to.throw();
   });
 });
