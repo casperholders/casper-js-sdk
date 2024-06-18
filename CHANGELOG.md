@@ -21,7 +21,7 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
 
 - `CLAccountHash` now has `toFormattedStr()` and `fromFormattedStr(hexStr: string)` methods
 - Changed `enum KeyVariant` to `enum KeyTag`, backfilled all the variants that were missing, added condor-specifin ones
-- `StoredValue` has new fields which represent enum variants and are reuqired for 2.x compatibility:
+- `StoredValue` has new fields which represent enum variants and are reuqired for `condor` compatibility:
   - `NamedKey`
   - `AddressableEntity`
   - `BidKind`
@@ -37,7 +37,7 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
 - `merkleProof` field to `EraSummary` class
 - optional `latest_switch_block_hash` added to `GetStatusResult`
 - field `execution_info` of type `ExecutionInfo` was added. This affects `CasperServiceByJsonRPC.getDeployInfo` method return types.
-- `block_with_signatures` was added of type `JsonBlockWithSignatures` was added. `JsonBlockWithSignatures.block` is a union type of either `Version1` or `Version2`. `Version1` variant should be returned for blocks cretaed prior to 2.x migration, `Version2` for blocks created after 2.x migration. This change affects `CasperServiceByJsonRPC.getBlockInfo` method return type.
+- `block_with_signatures` was added of type `JsonBlockWithSignatures` was added. `JsonBlockWithSignatures.block` is a union type of either `Version1` or `Version2`. `Version1` variant should be returned for blocks created prior to `condor` migration, `Version2` for blocks created after `condor` migration. This change affects `CasperServiceByJsonRPC.getBlockInfo` method return type.
 - static `build` function to the following classes:
   - UniqAddress
   - DeployHeader
@@ -51,7 +51,8 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
 - `delegators` entry field from `Bid` class changed structure
 - `CasperServiceByJsonRPC.getEraInfoBySwitchBlock` argument changed from `string` to `BlockIdentifier`
 - `CasperServiceByJsonRPC.getEraSummary` argument changed from `string` to `BlockIdentifier`
-- `ExecutionResult` class changed to a type union of either `Version1` or `Version2`. For deploys created pre-2.x `ExecutionResult` should contain `Version1`, for post `2.x` they will be `Version2` variants.
+- `ExecutionResult` class changed to a type union of either `Version1` or `Version2`. For deploys created pre-condor `ExecutionResult` should contain `Version1`, for post `condor` they will be `Version2` variants.
+- `getAccountInfo` function will only work before `condor` node release
 
 ### Removed
 
@@ -59,7 +60,7 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
   - UniqAddress
   - DeployHeader
   - Deploy
-- `getEraInfoBySwitchBlockHeight`, `getEraSummaryByBlockHeight`, `getAccountBalanceUrefByPublicKeyHash`, `getAccountBalanceUrefByPublicKey` methods from `CasperServiceByJsonRPC` class
+- `getEraInfoBySwitchBlockHeight`, `getEraSummaryByBlockHeight` methods from `CasperServiceByJsonRPC` class
 - `BalanceServiceByJsonRPC` class
 - `execution_results` field in `GetDeployResult` was removed. This affects `CasperServiceByJsonRPC.getDeployInfo` method return types.
 - field `block` of `GetBlockResult`. This change affects `CasperServiceByJsonRPC.getBlockInfo` method return type

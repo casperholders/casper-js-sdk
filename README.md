@@ -52,3 +52,9 @@ Basic library usage can be found below files:
 - [ByteConverters](https://github.com/casper-ecosystem/casper-js-sdk/tree/dev/src/lib/ByteConverters.test.ts)
 - [ChecksummedHex](https://github.com/casper-ecosystem/casper-js-sdk/tree/dev/src/lib/ChecksummedHex.test.ts)
 - [Serialization](https://github.com/casper-ecosystem/casper-js-sdk/tree/dev/src/lib/Serialization.test.ts)
+
+## Migration guides
+
+### v2 to v3
+
+Please see [v2-v3 migration guide](./resources/migration-guide_v2-v3.md).
