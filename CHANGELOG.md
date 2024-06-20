@@ -20,7 +20,7 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
 ### Added
 
 - `CLAccountHash` now has `toFormattedStr()` and `fromFormattedStr(hexStr: string)` methods
-- Changed `enum KeyVariant` to `enum KeyTag`, backfilled all the variants that were missing, added condor-specifin ones
+- Changed `enum KeyVariant` to `enum KeyTag`, backfilled all the variants that were missing, added Condor-specific ones
 - `StoredValue` has new fields which represent `enum` variants and are required for `Condor` compatibility:
   - `NamedKey`
   - `AddressableEntity`
