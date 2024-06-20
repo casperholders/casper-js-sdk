@@ -6,10 +6,7 @@ export const getAccountInfo: any = async (
   publicKey: CLPublicKey
 ) => {
   const client = new CasperServiceByJsonRPC(nodeAddress);
-  const stateRootHash = await client.getStateRootHash();
-  const accountHash = publicKey.toAccountHashStr();
-  const blockState = await client.getBlockState(stateRootHash, accountHash, []);
-  return blockState.Account;
+  return client.getAccountInfo(publicKey);
 };
 
 export const sleep = (ms: number) => {

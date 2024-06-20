@@ -477,6 +477,47 @@ export class CasperServiceByJsonRPC {
   }
 
   /**
+   * Get the reference to an account balance uref by an account's account hash, so it may be cached. This will work only for accounts that were not migrated to `AddressableEntity`
+   * @param stateRootHash The state root hash at which the main purse URef will be queried
+   * @param accountHash The account hash of the account
+   * @param props optional request props
+   * @returns The account's main purse URef
+   */
+  public async getAccountBalanceUrefByPublicKeyHash(
+    stateRootHash: string,
+    accountHash: string,
+    props?: RpcRequestProps
+  ): Promise<string> {
+    const account = await this.getBlockState(
+      stateRootHash,
+      'account-hash-' + accountHash,
+      [],
+      props
+    ).then(res => res.Account!);
+    return account.mainPurse;
+  }
+
+  /**
+   * Get the reference to an account balance uref by an account's public key, so it may be cached. This will work only for accounts that were not migrated to `AddressableEntity`
+   * @param stateRootHash The state root hash at which the main purse URef will be queried
+   * @param publicKey The public key of the account
+   * @param props optional request props
+   * @returns The account's main purse URef
+   * @see [getAccountBalanceUrefByPublicKeyHash](#L486)
+   */
+  public async getAccountBalanceUrefByPublicKey(
+    stateRootHash: string,
+    publicKey: CLPublicKey,
+    props?: RpcRequestProps
+  ): Promise<string> {
+    return this.getAccountBalanceUrefByPublicKeyHash(
+      stateRootHash,
+      encodeBase16(publicKey.toAccountHash()),
+      props
+    );
+  }
+
+  /**
    * Returns balance using a purse identifier and a state identifier
    * @added casper-node 1.5
    * @example
@@ -662,7 +703,7 @@ export class CasperServiceByJsonRPC {
    * @param signedDeploy A signed `Deploy` object to be sent to a node
    * @param props optional request props
    * @remarks A deploy must not exceed 1 megabyte
-   * @deprecated use `sendTransaction` method
+   * @deprecated use `transaction` method
    */
   public async deploy(
     signedDeploy: DeployUtil.Deploy,
@@ -675,7 +716,7 @@ export class CasperServiceByJsonRPC {
     }
   ): Promise<DeployResult> {
     console.warn(
-      'This method is deprecated and will be removed in the future release, please use sendTransaction method instead.'
+      'This method is deprecated and will be removed in the future release, please use transaction method instead.'
     );
     this.checkDeploySize(signedDeploy);
 
@@ -873,18 +914,24 @@ export class CasperServiceByJsonRPC {
   public async getEraInfoBySwitchBlock(
     blockIdentifier: BlockIdentifier,
     props?: RpcRequestProps
-  ): Promise<EraSummary> {
+  ): Promise<EraSummary | undefined> {
     const params = {
       block_identifier: blockIdentifier
     };
 
-    return this.client.request(
+    const res = await this.client.request(
       {
         method: 'chain_get_era_info_by_switch_block',
         params
       },
       props?.timeout
     );
+    if (res.error) {
+      throw res;
+    } else {
+      const serializer = new TypedJSON(EraSummary);
+      return serializer.parse(res.era_summary);
+    }
   }
 
   /**

@@ -7,6 +7,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 import {
   CasperServiceByJsonRPC,
+  EraSummary,
   NamedKey,
   PurseIdentifier,
   getBlockHash,
@@ -507,7 +508,7 @@ describe('CasperServiceByJsonRPC', () => {
   });
 
   it('chain_get_era_info_by_switch_block - by height', async () => {
-    const getEarliestSwitchBlock = async (): Promise<[number, any]> => {
+    const getEarliestSwitchBlock = async (): Promise<[number, EraSummary]> => {
       return new Promise(async resolve => {
         // For some reason in 2.0 blok with height 0 has `era_end` filled, but there is no era_end entity in storage.
         // This makes getEraInfoBySwitchBlock fail on block 0. For now we start from 1, but we need to know if this is a bug or it's intentional.
@@ -515,10 +516,12 @@ describe('CasperServiceByJsonRPC', () => {
         let height = 1;
         let summary;
         while (!summary) {
-          const era = await client.getEraInfoBySwitchBlock({ Height: height });
-          if (era.era_summary) {
+          const eraSummary = await client.getEraInfoBySwitchBlock({
+            Height: height
+          });
+          if (eraSummary) {
             height = height;
-            summary = era.era_summary;
+            summary = eraSummary;
             return resolve([height, summary]);
           } else {
             height += 1;
@@ -528,7 +531,7 @@ describe('CasperServiceByJsonRPC', () => {
     };
     const [height, eraSummary] = await getEarliestSwitchBlock();
     const blockInfo = await client.getBlockInfoByHeight(height);
-    expect(eraSummary.block_hash).to.be.equal(
+    expect(eraSummary.blockHash).to.be.equal(
       getBlockHash(blockInfo.block_with_signatures!.block)
     );
   });
