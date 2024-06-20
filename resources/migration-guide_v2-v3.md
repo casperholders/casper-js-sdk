@@ -1,18 +1,18 @@
-# v2 to v3 migration guide
+# V2 to V3 Migration Guide
 
-The `v3` release made several breaking changes to inputs, outputs that were present in `v2`. All of them are attempts to follow how the API of the node changed. `V3` does not introduce any changes to the behavior of the sdk outside of those that were forced by the changes in the node. This document will explain changes on an endpoint by endpoint basis.
+The `v3` release makes several breaking changes to inputs and outputs that were present in `v2`. All changes to the SDK are driven by changes to the API of the node. `V3` does not introduce any changes to the behavior of the SDK, outside of those that were forced by the changes in the node. This document will explain all changes on an endpoint by endpoint basis.
 
 ## Breaking changes
 
 ### getAccountInfo
 
-This util function will be usable only to fetch unmigrated data from the node. All legacy `Account` data in the noe will be gradually migrated to the new `AddressableEntity` format. This is a lazy process and will happen once someone deploys a `Transaction` using an `Account`. To fetch accounts created after node 2.x migration or ones that were migrated to the new format, use `CasperServiceByJsonRPC.getEntity`.
+This `util` function will be usable only to fetch unmigrated data from the node. All legacy `Account` data in the node will be gradually migrated to the new `AddressableEntity` format. This is a "lazy" process and will happen once someone deploys a `Transaction` using an `Account`. To fetch accounts created after node 2.x migration or ones that were migrated to the new format, use `CasperServiceByJsonRPC.getEntity`.
 
 ### CasperServiceByJsonRPC
 
 #### getDeployInfo
 
-The output data for this endpoint changed. The `GetDeployResult` used to have `deploy` and `execution_results` fields. `deploy` should not have changed, but the `execution_results` field was removed. It was replaced by optional `execution_info` field of `ExecutionInfo` type. `ExecutionInfo` contains `execution_result` (singular, not an array as previously) of `ExecutionResult` type. `ExecutionResult` type changed to be a union of either `ExecutionResultV1` or `ExecutionResultV2`. `ExecutionResultV1` corresponds to `ExecutionResult` prior to the discussed changes.
+The output data for this endpoint changed. The `GetDeployResult` previously contained `deploy` and `execution_results` fields. `deploy` should not have changed, but the `execution_results` field was removed. It was replaced by optional `execution_info` field of `ExecutionInfo` type. `ExecutionInfo` contains `execution_result` (singular, not an array as previously) of `ExecutionResult` type. `ExecutionResult` type changed to be a union of either `ExecutionResultV1` or `ExecutionResultV2`. `ExecutionResultV1` corresponds to `ExecutionResult` prior to the discussed changes.
 
 The `getDeployInfo` should return `ExecutionResultV1` for deploys that were executed before the changes in the node. For deploys that were executed after the changes in the node, the `getDeployInfo` should return `ExecutionResultV2`. Anyone using `getDeployInfo` should be prepared to handle both variants of `ExecutionResult`.
 
@@ -26,7 +26,7 @@ This method change it's output data (`GetBlockResult`). Currently it returns a s
 { Version1: BlockV1 }
 ```
 
-for blocks that were produced prior to `condor` migration, and
+for blocks that were produced prior to `Condor` migration, and
 
 ```
 { Version2: BlockV2 }
@@ -36,11 +36,11 @@ for blocks produced after the migration. `BlockV1` is the same as type `JsonBloc
 
 #### getBlockInfoByHeight
 
-All the changes that were made to output data of `getBlockInfo` were also made to `getBlockInfoByHeight`.
+All changes made to output data of `getBlockInfo` were also made to `getBlockInfoByHeight`.
 
 #### getLatestBlockInfo
 
-All the changes that were made to output data of `getBlockInfo` were also made to `getLatestBlockInfo`.
+All changes made to output data of `getBlockInfo` were also made to `getLatestBlockInfo`.
 
 #### getEraInfoBySwitchBlock
 
