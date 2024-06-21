@@ -60,6 +60,15 @@ export class Stored implements TransactionTarget {
       concat([toBytesU8(STORED_TAG), idBytes, maybeRuntimeBytes.unwrap()])
     );
   }
+  static build(
+    id: TransactionInvocationTarget,
+    runtime: TransactionRuntime
+  ): Stored {
+    const stored = new Stored();
+    stored.id = id;
+    stored.runtime = runtime;
+    return stored;
+  }
 }
 
 /**
@@ -87,6 +96,7 @@ function kindToBytes(sessionKind: TransactionSessionKind): Uint8Array {
       throw new Error('Unknown session kind');
   }
 }
+
 @jsonObject
 export class Session implements TransactionTarget {
   @jsonMember({ constructor: String })
@@ -125,6 +135,17 @@ export class Session implements TransactionTarget {
         runtimeBytes
       ])
     );
+  }
+  static build(
+    kind: TransactionSessionKind,
+    moduleBytes: Uint8Array,
+    runtime: TransactionRuntime
+  ): Session {
+    const session = new Session();
+    session.kind = kind;
+    session.moduleBytes = moduleBytes;
+    session.runtime = runtime;
+    return session;
   }
 }
 

@@ -79,20 +79,22 @@ export class TransactionV1Header implements ToBytes {
   })
   public initiatorAddr: InitiatorAddr;
 
-  constructor(
+  static build(
     initiatorAddr: InitiatorAddr,
     timestamp: number,
     ttl: number,
     chainName: string,
     bodyHash: Uint8Array,
     pricingMode: PricingMode
-  ) {
-    this.initiatorAddr = initiatorAddr;
-    this.timestamp = timestamp;
-    this.ttl = ttl;
-    this.bodyHash = bodyHash;
-    this.pricingMode = pricingMode;
-    this.chainName = chainName;
+  ): TransactionV1Header {
+    const header = new TransactionV1Header();
+    header.initiatorAddr = initiatorAddr;
+    header.timestamp = timestamp;
+    header.ttl = ttl;
+    header.bodyHash = bodyHash;
+    header.pricingMode = pricingMode;
+    header.chainName = chainName;
+    return header;
   }
 
   toBytes(): ToBytesResult {
@@ -202,15 +204,17 @@ export class TransactionV1 {
   @jsonArrayMember(Approval)
   public approvals: Approval[];
 
-  constructor(
+  static build(
     hash: Uint8Array,
     header: TransactionV1Header,
     body: TransactionV1Body
-  ) {
-    this.hash = hash;
-    this.header = header;
-    this.body = body;
-    this.approvals = [];
+  ): TransactionV1 {
+    const transaction = new TransactionV1();
+    transaction.hash = hash;
+    transaction.header = header;
+    transaction.body = body;
+    transaction.approvals = [];
+    return transaction;
   }
 }
 
@@ -409,19 +413,20 @@ export function makeV1Transaction(
   args: RuntimeArgs,
   target: TransactionTarget,
   entryPoint: TransactionEntryPoint,
-  scheduling: TransactionScheduling
+  scheduling: TransactionScheduling,
+  transactionKind: number
 ): Transaction {
   const body = TransactionV1Body.build(
     args,
     target,
     entryPoint,
-    TransactionCategoryMint,
+    transactionKind,
     scheduling
   );
   const bodyBytes = body.toBytes().unwrap();
   const bodyHash = byteHash(bodyBytes);
 
-  const header = new TransactionV1Header(
+  const header = TransactionV1Header.build(
     transactionParam.initiatorAddr,
     transactionParam.timestamp,
     transactionParam.ttl,
@@ -432,6 +437,6 @@ export function makeV1Transaction(
 
   const headerBytes = header.toBytes().unwrap();
   const headerHash = byteHash(headerBytes);
-  const version1 = new TransactionV1(headerHash, header, body);
+  const version1 = TransactionV1.build(headerHash, header, body);
   return Transaction.fromVersion1(version1);
 }

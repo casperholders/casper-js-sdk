@@ -12,6 +12,7 @@ const UNDELEGATE_TAG = 5;
 const REDELEGATE_TAG = 6;
 const ACTIVATE_BID_TAG = 7;
 const CHANGE_BID_PUBLIC_KEY_TAG = 8;
+const CALL_TAG = 9;
 
 export abstract class TransactionEntryPoint extends ToBytes {
   public abstract toJSON(): unknown;
@@ -27,6 +28,15 @@ export class WithdrawBid extends TransactionEntryPoint {
   }
 }
 
+export class Call extends TransactionEntryPoint {
+  public toJSON(): string {
+    return 'Call';
+  }
+
+  toBytes(): ToBytesResult {
+    return Ok(toBytesU8(CALL_TAG));
+  }
+}
 export class Delegate extends TransactionEntryPoint {
   public toJSON(): string {
     return 'Delegate';
@@ -95,14 +105,15 @@ export class ChangeBidPublicKey extends TransactionEntryPoint {
 
 export class Custom extends TransactionEntryPoint {
   value: string;
-  constructor(custom: string) {
-    super();
-    this.value = custom;
-  }
   public toJSON(): unknown {
     return {
       Custom: this.value
     };
+  }
+  static build(value: string): Custom {
+    const custom = new Custom();
+    custom.value = value;
+    return custom;
   }
   toBytes(): ToBytesResult {
     const valueBytes = toBytesString(this.value);
@@ -115,7 +126,7 @@ export const matchTransactionEntryPoint = (
 ): TransactionEntryPoint | undefined => {
   if (type instanceof Object) {
     if (type.Custom) {
-      return new Custom(type.Custom);
+      return Custom.build(type.Custom);
     }
   } else if (type == 'ChangeBidPublicKey') {
     return new ChangeBidPublicKey();
@@ -133,6 +144,8 @@ export const matchTransactionEntryPoint = (
     return new Redelegate();
   } else if (type == 'ActivateBid') {
     return new ActivateBid();
+  } else if (type == 'Call') {
+    return new Call();
   }
 
   return undefined;
