@@ -1,4 +1,4 @@
-export FAUCET_PRIV_KEY="MC4CAQAwBQYDK2VwBCIEIH4rEEbgrO4gIfUe2mwzZDsnJTME5Cj5P6lRinG3S0Sg"
+export FAUCET_PRIV_KEY="MC4CAQAwBQYDK2VwBCIEIADgSIhbVhYEgVoSq0b0rIxs7YAGkHCEG6KBFbyPIBcW"
 export NODE_URL="http://127.0.0.1:7777/rpc"
 export HTTP_EVENT_STREAM_URL="http://127.0.0.1:19999/events"
 export HTTPS_EVENT_STREAM_URL="https://events.mainnet.casperlabs.io/events"

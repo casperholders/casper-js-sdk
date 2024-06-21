@@ -25,7 +25,6 @@ import {
   CLU64,
   CLU64Type,
   encodeBase16,
-  decodeBase16,
   TransactionRuntime
 } from '../../src/index';
 import { sleep } from './utils';
@@ -37,38 +36,20 @@ import {
   TransactionCategoryInstallUpgrade,
   TransactionCategoryLarge,
   TransactionCategoryMint,
-  TransactionCategorySmall,
   makeV1Transaction
 } from '../../src/lib/TransactionUtil';
 import {
   Native,
   Session,
   Stored,
-  TransactionSessionKind,
-  TransactionTarget
+  TransactionSessionKind
 } from '../../src/lib/TransactionTarget';
-import {
-  Call,
-  Custom,
-  TransactionEntryPoint,
-  Transfer,
-  WithdrawBid
-} from '../../src/lib/TransactionEntryPoint';
-import {
-  Standard,
-  TransactionScheduling
-} from '../../src/lib/TransactionScheduling';
+import { Call, Custom, Transfer } from '../../src/lib/TransactionEntryPoint';
+import { Standard } from '../../src/lib/TransactionScheduling';
 import { InitiatorAddr } from '../../src/lib/InitiatorAddr';
 import { Some } from 'ts-results';
 import { DEFAULT_DEPLOY_TTL } from '../../src/constants';
-import {
-  ByPackageHashJson,
-  TransactionInvocationTarget
-} from '../../src/lib/TransactionInvocationTarget';
-import {
-  undefinedSafeByteArrayJsonDeserializer,
-  undefinedSafeByteArrayJsonSerializer
-} from '../../src/lib/Common';
+import { TransactionInvocationTarget } from '../../src/lib/TransactionInvocationTarget';
 
 config();
 
@@ -556,7 +537,7 @@ describe('CasperServiceByJsonRPC', () => {
       Date.now(),
       DEFAULT_DEPLOY_TTL,
       NETWORK_NAME,
-      PricingMode.fromFixed(3)
+      PricingMode.buildFixed(3)
     );
     const transaction = makeV1Transaction(
       params,
@@ -576,7 +557,9 @@ describe('CasperServiceByJsonRPC', () => {
     await sleep(2500);
 
     let result = await client.waitForTransaction(signedTransaction, 100000);
-
+    if (!result) {
+      assert.fail('Deploy failed');
+    }
     let entity_identifier = {
       AccountHash: faucetKey.publicKey.toAccountHashStr()
     };
@@ -619,7 +602,7 @@ describe('CasperServiceByJsonRPC', () => {
       Date.now(),
       DEFAULT_DEPLOY_TTL,
       NETWORK_NAME,
-      PricingMode.fromFixed(3)
+      PricingMode.buildFixed(3)
     );
     const byHash = new TransactionInvocationTarget();
     const contractName = `cep18_contract_hash_${tokenName}`;
