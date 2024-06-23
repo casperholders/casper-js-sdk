@@ -1,12 +1,15 @@
 import { Ok } from 'ts-results';
 import { BigNumberish, BigNumber } from '@ethersproject/bignumber';
+
 import {
   KeyTag,
   ResultAndRemainder,
   resultHelper,
   CLErrorCodes,
-  CLValueBytesParsers,
-  UREF_ADDR_LENGTH,
+  CLAccountHash,
+  // CLValueBytesParsers,
+  // UREF_ADDR_LENGTH,
+  ACCOUNT_HASH_LENGTH,
   HASH_PREFIX,
   TRANSFER_PREFIX,
   DEPLOY_HASH_PREFIX,
@@ -17,7 +20,13 @@ import {
   DICTIONARY_PREFIX,
   SYSTEM_ENTITY_REGISTRY_PREFIX,
   ERA_SUMMARY_PREFIX,
-  UNBOND_PREFIX
+  UNBOND_PREFIX,
+  CHAINSPEC_REGISTRY_PREFIX,
+  CHECKSUM_REGISTRY_PREFIX,
+  BID_ADDR_PREFIX
+  // PACKAGE_PREFIX,
+  // BLOCK_GLOBAL_TIME_PREFIX,
+  // BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX
 } from './index';
 import { decodeBase16, encodeBase16 } from '../Conversions';
 
@@ -354,9 +363,7 @@ export class KeyEraSummary implements CLKeyVariant {
       throw new Error(`Prefix is not ${ERA_SUMMARY_PREFIX}`);
     }
 
-    const hashStr = input.substring(
-      `${ERA_SUMMARY_PREFIX}-`.length + 1
-    );
+    const hashStr = input.substring(`${ERA_SUMMARY_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
     return new KeyEraSummary(hashBytes);
@@ -386,11 +393,142 @@ export class KeyUnbond implements CLKeyVariant {
       throw new Error(`Prefix is not ${UNBOND_PREFIX}`);
     }
 
-    const hashStr = input.substring(
-      `${UNBOND_PREFIX}-`.length + 1
-    );
+    const hashStr = input.substring(`${UNBOND_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
     return new KeyUnbond(hashBytes);
   }
+}
+
+export class KeyChainspecRegistry implements CLKeyVariant {
+  keyVariant = KeyTag.ChainspecRegistry;
+  prefix = CHAINSPEC_REGISTRY_PREFIX;
+
+  constructor(public data: Uint8Array) {}
+
+  value(): any {
+    return this.data;
+  }
+
+  toString() {
+    return encodeBase16(this.data);
+  }
+
+  toFormattedString() {
+    return `${CHAINSPEC_REGISTRY_PREFIX}-${this.toString()}`;
+  }
+
+  static fromFormattedString(input: string): DeployHash {
+    if (!input.startsWith(`${CHAINSPEC_REGISTRY_PREFIX}-`)) {
+      throw new Error(`Prefix is not ${CHAINSPEC_REGISTRY_PREFIX}`);
+    }
+
+    const hashStr = input.substring(`${CHAINSPEC_REGISTRY_PREFIX}-`.length + 1);
+    const hashBytes = decodeBase16(hashStr);
+
+    return new KeyChainspecRegistry(hashBytes);
+  }
+}
+
+export class KeyChecksumRegistry implements CLKeyVariant {
+  keyVariant = KeyTag.ChecksumRegistry;
+  prefix = CHECKSUM_REGISTRY_PREFIX;
+
+  constructor(public data: Uint8Array) {}
+
+  value(): any {
+    return this.data;
+  }
+
+  toString() {
+    return encodeBase16(this.data);
+  }
+
+  toFormattedString() {
+    return `${CHECKSUM_REGISTRY_PREFIX}-${this.toString()}`;
+  }
+
+  static fromFormattedString(input: string): DeployHash {
+    if (!input.startsWith(`${CHECKSUM_REGISTRY_PREFIX}-`)) {
+      throw new Error(`Prefix is not ${CHECKSUM_REGISTRY_PREFIX}`);
+    }
+
+    const hashStr = input.substring(`${CHECKSUM_REGISTRY_PREFIX}-`.length + 1);
+    const hashBytes = decodeBase16(hashStr);
+
+    return new KeyChecksumRegistry(hashBytes);
+  }
+}
+
+// export class BidAddrBytesParser {
+//   fromBytesWithRemainder(
+//     bytes: Uint8Array
+//   ): ResultAndRemainder<CLKey, CLErrorCodes> {
+//   }
+// }
+
+const UNIFIED_TAG = 0;
+const VALIDATOR_TAG = 1;
+const DELEGATOR_TAG = 2;
+const CREDIT_TAG = 4;
+
+enum BidAddrTag {
+  // BidAddr for legacy unified bid.
+  Unified = UNIFIED_TAG,
+  /// BidAddr for validator bid.
+  Validator = VALIDATOR_TAG,
+  /// BidAddr for delegator bid.
+  Delegator = DELEGATOR_TAG,
+
+  /// BidAddr for auction credit.
+  Credit = CREDIT_TAG,
+}
+
+const BID_ADDR_TAG_LENGTH = 1;
+const VALIDATOR_BID_ADDR_LENGTH = ACCOUNT_HASH_LENGTH + BID_ADDR_TAG_LENGTH;
+const DELEGATOR_BID_ADDR_LENGTH = (ACCOUNT_HASH_LENGTH * 2) + BID_ADDR_TAG_LENGTH;
+
+interface BidAddrData {
+  Unified?: CLAccountHash,
+  Validator?: CLAccountHash,
+  Delegator?: {
+    validator: CLAccountHash,
+    delegator: CLAccountHash
+  },
+  Credit?: {
+    validator: CLAccountHash,
+    era_id: BigNumberish
+  }
+}
+
+export class BidAddr implements CLKeyVariant {
+  keyVariant = KeyTag.BidAddr;
+  prefix = BID_ADDR_PREFIX;
+  
+  bidAddrTag = BidAddrTag;
+
+  constructor(public data: BidAddrData) {}
+
+  value(): any {
+    return this.data;
+  }
+
+  // toString() {
+  //   return encodeBase16(this.data);
+  // }
+
+  // toFormattedString() {
+  //   return `${BID_ADDR_PREFIX}-${this.toString()}`;
+  // }
+
+  // static fromFormattedString(input: string): DeployHash {
+  //   if (!input.startsWith(`${BID_ADDR_PREFIX}-`)) {
+  //     throw new Error(`Prefix is not ${BID_ADDR_PREFIX}`);
+  //   }
+
+  //   const hashStr = input.substring(`${BID_PREFIX}-`.length + 1);
+  //   const hashBytes = decodeBase16(hashStr);
+
+  //   return new BidAddr(hashBytes);
+  // }
 }

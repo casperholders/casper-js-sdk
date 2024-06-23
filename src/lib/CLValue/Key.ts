@@ -28,6 +28,8 @@ import {
   KeySystemEntityRegistry,
   KeyEraSummary,
   KeyUnbond,
+  KeyChainspecRegistry,
+  KeyChecksumRegistry,
   ACCOUNT_HASH_PREFIX,
   HASH_PREFIX,
   UREF_PREFIX,
@@ -40,7 +42,13 @@ import {
   DICTIONARY_PREFIX,
   SYSTEM_ENTITY_REGISTRY_PREFIX,
   ERA_SUMMARY_PREFIX,
-  UNBOND_PREFIX
+  UNBOND_PREFIX,
+  CHAINSPEC_REGISTRY_PREFIX,
+  CHECKSUM_REGISTRY_PREFIX
+  // BID_ADDR_PREFIX,
+  // PACKAGE_PREFIX,
+  // BLOCK_GLOBAL_TIME_PREFIX,
+  // BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX
 } from './index';
 import { toBytesNumber } from '../ByteConverters';
 import { KEY_TYPE, CLTypeTag } from './constants';
@@ -90,6 +98,8 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
         return Ok(concat([Uint8Array.from([KeyTag.Balance]), value.data.data]));
       case KeyTag.Bid:
         return Ok(concat([Uint8Array.from([KeyTag.Bid]), value.data.data]));
+      case KeyTag.BidAddr:
+        return Ok(concat([]));
       case KeyTag.Withdraw:
         return Ok(
           concat([Uint8Array.from([KeyTag.Withdraw]), value.data.data])
@@ -98,28 +108,34 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
         return Ok(
           concat([Uint8Array.from([KeyTag.Dictionary]), value.data.data])
         );
-      case KeyTag.SystemEntityRegistry:
-        // TODO: Add padding to 32
+      case KeyTag.SystemEntityRegistry: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
         return Ok(
-          concat([Uint8Array.from([KeyTag.SystemEntityRegistry]), value.data.data])
+          concat([Uint8Array.from([KeyTag.SystemEntityRegistry]), padding])
         );
-      case KeyTag.EraSummary:
-        // TODO: Add padding to 32
+      }
+      case KeyTag.EraSummary: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
         return Ok(
-          concat([Uint8Array.from([KeyTag.EraSummary]), value.data.data])
+          concat([Uint8Array.from([KeyTag.EraSummary]), padding])
         );
-      case KeyTag.ChainspecRegistry:
-        // TODO: Add padding to 32
+      }
+      case KeyTag.ChainspecRegistry: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
         return Ok(
-          concat([Uint8Array.from([KeyTag.ChainspecRegistry]), value.data.data])
+          concat([Uint8Array.from([KeyTag.ChainspecRegistry]), padding])
         );
-      case KeyTag.ChecksumRegistry:
-        // TODO: Add padding to 32
+      }
+      case KeyTag.ChecksumRegistry: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
         return Ok(
-          concat([Uint8Array.from([KeyTag.ChecksumRegistry]), value.data.data])
+          concat([Uint8Array.from([KeyTag.ChecksumRegistry]), padding])
         );
-
-        throw new Error('TODO: Implement parsing and serializing');
+      }
       default:
         throw new Error(
           `Problem serializing keyVariant: ${value.data.keyVariant}`
@@ -233,18 +249,23 @@ export class CLKey extends CLValue {
           return new CLKey(EraInfo.fromFormattedString(input));
         case BALANCE_PREFIX:
           return new CLKey(Balance.fromFormattedString(input));
+        // note: BID_ADDR must come before BID as their heads overlap (bid- / bid-addr-)
         case BID_PREFIX:
           return new CLKey(KeyBid.fromFormattedString(input));
         case WITHDRAW_PREFIX:
           return new CLKey(Withdraw.fromFormattedString(input));
         case DICTIONARY_PREFIX:
           return new CLKey(KeyDictionary.fromFormattedString(input));
+        case UNBOND_PREFIX:
+          return new CLKey(KeyUnbond.fromFormattedString(input));
         case SYSTEM_ENTITY_REGISTRY_PREFIX:
           return new CLKey(KeySystemEntityRegistry.fromFormattedString(input));
         case ERA_SUMMARY_PREFIX:
           return new CLKey(KeyEraSummary.fromFormattedString(input));
-        case UNBOND_PREFIX:
-          return new CLKey(KeyUnbond.fromFormattedString(input));
+        case CHAINSPEC_REGISTRY_PREFIX:
+          return new CLKey(KeyChainspecRegistry.fromFormattedString(input));
+        case CHECKSUM_REGISTRY_PREFIX:
+          return new CLKey(KeyChecksumRegistry.fromFormattedString(input));
         default:
           throw new Error('Unsupported prefix');
       }
