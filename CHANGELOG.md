@@ -42,6 +42,7 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
   - UniqAddress
   - DeployHeader
   - Deploy
+- variants `TransactionProcessed`, `TransactionExpired` and `TransactionAccepted` of enum `EventName` in `EventStream.ts`
 
 ### Changed
 
@@ -64,6 +65,7 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
 - `BalanceServiceByJsonRPC` class
 - `execution_results` field in `GetDeployResult` was removed. This affects `CasperServiceByJsonRPC.getDeployInfo` method return types.
 - field `block` of `GetBlockResult`. This change affects `CasperServiceByJsonRPC.getBlockInfo` method return type
+- variants `DeployProcessed` and `DeployAccepted` of enum `EventName` in `EventStream.ts`
 
 ## [2.15.5] - 2024-04-18
 
