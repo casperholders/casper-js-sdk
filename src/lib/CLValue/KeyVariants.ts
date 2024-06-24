@@ -26,8 +26,8 @@ import {
   UNBOND_PREFIX,
   CHAINSPEC_REGISTRY_PREFIX,
   CHECKSUM_REGISTRY_PREFIX,
-  BID_ADDR_PREFIX
-  // PACKAGE_PREFIX,
+  BID_ADDR_PREFIX,
+  PACKAGE_PREFIX,
   // BLOCK_GLOBAL_TIME_PREFIX,
   // BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX
 } from './index';
@@ -464,13 +464,6 @@ export class KeyChecksumRegistry implements CLKeyVariant {
   }
 }
 
-// export class BidAddrBytesParser {
-//   fromBytesWithRemainder(
-//     bytes: Uint8Array
-//   ): ResultAndRemainder<CLKey, CLErrorCodes> {
-//   }
-// }
-
 const UNIFIED_TAG = 0;
 const VALIDATOR_TAG = 1;
 const DELEGATOR_TAG = 2;
@@ -488,10 +481,6 @@ enum BidAddrTag {
   Credit = CREDIT_TAG
 }
 
-// const BID_ADDR_TAG_LENGTH = 1;
-// const VALIDATOR_BID_ADDR_LENGTH = ACCOUNT_HASH_LENGTH + BID_ADDR_TAG_LENGTH;
-// const DELEGATOR_BID_ADDR_LENGTH = ACCOUNT_HASH_LENGTH * 2 + BID_ADDR_TAG_LENGTH;
-
 interface BidAddrData {
   Unified?: CLAccountHash;
   Validator?: CLAccountHash;
@@ -505,88 +494,8 @@ interface BidAddrData {
   };
 }
 
-export class BidAddr implements CLKeyVariant {
-  keyVariant = KeyTag.BidAddr;
-  prefix = BID_ADDR_PREFIX;
-
-  bidAddrTag = BidAddrTag;
-
-  constructor(public data: BidAddrData) {}
-
-  value(): any {
-    return this.data;
-  }
-
-  static validator(validator: CLAccountHash) {
-    return new BidAddr({ Validator: validator });
-  }
-
-  static delegator(validator: CLAccountHash, delegator: CLAccountHash) {
-    return new BidAddr({ Delegator: { validator, delegator } });
-  }
-
-  static legacy(validator: CLAccountHash) {
-    return new BidAddr({ Unified: validator });
-  }
-
-  static fromPublicKeys(validator: CLPublicKey, delegator?: CLPublicKey) {
-    if (delegator) {
-      return new BidAddr({
-        Delegator: {
-          validator: validator.toAccountHashType(),
-          delegator: delegator.toAccountHashType()
-        }
-      });
-    }
-
-    return new BidAddr({ Validator: validator.toAccountHashType() });
-  }
-
-  static credit(validator: CLAccountHash, eraId: BigNumberish) {
-    return new BidAddr({
-      Credit: {
-        validator: validator,
-        eraId
-      }
-    });
-  }
-
-  tag(): BidAddrTag {
-    if (this.data.Unified) return BidAddrTag.Unified;
-    if (this.data.Validator) return BidAddrTag.Validator;
-    if (this.data.Delegator) return BidAddrTag.Delegator;
-    if (this.data.Credit) return BidAddrTag.Credit;
-
-    throw new Error('Invalid data stored inside BidAddr');
-  }
-
-  toBytes() {
-    const tag = this.tag();
-
-    switch (tag) {
-      case BidAddrTag.Unified:
-        return concat([[tag], this.data.Unified!.data]);
-      case BidAddrTag.Validator:
-        return concat([[tag], this.data.Validator!.data]);
-      case BidAddrTag.Delegator:
-        return concat([
-          [tag],
-          this.data.Delegator!.validator.data,
-          this.data.Delegator!.delegator.data
-        ]);
-      case BidAddrTag.Credit:
-        const era = BigNumber.from(this.data.Credit!.eraId);
-        return concat([
-          [tag],
-          this.data.Credit!.validator.data,
-          toBytesU64(era)
-        ]);
-      default:
-        throw new Error('Unsupported tag while serializing!');
-    }
-  }
-
-  static fromBytes(
+export const BidAddrParser = {
+  fromBytesWithRemainder(
     bytes: Uint8Array
   ): ResultAndRemainder<BidAddr, CLErrorCodes> {
     const tag = bytes[0];
@@ -658,10 +567,91 @@ export class BidAddr implements CLKeyVariant {
       default:
         throw new Error('Unsupported tag while deserializing!');
     }
+  },
+  toBytes(value: BidAddr): Uint8Array {
+    const tag = value.tag();
+
+    switch (tag) {
+      case BidAddrTag.Unified:
+        return concat([[tag], value.data.Unified!.data]);
+      case BidAddrTag.Validator:
+        return concat([[tag], value.data.Validator!.data]);
+      case BidAddrTag.Delegator:
+        return concat([
+          [tag],
+          value.data.Delegator!.validator.data,
+          value.data.Delegator!.delegator.data
+        ]);
+      case BidAddrTag.Credit:
+        const era = BigNumber.from(value.data.Credit!.eraId);
+        return concat([
+          [tag],
+          value.data.Credit!.validator.data,
+          toBytesU64(era)
+        ]);
+      default:
+        throw new Error('Unsupported tag while serializing!');
+    }
+  }
+};
+
+export class BidAddr implements CLKeyVariant {
+  keyVariant = KeyTag.BidAddr;
+  prefix = BID_ADDR_PREFIX;
+
+  bidAddrTag = BidAddrTag;
+
+  constructor(public data: BidAddrData) {}
+
+  value(): any {
+    return this.data;
+  }
+
+  static validator(validator: CLAccountHash) {
+    return new BidAddr({ Validator: validator });
+  }
+
+  static delegator(validator: CLAccountHash, delegator: CLAccountHash) {
+    return new BidAddr({ Delegator: { validator, delegator } });
+  }
+
+  static legacy(validator: CLAccountHash) {
+    return new BidAddr({ Unified: validator });
+  }
+
+  static fromPublicKeys(validator: CLPublicKey, delegator?: CLPublicKey) {
+    if (delegator) {
+      return new BidAddr({
+        Delegator: {
+          validator: validator.toAccountHashType(),
+          delegator: delegator.toAccountHashType()
+        }
+      });
+    }
+
+    return new BidAddr({ Validator: validator.toAccountHashType() });
+  }
+
+  static credit(validator: CLAccountHash, eraId: BigNumberish) {
+    return new BidAddr({
+      Credit: {
+        validator: validator,
+        eraId
+      }
+    });
+  }
+
+  tag(): BidAddrTag {
+    if (this.data.Unified) return BidAddrTag.Unified;
+    if (this.data.Validator) return BidAddrTag.Validator;
+    if (this.data.Delegator) return BidAddrTag.Delegator;
+    if (this.data.Credit) return BidAddrTag.Credit;
+
+    throw new Error('Invalid data stored inside BidAddr');
   }
 
   toString() {
-    return encodeBase16(this.toBytes());
+    return encodeBase16(BidAddrParser.toBytes(this));
   }
 
   toFormattedString() {
@@ -675,12 +665,42 @@ export class BidAddr implements CLKeyVariant {
 
     const hashStr = input.substring(`${BID_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
-    const { result } = BidAddr.fromBytes(hashBytes);
+    const { result } = BidAddrParser.fromBytesWithRemainder(hashBytes);
 
     if (result.ok) {
       return result.val;
     } else {
       throw new Error('Problem deserializing bytes from string.');
     }
+  }
+}
+
+export class KeyPackage implements CLKeyVariant {
+  keyVariant = KeyTag.Package;
+  prefix = PACKAGE_PREFIX;
+
+  constructor(public data: Uint8Array) {}
+
+  value(): any {
+    return this.data;
+  }
+
+  toString() {
+    return encodeBase16(this.data);
+  }
+
+  toFormattedString() {
+    return `${PACKAGE_PREFIX}-${this.toString()}`;
+  }
+
+  static fromFormattedString(input: string): DeployHash {
+    if (!input.startsWith(`${PACKAGE_PREFIX}-`)) {
+      throw new Error(`Prefix is not ${PACKAGE_PREFIX}`);
+    }
+
+    const hashStr = input.substring(`${PACKAGE_PREFIX}-`.length + 1);
+    const hashBytes = decodeBase16(hashStr);
+
+    return new KeyPackage(hashBytes);
   }
 }

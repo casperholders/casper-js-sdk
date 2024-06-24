@@ -385,3 +385,11 @@ export const matchBytesToCLType = (
 
 export const padNum = (v: string, n = 1): string =>
   new Array(n).join('0').slice((n || 2) * -1) + v;
+
+export const splitAt = (i: number, arr: Uint8Array) => {
+  if (i > arr.length - 1) {
+    throw new Error('Early end of stream when deserializing data.');
+  }
+  const clonedArray = new Uint8Array(arr);
+  return [clonedArray.subarray(0, i), clonedArray.subarray(i)];
+}

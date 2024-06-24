@@ -30,6 +30,7 @@ import {
   KeyUnbond,
   KeyChainspecRegistry,
   KeyChecksumRegistry,
+  KeyPackage,
   ACCOUNT_HASH_PREFIX,
   HASH_PREFIX,
   UREF_PREFIX,
@@ -44,14 +45,17 @@ import {
   ERA_SUMMARY_PREFIX,
   UNBOND_PREFIX,
   CHAINSPEC_REGISTRY_PREFIX,
-  CHECKSUM_REGISTRY_PREFIX
+  CHECKSUM_REGISTRY_PREFIX,
+  BidAddr,
+  BidAddrParser
   // BID_ADDR_PREFIX,
   // PACKAGE_PREFIX,
   // BLOCK_GLOBAL_TIME_PREFIX,
   // BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX
 } from './index';
 import { toBytesNumber } from '../ByteConverters';
-import { KEY_TYPE, CLTypeTag } from './constants';
+import { KEY_TYPE, CLTypeTag, KEY_DEFAULT_BYTE_LENGTH } from './constants';
+import { splitAt } from './utils';
 
 export class CLKeyType extends CLType {
   linksTo = KEY_TYPE;
@@ -96,10 +100,11 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
         );
       case KeyTag.Balance:
         return Ok(concat([Uint8Array.from([KeyTag.Balance]), value.data.data]));
+      case KeyTag.BidAddr:
+        const bidAddrBytes = BidAddrParser.toBytes(value.data as BidAddr);
+        return Ok(concat([Uint8Array.from([KeyTag.BidAddr]), bidAddrBytes]));
       case KeyTag.Bid:
         return Ok(concat([Uint8Array.from([KeyTag.Bid]), value.data.data]));
-      case KeyTag.BidAddr:
-        return Ok(concat([]));
       case KeyTag.Withdraw:
         return Ok(
           concat([Uint8Array.from([KeyTag.Withdraw]), value.data.data])
@@ -118,9 +123,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
       case KeyTag.EraSummary: {
         const padding = new Uint8Array(32);
         padding.set(value.data.data, 0);
-        return Ok(
-          concat([Uint8Array.from([KeyTag.EraSummary]), padding])
-        );
+        return Ok(concat([Uint8Array.from([KeyTag.EraSummary]), padding]));
       }
       case KeyTag.ChainspecRegistry: {
         const padding = new Uint8Array(32);
@@ -154,45 +157,155 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     }
 
     const tag = bytes[0];
+    const contentBytes = bytes.subarray(1);
 
-    // TODO: Use switch
-    if (tag === KeyTag.Hash) {
-      const hashBytes = bytes.subarray(1);
-      const { result, remainder } = HashParser.fromBytesWithRemainder(
-        hashBytes
-      );
-      if (result.ok) {
-        const key = new CLKey(result.val);
-        return resultHelper(Ok(key), remainder);
-      } else {
-        return resultHelper<CLKey, CLErrorCodes>(Err(result.val));
+    switch (tag) {
+      case KeyTag.Hash: {
+        const hashBytes = bytes.subarray(1);
+        const { result, remainder } = HashParser.fromBytesWithRemainder(
+          hashBytes
+        );
+        if (result.ok) {
+          const key = new CLKey(result.val);
+          return resultHelper(Ok(key), remainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(result.val));
+        }
       }
-    } else if (tag === KeyTag.URef) {
-      const {
-        result: urefResult,
-        remainder: urefRemainder
-      } = new CLURefBytesParser().fromBytesWithRemainder(bytes.subarray(1));
-      if (urefResult.ok) {
-        const key = new CLKey(urefResult.val);
-        return resultHelper(Ok(key), urefRemainder);
-      } else {
-        return resultHelper<CLKey, CLErrorCodes>(Err(urefResult.val));
+      case KeyTag.URef: {
+        const {
+          result: urefResult,
+          remainder: urefRemainder
+        } = new CLURefBytesParser().fromBytesWithRemainder(bytes.subarray(1));
+        if (urefResult.ok) {
+          const key = new CLKey(urefResult.val);
+          return resultHelper(Ok(key), urefRemainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(urefResult.val));
+        }
       }
-    } else if (tag === KeyTag.Account) {
-      const {
-        result: accountHashResult,
-        remainder: accountHashRemainder
-      } = new CLAccountHashBytesParser().fromBytesWithRemainder(
-        bytes.subarray(1)
-      );
-      if (accountHashResult.ok) {
-        const key = new CLKey(accountHashResult.val);
-        return resultHelper(Ok(key), accountHashRemainder);
-      } else {
-        return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
+      case KeyTag.Account: {
+        const {
+          result: accountHashResult,
+          remainder: accountHashRemainder
+        } = new CLAccountHashBytesParser().fromBytesWithRemainder(
+          bytes.subarray(1)
+        );
+        if (accountHashResult.ok) {
+          const key = new CLKey(accountHashResult.val);
+          return resultHelper(Ok(key), accountHashRemainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
+        }
       }
-    } else {
-      return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
+      case KeyTag.Transfer: {
+        const [transferBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const transfer = new KeyTransferAddr(transferBytes);
+        return resultHelper(Ok(new CLKey(transfer)), remainder);
+      }
+      case KeyTag.DeployInfo: {
+        const [deployBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const deploy = new DeployHash(deployBytes);
+        return resultHelper(Ok(new CLKey(deploy)), remainder);
+      }
+      case KeyTag.EraInfo: {
+        const [eraBytes, remainder] = splitAt(
+          64,
+          contentBytes
+        );
+        const era = new EraInfo(eraBytes);
+        return resultHelper(Ok(new CLKey(era)), remainder);
+      }
+      case KeyTag.Balance: {
+        const [balanceBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const balance= new Balance(balanceBytes);
+        return resultHelper(Ok(new CLKey(balance)), remainder);
+      }
+      case KeyTag.BidAddr: {
+        const { result, remainder } = BidAddrParser.fromBytesWithRemainder(contentBytes);
+        if (result.ok) {
+          const key = new CLKey(result.val);
+          return resultHelper(Ok(key), remainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(result.val));
+        }
+      }
+      case KeyTag.Bid : {
+        const [bidBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const bid = new KeyBid(bidBytes);
+        return resultHelper(Ok(new CLKey(bid)), remainder);
+      }
+      case KeyTag.Withdraw: {
+        const [withdrawBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const withdraw = new Withdraw(withdrawBytes);
+        return resultHelper(Ok(new CLKey(withdraw)), remainder);
+      }
+      case KeyTag.Dictionary: {
+        const [dictBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const dict = new KeyDictionary(dictBytes);
+        return resultHelper(Ok(new CLKey(dict)), remainder);
+      }
+      case KeyTag.SystemEntityRegistry: {
+        const [systemBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const system = new KeySystemEntityRegistry(systemBytes);
+        return resultHelper(Ok(new CLKey(system)), remainder);
+      }
+      case KeyTag.EraSummary: {
+        const [eraBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const era = new KeyEraSummary(eraBytes);
+        return resultHelper(Ok(new CLKey(era)), remainder);
+      }
+      case KeyTag.ChainspecRegistry: {
+        const [chainBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const chain = new KeyChainspecRegistry(chainBytes);
+        return resultHelper(Ok(new CLKey(chain)), remainder);
+      }
+      case KeyTag.ChecksumRegistry: {
+        const [checksumBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const checksum = new KeyChecksumRegistry(checksumBytes);
+        return resultHelper(Ok(new CLKey(checksum)), remainder);
+      }
+      case KeyTag.Package: {
+        const [packageBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const keyPackage = new KeyPackage(packageBytes);
+        return resultHelper(Ok(new CLKey(keyPackage)), remainder);
+      }
+      default: {
+        return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
+      }
     }
   }
 }
