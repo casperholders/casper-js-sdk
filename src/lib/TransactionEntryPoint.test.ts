@@ -23,6 +23,7 @@ const redelegateMockJson = { a: 'Redelegate' };
 const transferMockJson = { a: 'Transfer' };
 const undelegateMockJson = { a: 'Undelegate' };
 const withdrawMockJson = { a: 'WithdrawBid' };
+const callMockJson = { a: 'Call' };
 
 describe('TransactionEntryPoint', () => {
   const serializer = new TypedJSON(UnderTest);
@@ -132,5 +133,17 @@ describe('TransactionEntryPoint', () => {
     const parsed = serializer.parse(withdrawMockJson);
     const bytes = parsed!.a.toBytes().unwrap();
     assert.deepStrictEqual(Array.from(bytes), [3]);
+  });
+
+  it('should parse TransactionEntryPoint::Call correctly', () => {
+    const parsed = serializer.parse(callMockJson);
+    const reserialized = JSON.parse(serializer.stringify(parsed!));
+    expect(reserialized).to.deep.eq(callMockJson);
+  });
+
+  it('should byte-serialize TransactionEntryPoint::Call correctly', () => {
+    const parsed = serializer.parse(callMockJson);
+    const bytes = parsed!.a.toBytes().unwrap();
+    assert.deepStrictEqual(Array.from(bytes), [9]);
   });
 });

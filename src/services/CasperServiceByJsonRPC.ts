@@ -2,7 +2,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
 import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
-
 import {
   CLAccountHash,
   CLPublicKey,
@@ -11,7 +10,6 @@ import {
   encodeBase16,
   StoredValue
 } from '..';
-
 import ProviderTransport, {
   SafeEventEmitterProvider
 } from './ProviderTransport';
@@ -724,7 +722,6 @@ export class CasperServiceByJsonRPC {
     if (checkApproval && signedDeploy.approvals.length == 0) {
       throw new Error('Required signed deploy');
     }
-
     return await this.client.request(
       {
         method: 'account_put_deploy',
@@ -749,7 +746,7 @@ export class CasperServiceByJsonRPC {
        */
       checkApproval?: boolean;
     }
-  ): Promise<TransactionResult> {
+  ): Promise<{ transaction_hash: TransactionResult }> {
     this.checkTransactionSize(signedTransaction);
 
     const { checkApproval = false } = props ?? {};
@@ -759,13 +756,11 @@ export class CasperServiceByJsonRPC {
     const params = [
       TransactionUtil.transactionToJson(signedTransaction).transaction
     ];
-    return await this.client.request(
-      {
-        method: 'account_put_transaction',
-        params: params
-      },
-      props?.timeout
-    );
+    const request = {
+      method: 'account_put_transaction',
+      params: params
+    };
+    return await this.client.request(request, props?.timeout);
   }
 
   public async waitForTransaction(
@@ -815,7 +810,7 @@ export class CasperServiceByJsonRPC {
   public async waitForDeploy(
     deploy: DeployUtil.Deploy | string,
     timeout = 60000
-  ) {
+  ): Promise<GetDeployResult> {
     const sleep = (ms: number) => {
       return new Promise(resolve => setTimeout(resolve, ms));
     };
@@ -1018,23 +1013,21 @@ export class CasperServiceByJsonRPC {
     props?: RpcRequestProps & { rawData?: boolean }
   ): Promise<StoredValue> {
     const rawData = props?.rawData ?? false;
-
-    const res = await this.client.request(
-      {
-        method: 'state_get_dictionary_item',
-        params: [
-          stateRootHash,
-          {
-            ContractNamedKey: {
-              key: contractHash,
-              dictionary_name: dictionaryName,
-              dictionary_item_key: dictionaryItemKey
-            }
+    const payload = {
+      method: 'state_get_dictionary_item',
+      params: [
+        stateRootHash,
+        {
+          EntityNamedKey: {
+            key: contractHash,
+            dictionary_name: dictionaryName,
+            dictionary_item_key: dictionaryItemKey
           }
-        ]
-      },
-      props?.timeout
-    );
+        }
+      ]
+    };
+
+    const res = await this.client.request(payload, props?.timeout);
     if (res.error) {
       return res;
     } else {
