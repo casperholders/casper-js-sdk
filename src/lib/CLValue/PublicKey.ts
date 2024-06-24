@@ -4,6 +4,7 @@ import { Ok, Err } from 'ts-results';
 import {
   CLType,
   CLValue,
+  CLAccountHash,
   CLValueBytesParsers,
   CLErrorCodes,
   resultHelper,
@@ -140,6 +141,11 @@ export class CLPublicKey extends CLValue {
     } else {
       return byteHash(concat([prefix, this.data]));
     }
+  }
+
+  toAccountHashType(): CLAccountHash {
+    const hash = this.toAccountHash();
+    return new CLAccountHash(hash);
   }
 
   toAccountHashStr(): string {

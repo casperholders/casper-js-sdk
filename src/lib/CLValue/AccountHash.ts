@@ -58,7 +58,9 @@ export class CLAccountHash extends CLValue implements CLKeyVariant {
   constructor(v: Uint8Array) {
     super();
     if (v.length !== ACCOUNT_HASH_LENGTH) {
-      throw new Error(`Wrong length of CLAccountHash. Please provide ${ACCOUNT_HASH_LENGTH} bytes`);
+      throw new Error(
+        `Wrong length of CLAccountHash. Please provide ${ACCOUNT_HASH_LENGTH} bytes.`
+      );
     }
     this.data = v;
   }
