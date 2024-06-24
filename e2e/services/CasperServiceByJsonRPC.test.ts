@@ -7,6 +7,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 import {
   CasperServiceByJsonRPC,
+  EraSummary,
   NamedKey,
   PurseIdentifier,
   getBlockHash,
@@ -23,18 +24,32 @@ import {
   TransactionUtil,
   CLU64,
   CLU64Type,
-  encodeBase16
+  encodeBase16,
+  TransactionRuntime
 } from '../../src/index';
 import { sleep } from './utils';
 import { Contract } from '../../src/lib/Contracts';
 
 import { FAUCET_PRIV_KEY, NETWORK_NAME, NODE_URL } from '../config';
-import { PricingMode } from '../../src/lib/TransactionUtil';
-import { Native } from '../../src/lib/TransactionTarget';
-import { Transfer } from '../../src/lib/TransactionEntryPoint';
+import {
+  PricingMode,
+  TransactionCategoryInstallUpgrade,
+  TransactionCategoryLarge,
+  TransactionCategoryMint,
+  makeV1Transaction
+} from '../../src/lib/TransactionUtil';
+import {
+  Native,
+  Session,
+  Stored,
+  TransactionSessionKind
+} from '../../src/lib/TransactionTarget';
+import { Call, Custom, Transfer } from '../../src/lib/TransactionEntryPoint';
 import { Standard } from '../../src/lib/TransactionScheduling';
 import { InitiatorAddr } from '../../src/lib/InitiatorAddr';
 import { Some } from 'ts-results';
+import { DEFAULT_DEPLOY_TTL } from '../../src/constants';
+import { TransactionInvocationTarget } from '../../src/lib/TransactionInvocationTarget';
 
 config();
 
@@ -285,9 +300,9 @@ describe('CasperServiceByJsonRPC', () => {
       runtimeArgs,
       transactionTarget,
       transactionEntryPoint,
-      transactionScheduling
+      transactionScheduling,
+      TransactionCategoryMint
     );
-
     const signedTransaction = TransactionUtil.signTransaction(
       transaction,
       faucetKey
@@ -400,33 +415,34 @@ describe('CasperServiceByJsonRPC', () => {
     assert.exists(named_key);
   });
 
-  //TODO we need a new wasm that works with 2.0
-  xit('should deploy wasm over rpc', async () => {
+  it('CEP18 should work deployed via "account_put_deploy"', async () => {
     const casperClient = new CasperClient(NODE_URL);
-    const erc20 = new Contract(casperClient);
-    const wasmPath = path.resolve(__dirname, './contract.wasm');
+    const cep18 = new Contract(casperClient);
+    const wasmPath = path.resolve(__dirname, './cep18.wasm');
     const wasm = new Uint8Array(fs.readFileSync(wasmPath, null).buffer);
+    const id = Date.now();
 
-    const tokenName = 'TEST';
-    const tokenSymbol = 'TST';
+    const tokenName = 'TEST-' + id;
+    const tokenSymbol = 'TST-' + id;
     const tokenDecimals = 8;
-    const tokenTotlaSupply = 500_000_000_000;
+    const tokenTotalSupply = 500_000;
 
-    const args = RuntimeArgs.fromMap({
-      message: CLValueBuilder.string(tokenName),
+    const runtimeArgs = RuntimeArgs.fromMap({
+      name: CLValueBuilder.string(tokenName),
       symbol: CLValueBuilder.string(tokenSymbol),
       decimals: CLValueBuilder.u8(tokenDecimals),
-      total_supply: CLValueBuilder.u256(tokenTotlaSupply)
+      total_supply: CLValueBuilder.u256(tokenTotalSupply),
+      events_mode: CLValueBuilder.u8(0)
     });
-    const signedDeploy = erc20.install(
+
+    const signedDeploy = cep18.install(
       wasm,
-      args,
-      '200000000000',
+      runtimeArgs,
+      '50000000000',
       faucetKey.publicKey,
       NETWORK_NAME,
       [faucetKey]
     );
-
     await client.deploy(signedDeploy);
 
     await sleep(2500);
@@ -438,19 +454,19 @@ describe('CasperServiceByJsonRPC', () => {
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
     const contractHash = AddressableEntity!.named_keys.find((i: NamedKey) => {
-      return i.name === 'erc20_token_contract';
+      return i.name === 'cep18_contract_hash_' + tokenName;
     })?.key;
 
     assert.exists(contractHash);
 
-    erc20.setContractHash(contractHash!);
-
-    const fetchedTokenName = await erc20.queryContractData(['name']);
-    const fetchedTokenSymbol = await erc20.queryContractData(['symbol']);
-    const fetchedTokenDecimals: BigNumber = await erc20.queryContractData([
+    cep18.setContractHash(contractHash!);
+    cep18.setContractName(`cep18_contract_hash_${tokenName}`);
+    const fetchedTokenName = await cep18.queryContractData(['name']);
+    const fetchedTokenSymbol = await cep18.queryContractData(['symbol']);
+    const fetchedTokenDecimals: BigNumber = await cep18.queryContractData([
       'decimals'
     ]);
-    const fetchedTokenTotalSupply: BigNumber = await erc20.queryContractData([
+    const fetchedTokenTotalSupply: BigNumber = await cep18.queryContractData([
       'total_supply'
     ]);
 
@@ -464,27 +480,23 @@ describe('CasperServiceByJsonRPC', () => {
       return balance;
     };
 
-    const balanceOfFaucet = await balanceOf(
-      erc20,
-      faucetKey.publicKey.toAccountHashType()
-    );
+    const balanceOfFaucet = await balanceOf(cep18, faucetKey.publicKey.toAccountHashType());
 
     assert.equal(tokenName, fetchedTokenName);
     assert.equal(tokenSymbol, fetchedTokenSymbol);
     assert.equal(tokenDecimals, fetchedTokenDecimals.toNumber());
-    assert.equal(tokenTotlaSupply, fetchedTokenTotalSupply.toNumber());
-    assert.equal(balanceOfFaucet.toNumber(), tokenTotlaSupply);
+    assert.equal(tokenTotalSupply, fetchedTokenTotalSupply.toNumber());
+    assert.equal(balanceOfFaucet.toNumber(), tokenTotalSupply);
 
     // Test `callEntrypoint` method: Transfter token
     const recipient = Ed25519.new().publicKey.toAccountHashType();
     const transferAmount = 2_000;
-
     const transferArgs = RuntimeArgs.fromMap({
       recipient: CLValueBuilder.key(recipient),
       amount: CLValueBuilder.u256(2_000)
     });
 
-    const transferDeploy = erc20.callEntrypoint(
+    const transferDeploy = cep18.callEntrypoint(
       'transfer',
       transferArgs,
       faucetKey.publicKey,
@@ -492,15 +504,157 @@ describe('CasperServiceByJsonRPC', () => {
       '2500000000',
       [faucetKey]
     );
-
     const { deploy_hash } = await client.deploy(transferDeploy);
+    await sleep(2500);
     result = await client.waitForDeploy(transferDeploy, 100000);
 
     assert.equal(result.deploy.hash, deploy_hash);
-    expect(result.deploy.session).to.have.property('StoredContractByHash');
-    // expect(result.execution_results[0].result).to.have.property('Success');
+    expect(result.deploy.session).to.have.property('StoredContractByName');
+    expect(result.execution_info!.execution_result!).to.have.property(
+      'Version2'
+    );
+    const amorphicExecutionResult: any = result.execution_info!.execution_result!;
+    if (amorphicExecutionResult['Version2']) {
+      expect(amorphicExecutionResult['Version2'].error_message).to.be.null;
+    }
+    const balanceOfRecipient = await balanceOf(cep18, recipient);
+    assert.equal(balanceOfRecipient.toNumber(), transferAmount);
+  });
 
-    const balanceOfRecipient = await balanceOf(erc20, recipient);
+  //This needs to wait for a fix in the node which currently prevents wasm transactions
+  xit('CEP18 should work deployed via "account_put_transaction"', async () => {
+    const casperClient = new CasperClient(NODE_URL);
+    const cep18 = new Contract(casperClient);
+    const wasmPath = path.resolve(__dirname, './cep18.wasm');
+    const wasm = new Uint8Array(fs.readFileSync(wasmPath, null).buffer);
+    const paymentAmount = 10000000000;
+    const id = Date.now();
+
+    const tokenName = 'TEST-' + id;
+    const tokenSymbol = 'TST-' + id;
+    const tokenDecimals = 8;
+    const tokenTotalSupply = 500_000;
+    const runtimeArgs = RuntimeArgs.fromMap({
+      name: CLValueBuilder.string(tokenName),
+      symbol: CLValueBuilder.string(tokenSymbol),
+      decimals: CLValueBuilder.u8(tokenDecimals),
+      total_supply: CLValueBuilder.u256(tokenTotalSupply),
+      events_mode: CLValueBuilder.u8(0),
+      amount: CLValueBuilder.u512(paymentAmount)
+    });
+    const params = new TransactionUtil.Version1Params(
+      InitiatorAddr.fromPublicKey(faucetKey.publicKey),
+      Date.now(),
+      DEFAULT_DEPLOY_TTL,
+      NETWORK_NAME,
+      PricingMode.buildFixed(3)
+    );
+    const transaction = makeV1Transaction(
+      params,
+      runtimeArgs,
+      Session.build(
+        TransactionSessionKind.Installer,
+        wasm,
+        TransactionRuntime.VmCasperV1
+      ),
+      new Call(),
+      new Standard(),
+      TransactionCategoryInstallUpgrade
+    );
+    const signedTransaction = transaction.sign([faucetKey]);
+    await client.transaction(signedTransaction);
+
+    await sleep(2500);
+
+    const result = await client.waitForTransaction(signedTransaction, 100000);
+    if (!result) {
+      assert.fail('Deploy failed');
+    }
+    const entity_identifier = {
+      AccountHash: faucetKey.publicKey.toAccountHashStr()
+    };
+    const { AddressableEntity } = await client.getEntity(entity_identifier);
+    const contractHash = AddressableEntity!.named_keys.find((i: NamedKey) => {
+      return i.name === 'cep18_contract_hash_' + tokenName;
+    })?.key;
+
+    assert.exists(contractHash);
+
+    cep18.setContractHash(contractHash!);
+    cep18.setContractName(`cep18_contract_hash_${tokenName}`);
+    const fetchedTokenName = await cep18.queryContractData(['name']);
+    const fetchedTokenSymbol = await cep18.queryContractData(['symbol']);
+    const fetchedTokenDecimals: BigNumber = await cep18.queryContractData([
+      'decimals'
+    ]);
+    const fetchedTokenTotalSupply: BigNumber = await cep18.queryContractData([
+      'total_supply'
+    ]);
+
+    const balanceOfFaucet = await balanceOf(cep18, faucetKey.publicKey.toAccountHashType());
+
+    assert.equal(tokenName, fetchedTokenName);
+    assert.equal(tokenSymbol, fetchedTokenSymbol);
+    assert.equal(tokenDecimals, fetchedTokenDecimals.toNumber());
+    assert.equal(tokenTotalSupply, fetchedTokenTotalSupply.toNumber());
+    assert.equal(balanceOfFaucet.toNumber(), tokenTotalSupply);
+
+    // Test `callEntrypoint` method: Transfter token
+    const recipient = Ed25519.new().publicKey;
+    const transferAmount = 2_000;
+    const transferArgs = RuntimeArgs.fromMap({
+      recipient: CLValueBuilder.key(recipient.toAccountHashType()),
+      amount: CLValueBuilder.u256(2_000)
+    });
+
+    const runEndpointParams = new TransactionUtil.Version1Params(
+      InitiatorAddr.fromPublicKey(faucetKey.publicKey),
+      Date.now(),
+      DEFAULT_DEPLOY_TTL,
+      NETWORK_NAME,
+      PricingMode.buildFixed(3)
+    );
+    const byHash = new TransactionInvocationTarget();
+    const contractName = `cep18_contract_hash_${tokenName}`;
+    byHash.ByName = contractName;
+    const runEndpointTransaction = makeV1Transaction(
+      runEndpointParams,
+      transferArgs,
+      Stored.build(byHash, TransactionRuntime.VmCasperV1),
+      Custom.build('transfer'),
+      new Standard(),
+      TransactionCategoryLarge
+    );
+
+    const signedRunEndpointTransaction = runEndpointTransaction.sign([
+      faucetKey
+    ]);
+    const { transaction_hash } = await client.transaction(
+      signedRunEndpointTransaction
+    );
+    await sleep(2500);
+    const transferResult = await client.waitForTransaction(
+      signedRunEndpointTransaction,
+      100000
+    );
+    assert.equal(
+      transferResult.transaction.Version1.hash,
+      transaction_hash.Version1!
+    );
+
+    expect(
+      transferResult.transaction.Version1.body.target.Stored.id
+    ).to.have.property('ByName');
+    expect(transferResult.execution_info!.execution_result!).to.have.property(
+      'Version2'
+    );
+    const amorphicExecutionResult: any = transferResult.execution_info!
+      .execution_result!;
+    if (amorphicExecutionResult['Version2']) {
+      expect(amorphicExecutionResult['Version2'].error_message).to.be.null;
+    }
+
+    const balanceOfRecipient = await balanceOf(cep18, recipient.toAccountHashType());
     assert.equal(balanceOfRecipient.toNumber(), transferAmount);
   });
 
@@ -510,7 +664,7 @@ describe('CasperServiceByJsonRPC', () => {
   });
 
   it('chain_get_era_info_by_switch_block - by height', async () => {
-    const getEarliestSwitchBlock = async (): Promise<[number, any]> => {
+    const getEarliestSwitchBlock = async (): Promise<[number, EraSummary]> => {
       return new Promise(async resolve => {
         // For some reason in 2.0 blok with height 0 has `era_end` filled, but there is no era_end entity in storage.
         // This makes getEraInfoBySwitchBlock fail on block 0. For now we start from 1, but we need to know if this is a bug or it's intentional.
@@ -518,10 +672,12 @@ describe('CasperServiceByJsonRPC', () => {
         let height = 1;
         let summary;
         while (!summary) {
-          const era = await client.getEraInfoBySwitchBlock({ Height: height });
-          if (era.era_summary) {
+          const eraSummary = await client.getEraInfoBySwitchBlock({
+            Height: height
+          });
+          if (eraSummary) {
             height = height;
-            summary = era.era_summary;
+            summary = eraSummary;
             return resolve([height, summary]);
           } else {
             height += 1;
@@ -531,7 +687,7 @@ describe('CasperServiceByJsonRPC', () => {
     };
     const [height, eraSummary] = await getEarliestSwitchBlock();
     const blockInfo = await client.getBlockInfoByHeight(height);
-    expect(eraSummary.block_hash).to.be.equal(
+    expect(eraSummary.blockHash).to.be.equal(
       getBlockHash(blockInfo.block_with_signatures!.block)
     );
   });
@@ -552,3 +708,16 @@ describe('CasperServiceByJsonRPC', () => {
   // TODO
   xit('speculative_exec');
 });
+
+async function balanceOf(
+  erc20: Contract,
+  owner: CLKeyVariant
+): Promise<BigNumber> {
+  const balanceKey = Buffer.from(
+    CLValueParsers.toBytes(CLValueBuilder.key(owner)).unwrap()
+  ).toString('base64');
+  const balance: BigNumber = (
+    await erc20.queryContractDictionary('balances', balanceKey)
+  ).value();
+  return balance;
+}

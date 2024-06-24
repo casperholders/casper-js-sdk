@@ -24,6 +24,13 @@ export class ByPackageHashJson {
   addr: Uint8Array;
   @jsonMember({ constructor: Number })
   version?: number;
+
+  static build(addr: Uint8Array, version?: number): ByPackageHashJson {
+    const byPackageHashJson = new ByPackageHashJson();
+    byPackageHashJson.addr = addr;
+    byPackageHashJson.version = version;
+    return byPackageHashJson;
+  }
 }
 
 @jsonObject

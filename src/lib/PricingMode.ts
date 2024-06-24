@@ -81,13 +81,14 @@ export class PricingMode {
   //TODO create builder methods for all variants
   public static buildClassic(
     paymentAmount: number,
-    gasPriceTolerance: number
+    gasPriceTolerance: number,
+    standardPayment = true
   ): PricingMode {
     const pm = new PricingMode();
     pm.Classic = new PricingModeClassic();
     pm.Classic.gasPriceTolerance = gasPriceTolerance;
     pm.Classic.paymentAmount = paymentAmount;
-    pm.Classic.standardPayment = true;
+    pm.Classic.standardPayment = standardPayment;
     return pm;
   }
 

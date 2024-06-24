@@ -21,6 +21,7 @@ const NO_CLIENT_ERR =
 export class Contract {
   public contractHash?: string;
   public contractPackageHash?: string;
+  public contractName?: string;
 
   /**
    * Constructor
@@ -30,24 +31,28 @@ export class Contract {
 
   /**
    * Attaches an on-chain smart contract to this `Contract` object using its hexadecimal string typed hash. The contract hash must include the prefix "hash-"
-   * @param contractHash The hexadecimal smart contract hash, with the prefix "hash-"
-   * @param contractPackageHash The hexadecimal smart contract package hash, with the prefix "hash-". This parameter is optional, and only used when there is event processing present.
+   * @param contractHash The hexadecimal smart contract hash, with the prefix "entity-contract-"
+   * @param contractPackageHash The hexadecimal smart contract package hash, with the prefix "package-". This parameter is optional, and only used when there is event processing present.
    */
   public setContractHash(
     contractHash: string,
     contractPackageHash?: string
   ): void {
     if (
-      !contractHash.startsWith('hash-') ||
-      (contractPackageHash && !contractPackageHash.startsWith('hash-'))
+      !contractHash.startsWith('entity-contract-') ||
+      (contractPackageHash && !contractPackageHash.startsWith('package-'))
     ) {
       throw new Error(
-        'Please provide contract hash in a format that contains hash- prefix.'
+        'Please provide contract hash in a format that contains entity-contract- prefix.'
       );
     }
 
     this.contractHash = contractHash;
     this.contractPackageHash = contractPackageHash;
+  }
+
+  public setContractName(contractName: string): void {
+    this.contractName = contractName;
   }
 
   /**
@@ -107,14 +112,10 @@ export class Contract {
   ): Deploy {
     this.checkSetup();
 
-    const contractHashAsByteArray = contractHashToByteArray(
-      this.contractHash!.slice(5)
-    );
-
     const deploy = DeployUtil.makeDeploy(
       new DeployUtil.DeployParams(sender, chainName, 1, ttl),
-      DeployUtil.ExecutableDeployItem.newStoredContractByHash(
-        contractHashAsByteArray,
+      DeployUtil.ExecutableDeployItem.newStoredContractByName(
+        this.contractName!,
         entryPoint,
         args
       ),
@@ -178,7 +179,6 @@ export class Contract {
 
     const stateRootHashToUse =
       stateRootHash || (await client.nodeClient.getStateRootHash());
-
     const storedValue = await client.nodeClient.getDictionaryItemByName(
       stateRootHashToUse,
       this.contractHash!,

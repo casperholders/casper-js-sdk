@@ -79,20 +79,22 @@ export class TransactionV1Header implements ToBytes {
   })
   public initiatorAddr: InitiatorAddr;
 
-  constructor(
+  static build(
     initiatorAddr: InitiatorAddr,
     timestamp: number,
     ttl: number,
     chainName: string,
     bodyHash: Uint8Array,
     pricingMode: PricingMode
-  ) {
-    this.initiatorAddr = initiatorAddr;
-    this.timestamp = timestamp;
-    this.ttl = ttl;
-    this.bodyHash = bodyHash;
-    this.pricingMode = pricingMode;
-    this.chainName = chainName;
+  ): TransactionV1Header {
+    const header = new TransactionV1Header();
+    header.initiatorAddr = initiatorAddr;
+    header.timestamp = timestamp;
+    header.ttl = ttl;
+    header.bodyHash = bodyHash;
+    header.pricingMode = pricingMode;
+    header.chainName = chainName;
+    return header;
   }
 
   toBytes(): ToBytesResult {
@@ -139,10 +141,10 @@ export class TransactionV1Body {
   })
   public entryPoint: TransactionEntryPoint;
   @jsonMember({
-    name: 'transaction_kind',
+    name: 'transaction_category',
     constructor: Number
   })
-  public transactionKind: number;
+  public transactionCategory: number;
   @jsonMember({
     deserializer: matchTransactionScheduling,
     serializer: value => value.toJSON()
@@ -153,7 +155,7 @@ export class TransactionV1Body {
     args: RuntimeArgs,
     target: TransactionTarget,
     entryPoint: TransactionEntryPoint,
-    transactionKind: number,
+    transactionCategory: number,
     scheduling: TransactionScheduling
   ): TransactionV1Body {
     const body = new TransactionV1Body();
@@ -161,7 +163,7 @@ export class TransactionV1Body {
     body.target = target;
     body.entryPoint = entryPoint;
     body.scheduling = scheduling;
-    body.transactionKind = transactionKind;
+    body.transactionCategory = transactionCategory;
     return body;
   }
 
@@ -169,14 +171,14 @@ export class TransactionV1Body {
     const argsBytes = toBytesBytesArray(this.args.toBytes().unwrap());
     const targetBytes = this.target.toBytes().unwrap();
     const entryPointBytes = this.entryPoint.toBytes().unwrap();
-    const transactionKindBytes = toBytesU8(this.transactionKind);
+    const transactionCategoryBytes = toBytesU8(this.transactionCategory);
     const schedulingBytes = this.scheduling.toBytes().unwrap();
     return Ok(
       concat([
         argsBytes,
         targetBytes,
         entryPointBytes,
-        transactionKindBytes,
+        transactionCategoryBytes,
         schedulingBytes
       ])
     );
@@ -202,15 +204,17 @@ export class TransactionV1 {
   @jsonArrayMember(Approval)
   public approvals: Approval[];
 
-  constructor(
+  static build(
     hash: Uint8Array,
     header: TransactionV1Header,
     body: TransactionV1Body
-  ) {
-    this.hash = hash;
-    this.header = header;
-    this.body = body;
-    this.approvals = [];
+  ): TransactionV1 {
+    const transaction = new TransactionV1();
+    transaction.hash = hash;
+    transaction.header = header;
+    transaction.body = body;
+    transaction.approvals = [];
+    return transaction;
   }
 }
 
@@ -409,19 +413,20 @@ export function makeV1Transaction(
   args: RuntimeArgs,
   target: TransactionTarget,
   entryPoint: TransactionEntryPoint,
-  scheduling: TransactionScheduling
+  scheduling: TransactionScheduling,
+  transactionCategory: number
 ): Transaction {
   const body = TransactionV1Body.build(
     args,
     target,
     entryPoint,
-    TransactionCategoryMint,
+    transactionCategory,
     scheduling
   );
   const bodyBytes = body.toBytes().unwrap();
   const bodyHash = byteHash(bodyBytes);
 
-  const header = new TransactionV1Header(
+  const header = TransactionV1Header.build(
     transactionParam.initiatorAddr,
     transactionParam.timestamp,
     transactionParam.ttl,
@@ -432,6 +437,6 @@ export function makeV1Transaction(
 
   const headerBytes = header.toBytes().unwrap();
   const headerHash = byteHash(headerBytes);
-  const version1 = new TransactionV1(headerHash, header, body);
+  const version1 = TransactionV1.build(headerHash, header, body);
   return Transaction.fromVersion1(version1);
 }
