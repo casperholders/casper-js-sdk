@@ -303,7 +303,6 @@ describe('CasperServiceByJsonRPC', () => {
       transactionScheduling,
       TransactionCategoryMint
     );
-
     const signedTransaction = TransactionUtil.signTransaction(
       transaction,
       faucetKey
@@ -512,7 +511,8 @@ describe('CasperServiceByJsonRPC', () => {
     assert.equal(balanceOfRecipient.toNumber(), transferAmount);
   });
 
-  it('CEP18 should work deployed via "account_put_transaction"', async () => {
+  //This needs to wait for a fix in the node which currently prevents wasm transactions
+  xit('CEP18 should work deployed via "account_put_transaction"', async () => {
     const casperClient = new CasperClient(NODE_URL);
     const cep18 = new Contract(casperClient);
     const wasmPath = path.resolve(__dirname, './cep18.wasm');

@@ -10,7 +10,6 @@ import {
   encodeBase16,
   StoredValue
 } from '..';
-
 import ProviderTransport, {
   SafeEventEmitterProvider
 } from './ProviderTransport';

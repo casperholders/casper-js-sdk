@@ -141,10 +141,10 @@ export class TransactionV1Body {
   })
   public entryPoint: TransactionEntryPoint;
   @jsonMember({
-    name: 'transaction_kind',
+    name: 'transaction_category',
     constructor: Number
   })
-  public transactionKind: number;
+  public transactionCategory: number;
   @jsonMember({
     deserializer: matchTransactionScheduling,
     serializer: value => value.toJSON()
@@ -155,7 +155,7 @@ export class TransactionV1Body {
     args: RuntimeArgs,
     target: TransactionTarget,
     entryPoint: TransactionEntryPoint,
-    transactionKind: number,
+    transactionCategory: number,
     scheduling: TransactionScheduling
   ): TransactionV1Body {
     const body = new TransactionV1Body();
@@ -163,7 +163,7 @@ export class TransactionV1Body {
     body.target = target;
     body.entryPoint = entryPoint;
     body.scheduling = scheduling;
-    body.transactionKind = transactionKind;
+    body.transactionCategory = transactionCategory;
     return body;
   }
 
@@ -171,14 +171,14 @@ export class TransactionV1Body {
     const argsBytes = toBytesBytesArray(this.args.toBytes().unwrap());
     const targetBytes = this.target.toBytes().unwrap();
     const entryPointBytes = this.entryPoint.toBytes().unwrap();
-    const transactionKindBytes = toBytesU8(this.transactionKind);
+    const transactionCategoryBytes = toBytesU8(this.transactionCategory);
     const schedulingBytes = this.scheduling.toBytes().unwrap();
     return Ok(
       concat([
         argsBytes,
         targetBytes,
         entryPointBytes,
-        transactionKindBytes,
+        transactionCategoryBytes,
         schedulingBytes
       ])
     );
@@ -414,13 +414,13 @@ export function makeV1Transaction(
   target: TransactionTarget,
   entryPoint: TransactionEntryPoint,
   scheduling: TransactionScheduling,
-  transactionKind: number
+  transactionCategory: number
 ): Transaction {
   const body = TransactionV1Body.build(
     args,
     target,
     entryPoint,
-    transactionKind,
+    transactionCategory,
     scheduling
   );
   const bodyBytes = body.toBytes().unwrap();
