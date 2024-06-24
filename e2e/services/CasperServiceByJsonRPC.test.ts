@@ -19,7 +19,7 @@ import {
   CasperClient,
   CLValueBuilder,
   CLValueParsers,
-  CLKeyParameters,
+  CLKeyVariant,
   TransactionUtil,
   CLU64,
   CLU64Type,
@@ -224,11 +224,11 @@ describe('CasperServiceByJsonRPC', () => {
   it('state_get_balance', async () => {
     const faucetBalance = '1000000000000000000000000000000000';
     const stateRootHash = await client.getStateRootHash();
-    let entity_identifier = {
+    const entity_identifier = {
       PublicKey: faucetKey.publicKey.toHex(false)
     };
     const entity = await client.getEntity(entity_identifier);
-    let main_purse = entity.AddressableEntity.entity.main_purse;
+    const main_purse = entity.AddressableEntity.entity.main_purse;
     const balance = await client.getAccountBalance(stateRootHash, main_purse);
     expect(balance.eq(faucetBalance)).to.be;
   });
@@ -261,7 +261,7 @@ describe('CasperServiceByJsonRPC', () => {
     const paymentAmount = 10000000000;
     const id = Date.now();
 
-    let initiatorAddr = InitiatorAddr.fromPublicKey(faucetKey.publicKey);
+    const initiatorAddr = InitiatorAddr.fromPublicKey(faucetKey.publicKey);
     const ttl = 1000000;
     const transactionParams = new TransactionUtil.Version1Params(
       initiatorAddr,
@@ -272,15 +272,15 @@ describe('CasperServiceByJsonRPC', () => {
     );
 
     const toPublicKey = Keys.Ed25519.new().publicKey;
-    let runtimeArgs = RuntimeArgs.fromMap({
+    const runtimeArgs = RuntimeArgs.fromMap({
       target: toPublicKey,
       amount: CLValueBuilder.u512(paymentAmount),
       id: CLValueBuilder.option(Some(new CLU64(id)), new CLU64Type())
     });
-    let transactionTarget = new Native();
-    let transactionEntryPoint = new Transfer();
-    let transactionScheduling = new Standard();
-    let transaction = TransactionUtil.makeV1Transaction(
+    const transactionTarget = new Native();
+    const transactionEntryPoint = new Transfer();
+    const transactionScheduling = new Standard();
+    const transaction = TransactionUtil.makeV1Transaction(
       transactionParams,
       runtimeArgs,
       transactionTarget,
@@ -301,7 +301,7 @@ describe('CasperServiceByJsonRPC', () => {
     expect(encodeBase16(signedTransaction.Version1!.hash)).to.be.equal(
       result.transaction.Version1.hash
     );
-    let block_hash = result.execution_info?.block_hash;
+    const block_hash = result.execution_info?.block_hash;
     if (!block_hash) {
       assert.fail('Expected block_hash in execution_info');
     }
@@ -346,7 +346,7 @@ describe('CasperServiceByJsonRPC', () => {
     }
     expect(deploy_hash).to.be.equal(result.deploy.hash);
     expect(result.deploy.session).to.have.property('Transfer');
-    let block_hash = result.execution_info?.block_hash;
+    const block_hash = result.execution_info?.block_hash;
     if (!block_hash) {
       assert.fail('Expected block_hash in execution_info');
     }
@@ -389,7 +389,7 @@ describe('CasperServiceByJsonRPC', () => {
     await client.deploy(signedDeploy);
     await sleep(2500);
     await client.waitForDeploy(signedDeploy, 100000);
-    let entity_identifier = {
+    const entity_identifier = {
       AccountHash: faucetKey.publicKey.toAccountHashStr()
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
@@ -433,7 +433,7 @@ describe('CasperServiceByJsonRPC', () => {
 
     let result = await client.waitForDeploy(signedDeploy, 100000);
 
-    let entity_identifier = {
+    const entity_identifier = {
       AccountHash: faucetKey.publicKey.toAccountHashStr()
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
@@ -454,7 +454,7 @@ describe('CasperServiceByJsonRPC', () => {
       'total_supply'
     ]);
 
-    const balanceOf = async (erc20: Contract, owner: CLKeyParameters) => {
+    const balanceOf = async (erc20: Contract, owner: CLKeyVariant) => {
       const balanceKey = Buffer.from(
         CLValueParsers.toBytes(CLValueBuilder.key(owner)).unwrap()
       ).toString('base64');
@@ -464,7 +464,10 @@ describe('CasperServiceByJsonRPC', () => {
       return balance;
     };
 
-    const balanceOfFaucet = await balanceOf(erc20, faucetKey.publicKey);
+    const balanceOfFaucet = await balanceOf(
+      erc20,
+      faucetKey.publicKey.toAccountHashType()
+    );
 
     assert.equal(tokenName, fetchedTokenName);
     assert.equal(tokenSymbol, fetchedTokenSymbol);
@@ -473,7 +476,7 @@ describe('CasperServiceByJsonRPC', () => {
     assert.equal(balanceOfFaucet.toNumber(), tokenTotlaSupply);
 
     // Test `callEntrypoint` method: Transfter token
-    const recipient = Ed25519.new().publicKey;
+    const recipient = Ed25519.new().publicKey.toAccountHashType();
     const transferAmount = 2_000;
 
     const transferArgs = RuntimeArgs.fromMap({
