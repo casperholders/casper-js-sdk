@@ -10,7 +10,7 @@ import {
   CLI32,
   CLI32Type,
   CLKey,
-  Hash,
+  KeyHashAddr,
 } from './index';
 
 describe('CLValue List implementation', () => {
@@ -218,7 +218,7 @@ describe('CLValue List implementation', () => {
 
   it('Runs toJSON() / fromJSON() properly', () => {
     const clKey = new CLKey(
-      new Hash(
+      new KeyHashAddr(
         Uint8Array.from([
           48,
           17,

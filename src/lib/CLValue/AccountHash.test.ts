@@ -4,7 +4,7 @@ import { CLValueParsers, CLAccountHashType } from './index';
 
 describe('CLAccountHash', () => {
   it('Should be able to return proper value by calling .value()', () => {
-    const arr8 = new Uint8Array([21, 31]);
+    const arr8 = new Uint8Array(32);
     const myHash = new CLAccountHash(arr8);
 
     expect(myHash.value()).to.be.deep.eq(arr8);
@@ -28,12 +28,12 @@ describe('CLAccountHash', () => {
     const hashStr =
       'account-hash-9fb3803b335f14b083b97400e57d5c8e8ad0ec5859a51225b6611e34357c8d77';
 
-    const fromStr = CLAccountHash.fromFormattedStr(hashStr);
+    const fromStr = CLAccountHash.fromFormattedString(hashStr);
 
-    expect(fromStr.toFormattedStr()).to.eq(hashStr);
+    expect(fromStr.toFormattedString()).to.eq(hashStr);
 
     const badFn = () =>
-      CLAccountHash.fromFormattedStr(
+      CLAccountHash.fromFormattedString(
         '9fb3803b335f14b083b97400e57d5c8e8ad0ec5859a51225b6611e34357c8d77'
       );
     expect(badFn).to.throw();

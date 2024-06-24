@@ -35,13 +35,13 @@ describe('CLUref', () => {
     });
   });
 
-  it('fromFormattedStr() / toFormattedStr() proper value', () => {
-    const myURef = CLURef.fromFormattedStr(formattedStr);
-    const badFn1 = () => CLURef.fromFormattedStr('xxxx-ttttttttttttttt-000');
-    const badFn2 = () => CLURef.fromFormattedStr('uref-ttttttttttttttt');
+  it('fromFormattedString() / toFormattedString() proper value', () => {
+    const myURef = CLURef.fromFormattedString(formattedStr);
+    const badFn1 = () => CLURef.fromFormattedString('xxxx-ttttttttttttttt-000');
+    const badFn2 = () => CLURef.fromFormattedString('uref-ttttttttttttttt');
 
     expect(myURef).to.be.an.instanceof(CLURef);
-    expect(myURef.toFormattedStr()).to.be.eq(formattedStr);
+    expect(myURef.toFormattedString()).to.be.eq(formattedStr);
     expect(badFn1).to.throw("Prefix is not 'uref-");
     expect(badFn2).to.throw('No access rights as suffix');
   });
