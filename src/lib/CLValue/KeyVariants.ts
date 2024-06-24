@@ -10,9 +10,6 @@ import {
   CLAccountHash,
   CLPublicKey,
   CLAccountHashBytesParser,
-  // CLValueBytesParsers,
-  // UREF_ADDR_LENGTH,
-  ACCOUNT_HASH_LENGTH,
   HASH_PREFIX,
   TRANSFER_PREFIX,
   DEPLOY_HASH_PREFIX,
@@ -28,8 +25,10 @@ import {
   CHECKSUM_REGISTRY_PREFIX,
   BID_ADDR_PREFIX,
   PACKAGE_PREFIX,
-  // BLOCK_GLOBAL_TIME_PREFIX,
-  // BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX
+  ENTITY_PREFIX,
+  SYSTEM_ENTITY_PREFIX,
+  ACCOUNT_ENTITY_PREFIX,
+  CONTRACT_ENTITY_PREFIX
 } from './index';
 import { decodeBase16, encodeBase16 } from '../Conversions';
 import { toBytesU64 } from '../ByteConverters';
@@ -63,13 +62,13 @@ const KEY_HASH_LENGTH = 32;
 export const HashParser = {
   fromBytesWithRemainder: (
     bytes: Uint8Array
-  ): ResultAndRemainder<KeyHash, CLErrorCodes> => {
-    const hash = new KeyHash(bytes.subarray(0, KEY_HASH_LENGTH));
+  ): ResultAndRemainder<KeyHashAddr, CLErrorCodes> => {
+    const hash = new KeyHashAddr(bytes.subarray(0, KEY_HASH_LENGTH));
     return resultHelper(Ok(hash), bytes.subarray(KEY_HASH_LENGTH));
   }
 };
 
-export class KeyHash implements CLKeyVariant {
+export class KeyHashAddr implements CLKeyVariant {
   keyVariant = KeyTag.Hash;
   prefix = HASH_PREFIX;
 
@@ -87,7 +86,7 @@ export class KeyHash implements CLKeyVariant {
     return `${HASH_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): KeyHash {
+  static fromFormattedString(input: string): KeyHashAddr {
     if (!input.startsWith(`${HASH_PREFIX}-`)) {
       throw new Error("Prefix is not 'uref-'");
     }
@@ -95,7 +94,7 @@ export class KeyHash implements CLKeyVariant {
     const hashStr = input.substring(`${HASH_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
-    return new KeyHash(hashBytes);
+    return new KeyHashAddr(hashBytes);
   }
 }
 
@@ -702,5 +701,113 @@ export class KeyPackage implements CLKeyVariant {
     const hashBytes = decodeBase16(hashStr);
 
     return new KeyPackage(hashBytes);
+  }
+}
+
+enum KeyEntityTag {
+  // The address for a system entity account or contract.
+  System,
+  // The address of an entity that corresponds to an Account.
+  Account,
+  // The address of an entity that corresponds to a Userland smart contract.
+  SmartContract
+}
+
+export const KeyEntityAddrParser = {
+  fromBytesWithRemainder(
+    bytes: Uint8Array
+  ): ResultAndRemainder<KeyEntityAddr, CLErrorCodes> {
+    const tag = bytes[0];
+    const rem = bytes.subarray(1);
+
+    const { result, remainder } = HashParser.fromBytesWithRemainder(rem);
+
+    if (result.ok) {
+      return resultHelper(
+        Ok(new KeyEntityAddr(result.val, tag as KeyEntityTag)),
+        remainder
+      );
+    } else {
+      return resultHelper<KeyEntityAddr, CLErrorCodes>(Err(result.val));
+    }
+  },
+  toBytes(value: KeyEntityAddr): Uint8Array {
+    const tag = value.tag();
+
+    return concat([[tag], value.data.data]);
+  }
+};
+
+export class KeyEntityAddr implements CLKeyVariant {
+  keyVariant = KeyTag.AddressableEntity;
+  prefix = ENTITY_PREFIX;
+
+  constructor(public data: KeyHashAddr, public variant: KeyEntityTag) {}
+
+  value(): any {
+    return this.data;
+  }
+
+  static system(data: KeyHashAddr) {
+    return new KeyEntityAddr(data, KeyEntityTag.System);
+  }
+
+  static account(data: KeyHashAddr) {
+    return new KeyEntityAddr(data, KeyEntityTag.Account);
+  }
+
+  static smartContract(data: KeyHashAddr) {
+    return new KeyEntityAddr(data, KeyEntityTag.SmartContract);
+  }
+
+  toString() {
+    return this.data.toString();
+  }
+
+  tag() {
+    return this.variant;
+  }
+
+  toFormattedString() {
+    switch (this.variant) {
+      case KeyEntityTag.System:
+        return `${ENTITY_PREFIX}-${SYSTEM_ENTITY_PREFIX}-${this.toString()}`;
+      case KeyEntityTag.Account:
+        return `${ENTITY_PREFIX}-${ACCOUNT_ENTITY_PREFIX}-${this.toString()}`;
+      case KeyEntityTag.SmartContract:
+        return `${ENTITY_PREFIX}-${CONTRACT_ENTITY_PREFIX}-${this.toString()}`;
+    }
+  }
+
+  static fromFormattedString(input: string): KeyEntityAddr {
+    if (!input.startsWith(`${ENTITY_PREFIX}-`)) {
+      throw new Error(`Prefix is not ${ENTITY_PREFIX}`);
+    }
+    const variantStr = input.substring(`${ENTITY_PREFIX}-`.length + 1);
+
+    if (variantStr.startsWith(`${SYSTEM_ENTITY_PREFIX}-`)) {
+      const hashStr = variantStr.substring(
+        `${SYSTEM_ENTITY_PREFIX}-`.length + 1
+      );
+      return KeyEntityAddr.system(new KeyHashAddr(decodeBase16(hashStr)));
+    }
+
+    if (variantStr.startsWith(`${ACCOUNT_ENTITY_PREFIX}-`)) {
+      const hashStr = variantStr.substring(
+        `${ACCOUNT_ENTITY_PREFIX}-`.length + 1
+      );
+      return KeyEntityAddr.account(new KeyHashAddr(decodeBase16(hashStr)));
+    }
+
+    if (variantStr.startsWith(`${CONTRACT_ENTITY_PREFIX}-`)) {
+      const hashStr = variantStr.substring(
+        `${CONTRACT_ENTITY_PREFIX}-`.length + 1
+      );
+      return KeyEntityAddr.smartContract(
+        new KeyHashAddr(decodeBase16(hashStr))
+      );
+    }
+
+    throw new Error(`Unsupported variant string`);
   }
 }

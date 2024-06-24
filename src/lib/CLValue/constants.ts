@@ -54,6 +54,11 @@ export const BID_ADDR_PREFIX = 'bid-addr';
 export const PACKAGE_PREFIX = 'package';
 export const BLOCK_GLOBAL_TIME_PREFIX = 'block-time';
 export const BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX= 'block-message-count';
+export const ENTITY_PREFIX = 'entity';
+export const SYSTEM_ENTITY_PREFIX = 'system';
+export const ACCOUNT_ENTITY_PREFIX = 'account';
+export const CONTRACT_ENTITY_PREFIX = 'contract';
+
 
 
 /**

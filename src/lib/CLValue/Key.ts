@@ -16,7 +16,7 @@ import {
   CLValueBytesParsers,
   CLValueParsers,
   resultHelper,
-  KeyHash,
+  KeyHashAddr,
   HashParser,
   KeyTransferAddr,
   DeployHash,
@@ -351,7 +351,7 @@ export class CLKey extends CLValue {
         case ACCOUNT_HASH_PREFIX:
           return new CLKey(CLAccountHash.fromFormattedString(input));
         case HASH_PREFIX:
-          return new CLKey(KeyHash.fromFormattedString(input));
+          return new CLKey(KeyHashAddr.fromFormattedString(input));
         case UREF_PREFIX:
           return new CLKey(CLURef.fromFormattedString(input));
         case TRANSFER_PREFIX:
