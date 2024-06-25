@@ -128,7 +128,7 @@ export class KeyTransferAddr implements CLKeyVariant {
   }
 }
 
-export class DeployHash implements CLKeyVariant {
+export class KeyDeployHash implements CLKeyVariant {
   keyVariant = KeyTag.DeployInfo;
   prefix = DEPLOY_HASH_PREFIX;
 
@@ -146,7 +146,7 @@ export class DeployHash implements CLKeyVariant {
     return `${DEPLOY_HASH_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyDeployHash {
     if (!input.startsWith(`${DEPLOY_HASH_PREFIX}-`)) {
       throw new Error(`Prefix is not ${DEPLOY_HASH_PREFIX}`);
     }
@@ -154,11 +154,11 @@ export class DeployHash implements CLKeyVariant {
     const hashStr = input.substring(`${DEPLOY_HASH_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
-    return new DeployHash(hashBytes);
+    return new KeyDeployHash(hashBytes);
   }
 }
 
-export class EraInfo implements CLKeyVariant {
+export class KeyEraInfo implements CLKeyVariant {
   keyVariant = KeyTag.EraInfo;
   prefix = ERA_INFO_PREFIX;
   data: BigNumber;
@@ -179,7 +179,7 @@ export class EraInfo implements CLKeyVariant {
     return `${ERA_INFO_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): EraInfo {
+  static fromFormattedString(input: string): KeyEraInfo {
     if (!input.startsWith(`${ERA_INFO_PREFIX}-`)) {
       throw new Error(`Prefix is not ${ERA_INFO_PREFIX}`);
     }
@@ -187,11 +187,11 @@ export class EraInfo implements CLKeyVariant {
     const hashStr = input.substring(`${ERA_INFO_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
-    return new EraInfo(hashBytes);
+    return new KeyEraInfo(hashBytes);
   }
 }
 
-export class Balance implements CLKeyVariant {
+export class KeyBalance implements CLKeyVariant {
   keyVariant = KeyTag.Balance;
   prefix = BALANCE_PREFIX;
 
@@ -209,7 +209,7 @@ export class Balance implements CLKeyVariant {
     return `${BALANCE_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyBalance {
     if (!input.startsWith(`${BALANCE_PREFIX}-`)) {
       throw new Error(`Prefix is not ${BALANCE_PREFIX}`);
     }
@@ -217,7 +217,7 @@ export class Balance implements CLKeyVariant {
     const hashStr = input.substring(`${BALANCE_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
-    return new Balance(hashBytes);
+    return new KeyBalance(hashBytes);
   }
 }
 
@@ -251,7 +251,7 @@ export class KeyBid implements CLKeyVariant {
   }
 }
 
-export class Withdraw implements CLKeyVariant {
+export class KeyWithdraw implements CLKeyVariant {
   keyVariant = KeyTag.Withdraw;
   prefix = WITHDRAW_PREFIX;
 
@@ -269,7 +269,7 @@ export class Withdraw implements CLKeyVariant {
     return `${WITHDRAW_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyWithdraw {
     if (!input.startsWith(`${WITHDRAW_PREFIX}-`)) {
       throw new Error(`Prefix is not ${WITHDRAW_PREFIX}`);
     }
@@ -277,7 +277,7 @@ export class Withdraw implements CLKeyVariant {
     const hashStr = input.substring(`${WITHDRAW_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
-    return new Withdraw(hashBytes);
+    return new KeyWithdraw(hashBytes);
   }
 }
 
@@ -299,7 +299,7 @@ export class KeyDictionary implements CLKeyVariant {
     return `${DICTIONARY_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyDictionary {
     if (!input.startsWith(`${DICTIONARY_PREFIX}-`)) {
       throw new Error(`Prefix is not ${DICTIONARY_PREFIX}`);
     }
@@ -329,7 +329,7 @@ export class KeySystemEntityRegistry implements CLKeyVariant {
     return `${SYSTEM_ENTITY_REGISTRY_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeySystemEntityRegistry {
     if (!input.startsWith(`${SYSTEM_ENTITY_REGISTRY_PREFIX}-`)) {
       throw new Error(`Prefix is not ${SYSTEM_ENTITY_REGISTRY_PREFIX}`);
     }
@@ -361,7 +361,7 @@ export class KeyEraSummary implements CLKeyVariant {
     return `${ERA_SUMMARY_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyEraSummary {
     if (!input.startsWith(`${ERA_SUMMARY_PREFIX}-`)) {
       throw new Error(`Prefix is not ${ERA_SUMMARY_PREFIX}`);
     }
@@ -391,7 +391,7 @@ export class KeyUnbond implements CLKeyVariant {
     return `${UNBOND_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyUnbond {
     if (!input.startsWith(`${UNBOND_PREFIX}-`)) {
       throw new Error(`Prefix is not ${UNBOND_PREFIX}`);
     }
@@ -421,7 +421,7 @@ export class KeyChainspecRegistry implements CLKeyVariant {
     return `${CHAINSPEC_REGISTRY_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyChainspecRegistry {
     if (!input.startsWith(`${CHAINSPEC_REGISTRY_PREFIX}-`)) {
       throw new Error(`Prefix is not ${CHAINSPEC_REGISTRY_PREFIX}`);
     }
@@ -451,7 +451,7 @@ export class KeyChecksumRegistry implements CLKeyVariant {
     return `${CHECKSUM_REGISTRY_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyChecksumRegistry {
     if (!input.startsWith(`${CHECKSUM_REGISTRY_PREFIX}-`)) {
       throw new Error(`Prefix is not ${CHECKSUM_REGISTRY_PREFIX}`);
     }
@@ -496,7 +496,7 @@ interface BidAddrData {
 export const BidAddrParser = {
   fromBytesWithRemainder(
     bytes: Uint8Array
-  ): ResultAndRemainder<BidAddr, CLErrorCodes> {
+  ): ResultAndRemainder<KeyBidAddr, CLErrorCodes> {
     const tag = bytes[0];
     const rem = bytes.subarray(1);
 
@@ -507,20 +507,20 @@ export const BidAddrParser = {
         const { result, remainder } = accHashParser.fromBytesWithRemainder(rem);
 
         if (result.ok) {
-          const bidAddr = BidAddr.legacy(result.val);
+          const bidAddr = KeyBidAddr.legacy(result.val);
           return resultHelper(Ok(bidAddr), remainder);
         } else {
-          return resultHelper<BidAddr, CLErrorCodes>(Err(result.val));
+          return resultHelper<KeyBidAddr, CLErrorCodes>(Err(result.val));
         }
       }
       case BidAddrTag.Validator: {
         const { result, remainder } = accHashParser.fromBytesWithRemainder(rem);
 
         if (result.ok) {
-          const bidAddr = BidAddr.validator(result.val);
+          const bidAddr = KeyBidAddr.validator(result.val);
           return resultHelper(Ok(bidAddr), remainder);
         } else {
-          return resultHelper<BidAddr, CLErrorCodes>(Err(result.val));
+          return resultHelper<KeyBidAddr, CLErrorCodes>(Err(result.val));
         }
       }
       case BidAddrTag.Delegator: {
@@ -536,16 +536,16 @@ export const BidAddrParser = {
           } = accHashParser.fromBytesWithRemainder(delegatorRem!);
 
           if (delegatorRes.ok) {
-            const bidAddr = BidAddr.delegator(
+            const bidAddr = KeyBidAddr.delegator(
               validatorRes.val,
               delegatorRes.val
             );
             return resultHelper(Ok(bidAddr), remainder);
           } else {
-            return resultHelper<BidAddr, CLErrorCodes>(Err(delegatorRes.val));
+            return resultHelper<KeyBidAddr, CLErrorCodes>(Err(delegatorRes.val));
           }
         } else {
-          return resultHelper<BidAddr, CLErrorCodes>(Err(validatorRes.val));
+          return resultHelper<KeyBidAddr, CLErrorCodes>(Err(validatorRes.val));
         }
       }
       case BidAddrTag.Credit: {
@@ -557,17 +557,17 @@ export const BidAddrParser = {
         if (validatorRes.ok) {
           const u64Bytes = Uint8Array.from(remainder!.subarray(0, 8));
           const eraId = BigNumber.from(u64Bytes.slice().reverse());
-          const bidAddr = BidAddr.credit(validatorRes.val, eraId);
+          const bidAddr = KeyBidAddr.credit(validatorRes.val, eraId);
           return resultHelper(Ok(bidAddr), remainder);
         } else {
-          return resultHelper<BidAddr, CLErrorCodes>(Err(validatorRes.val));
+          return resultHelper<KeyBidAddr, CLErrorCodes>(Err(validatorRes.val));
         }
       }
       default:
         throw new Error('Unsupported tag while deserializing!');
     }
   },
-  toBytes(value: BidAddr): Uint8Array {
+  toBytes(value: KeyBidAddr): Uint8Array {
     const tag = value.tag();
 
     switch (tag) {
@@ -594,7 +594,7 @@ export const BidAddrParser = {
   }
 };
 
-export class BidAddr implements CLKeyVariant {
+export class KeyBidAddr implements CLKeyVariant {
   keyVariant = KeyTag.BidAddr;
   prefix = BID_ADDR_PREFIX;
 
@@ -607,20 +607,20 @@ export class BidAddr implements CLKeyVariant {
   }
 
   static validator(validator: CLAccountHash) {
-    return new BidAddr({ Validator: validator });
+    return new KeyBidAddr({ Validator: validator });
   }
 
   static delegator(validator: CLAccountHash, delegator: CLAccountHash) {
-    return new BidAddr({ Delegator: { validator, delegator } });
+    return new KeyBidAddr({ Delegator: { validator, delegator } });
   }
 
   static legacy(validator: CLAccountHash) {
-    return new BidAddr({ Unified: validator });
+    return new KeyBidAddr({ Unified: validator });
   }
 
   static fromPublicKeys(validator: CLPublicKey, delegator?: CLPublicKey) {
     if (delegator) {
-      return new BidAddr({
+      return new KeyBidAddr({
         Delegator: {
           validator: validator.toAccountHashType(),
           delegator: delegator.toAccountHashType()
@@ -628,11 +628,11 @@ export class BidAddr implements CLKeyVariant {
       });
     }
 
-    return new BidAddr({ Validator: validator.toAccountHashType() });
+    return new KeyBidAddr({ Validator: validator.toAccountHashType() });
   }
 
   static credit(validator: CLAccountHash, eraId: BigNumberish) {
-    return new BidAddr({
+    return new KeyBidAddr({
       Credit: {
         validator: validator,
         eraId
@@ -657,7 +657,7 @@ export class BidAddr implements CLKeyVariant {
     return `${BID_ADDR_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): BidAddr {
+  static fromFormattedString(input: string): KeyBidAddr {
     if (!input.startsWith(`${BID_ADDR_PREFIX}-`)) {
       throw new Error(`Prefix is not ${BID_ADDR_PREFIX}`);
     }
@@ -692,7 +692,7 @@ export class KeyPackage implements CLKeyVariant {
     return `${PACKAGE_PREFIX}-${this.toString()}`;
   }
 
-  static fromFormattedString(input: string): DeployHash {
+  static fromFormattedString(input: string): KeyDeployHash {
     if (!input.startsWith(`${PACKAGE_PREFIX}-`)) {
       throw new Error(`Prefix is not ${PACKAGE_PREFIX}`);
     }

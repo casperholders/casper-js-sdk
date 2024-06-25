@@ -19,11 +19,11 @@ import {
   KeyHashAddr,
   HashParser,
   KeyTransferAddr,
-  DeployHash,
-  EraInfo,
-  Balance,
+  KeyDeployHash,
+  KeyEraInfo,
+  KeyBalance,
   KeyBid,
-  Withdraw,
+  KeyWithdraw,
   KeyDictionary,
   KeySystemEntityRegistry,
   KeyEraSummary,
@@ -46,7 +46,7 @@ import {
   UNBOND_PREFIX,
   CHAINSPEC_REGISTRY_PREFIX,
   CHECKSUM_REGISTRY_PREFIX,
-  BidAddr,
+  KeyBidAddr,
   BidAddrParser
   // BID_ADDR_PREFIX,
   // PACKAGE_PREFIX,
@@ -101,7 +101,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
       case KeyTag.Balance:
         return Ok(concat([Uint8Array.from([KeyTag.Balance]), value.data.data]));
       case KeyTag.BidAddr:
-        const bidAddrBytes = BidAddrParser.toBytes(value.data as BidAddr);
+        const bidAddrBytes = BidAddrParser.toBytes(value.data as KeyBidAddr);
         return Ok(concat([Uint8Array.from([KeyTag.BidAddr]), bidAddrBytes]));
       case KeyTag.Bid:
         return Ok(concat([Uint8Array.from([KeyTag.Bid]), value.data.data]));
@@ -211,7 +211,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
           KEY_DEFAULT_BYTE_LENGTH,
           contentBytes
         );
-        const deploy = new DeployHash(deployBytes);
+        const deploy = new KeyDeployHash(deployBytes);
         return resultHelper(Ok(new CLKey(deploy)), remainder);
       }
       case KeyTag.EraInfo: {
@@ -219,7 +219,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
           64,
           contentBytes
         );
-        const era = new EraInfo(eraBytes);
+        const era = new KeyEraInfo(eraBytes);
         return resultHelper(Ok(new CLKey(era)), remainder);
       }
       case KeyTag.Balance: {
@@ -227,7 +227,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
           KEY_DEFAULT_BYTE_LENGTH,
           contentBytes
         );
-        const balance= new Balance(balanceBytes);
+        const balance= new KeyBalance(balanceBytes);
         return resultHelper(Ok(new CLKey(balance)), remainder);
       }
       case KeyTag.BidAddr: {
@@ -252,7 +252,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
           KEY_DEFAULT_BYTE_LENGTH,
           contentBytes
         );
-        const withdraw = new Withdraw(withdrawBytes);
+        const withdraw = new KeyWithdraw(withdrawBytes);
         return resultHelper(Ok(new CLKey(withdraw)), remainder);
       }
       case KeyTag.Dictionary: {
@@ -357,16 +357,16 @@ export class CLKey extends CLValue {
         case TRANSFER_PREFIX:
           return new CLKey(KeyTransferAddr.fromFormattedString(input));
         case DEPLOY_HASH_PREFIX:
-          return new CLKey(DeployHash.fromFormattedString(input));
+          return new CLKey(KeyDeployHash.fromFormattedString(input));
         case ERA_INFO_PREFIX:
-          return new CLKey(EraInfo.fromFormattedString(input));
+          return new CLKey(KeyEraInfo.fromFormattedString(input));
         case BALANCE_PREFIX:
-          return new CLKey(Balance.fromFormattedString(input));
+          return new CLKey(KeyBalance.fromFormattedString(input));
         // note: BID_ADDR must come before BID as their heads overlap (bid- / bid-addr-)
         case BID_PREFIX:
           return new CLKey(KeyBid.fromFormattedString(input));
         case WITHDRAW_PREFIX:
-          return new CLKey(Withdraw.fromFormattedString(input));
+          return new CLKey(KeyWithdraw.fromFormattedString(input));
         case DICTIONARY_PREFIX:
           return new CLKey(KeyDictionary.fromFormattedString(input));
         case UNBOND_PREFIX:
