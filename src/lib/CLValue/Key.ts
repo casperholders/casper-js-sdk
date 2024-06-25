@@ -1,14 +1,10 @@
-// NOTE: Revisit in future based on https://docs.rs/casper-types/1.0.1/casper_types/enum.Key.html
-
 import { concat } from '@ethersproject/bytes';
 import { Ok, Err } from 'ts-results';
 
 import {
   CLType,
   CLValue,
-  CLByteArray,
-  CLByteArrayType,
-  CLByteArrayBytesParser,
+  CLKeyVariant,
   CLURef,
   CLURefBytesParser,
   CLAccountHash,
@@ -19,15 +15,43 @@ import {
   ToBytesResult,
   CLValueBytesParsers,
   CLValueParsers,
-  CLPublicKey,
   resultHelper,
-  ACCOUNT_HASH_TYPE,
-  BYTE_ARRAY_TYPE,
-  UREF_TYPE
+  KeyHashAddr,
+  HashParser,
+  KeyTransferAddr,
+  KeyDeployHash,
+  KeyEraInfo,
+  KeyBalance,
+  KeyBid,
+  KeyWithdraw,
+  KeyDictionary,
+  KeySystemEntityRegistry,
+  KeyEraSummary,
+  KeyUnbond,
+  KeyChainspecRegistry,
+  KeyChecksumRegistry,
+  KeyPackage,
+  ACCOUNT_HASH_PREFIX,
+  HASH_PREFIX,
+  UREF_PREFIX,
+  TRANSFER_PREFIX,
+  DEPLOY_HASH_PREFIX,
+  ERA_INFO_PREFIX,
+  BALANCE_PREFIX,
+  BID_PREFIX,
+  WITHDRAW_PREFIX,
+  DICTIONARY_PREFIX,
+  SYSTEM_ENTITY_REGISTRY_PREFIX,
+  ERA_SUMMARY_PREFIX,
+  UNBOND_PREFIX,
+  CHAINSPEC_REGISTRY_PREFIX,
+  CHECKSUM_REGISTRY_PREFIX,
+  KeyBidAddr,
+  BidAddrParser
 } from './index';
-import { KEY_TYPE, CLTypeTag } from './constants';
-
-const HASH_LENGTH = 32;
+import { toBytesNumber } from '../ByteConverters';
+import { KEY_TYPE, CLTypeTag, KEY_DEFAULT_BYTE_LENGTH } from './constants';
+import { splitAt } from './utils';
 
 export class CLKeyType extends CLType {
   linksTo = KEY_TYPE;
@@ -36,35 +60,86 @@ export class CLKeyType extends CLType {
 
 export class CLKeyBytesParser extends CLValueBytesParsers {
   toBytes(value: CLKey): ToBytesResult {
-    if (value.isAccount()) {
-      return Ok(
-        concat([
-          Uint8Array.from([KeyTag.Account]),
-          new CLAccountHashBytesParser()
-            .toBytes(value.data as CLAccountHash)
-            .unwrap()
-        ])
-      );
+    switch (value.data.keyVariant) {
+      case KeyTag.Account:
+        return Ok(
+          concat([
+            Uint8Array.from([KeyTag.Account]),
+            new CLAccountHashBytesParser()
+              .toBytes(value.data as CLAccountHash)
+              .unwrap()
+          ])
+        );
+      case KeyTag.Hash:
+        return Ok(concat([Uint8Array.from([KeyTag.Hash]), value.data.data]));
+      case KeyTag.URef:
+        return Ok(
+          concat([
+            Uint8Array.from([KeyTag.URef]),
+            CLValueParsers.toBytes(value.data as CLURef).unwrap()
+          ])
+        );
+      case KeyTag.Transfer:
+        return Ok(
+          concat([Uint8Array.from([KeyTag.Transfer]), value.data.data])
+        );
+      case KeyTag.DeployInfo:
+        return Ok(
+          concat([Uint8Array.from([KeyTag.DeployInfo]), value.data.data])
+        );
+      case KeyTag.EraInfo:
+        return Ok(
+          concat([
+            Uint8Array.from([KeyTag.DeployInfo]),
+            toBytesNumber(64, false)(value.data.data)
+          ])
+        );
+      case KeyTag.Balance:
+        return Ok(concat([Uint8Array.from([KeyTag.Balance]), value.data.data]));
+      case KeyTag.BidAddr:
+        const bidAddrBytes = BidAddrParser.toBytes(value.data as KeyBidAddr);
+        return Ok(concat([Uint8Array.from([KeyTag.BidAddr]), bidAddrBytes]));
+      case KeyTag.Bid:
+        return Ok(concat([Uint8Array.from([KeyTag.Bid]), value.data.data]));
+      case KeyTag.Withdraw:
+        return Ok(
+          concat([Uint8Array.from([KeyTag.Withdraw]), value.data.data])
+        );
+      case KeyTag.Dictionary:
+        return Ok(
+          concat([Uint8Array.from([KeyTag.Dictionary]), value.data.data])
+        );
+      case KeyTag.SystemEntityRegistry: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
+        return Ok(
+          concat([Uint8Array.from([KeyTag.SystemEntityRegistry]), padding])
+        );
+      }
+      case KeyTag.EraSummary: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
+        return Ok(concat([Uint8Array.from([KeyTag.EraSummary]), padding]));
+      }
+      case KeyTag.ChainspecRegistry: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
+        return Ok(
+          concat([Uint8Array.from([KeyTag.ChainspecRegistry]), padding])
+        );
+      }
+      case KeyTag.ChecksumRegistry: {
+        const padding = new Uint8Array(32);
+        padding.set(value.data.data, 0);
+        return Ok(
+          concat([Uint8Array.from([KeyTag.ChecksumRegistry]), padding])
+        );
+      }
+      default:
+        throw new Error(
+          `Problem serializing keyVariant: ${value.data.keyVariant}`
+        );
     }
-    if (value.isHash()) {
-      return Ok(
-        concat([
-          Uint8Array.from([KeyTag.Hash]),
-          new CLByteArrayBytesParser()
-            .toBytes(value.data as CLByteArray)
-            .unwrap()
-        ])
-      );
-    }
-    if (value.isURef()) {
-      return Ok(
-        concat([
-          Uint8Array.from([KeyTag.URef]),
-          CLValueParsers.toBytes(value.data as CLURef).unwrap()
-        ])
-      );
-    }
-
     throw new Error('Unknown byte types');
   }
 
@@ -78,69 +153,164 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
     }
 
     const tag = bytes[0];
-    if (tag === KeyTag.Hash) {
-      const hashBytes = bytes.subarray(1);
-      const {
-        result: hashResult,
-        remainder: hashRemainder
-      } = new CLByteArrayBytesParser().fromBytesWithRemainder(
-        hashBytes,
-        new CLByteArrayType(HASH_LENGTH)
-      );
-      const hash = hashResult.unwrap();
-      const key = new CLKey(hash);
-      return resultHelper(Ok(key), hashRemainder);
-    } else if (tag === KeyTag.URef) {
-      const {
-        result: urefResult,
-        remainder: urefRemainder
-      } = new CLURefBytesParser().fromBytesWithRemainder(bytes.subarray(1));
-      if (urefResult.ok) {
-        const key = new CLKey(urefResult.val);
-        return resultHelper(Ok(key), urefRemainder);
-      } else {
-        return resultHelper<CLKey, CLErrorCodes>(Err(urefResult.val));
+    const contentBytes = bytes.subarray(1);
+
+    switch (tag) {
+      case KeyTag.Hash: {
+        const hashBytes = bytes.subarray(1);
+        const { result, remainder } = HashParser.fromBytesWithRemainder(
+          hashBytes
+        );
+        if (result.ok) {
+          const key = new CLKey(result.val);
+          return resultHelper(Ok(key), remainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(result.val));
+        }
       }
-    } else if (tag === KeyTag.Account) {
-      const {
-        result: accountHashResult,
-        remainder: accountHashRemainder
-      } = new CLAccountHashBytesParser().fromBytesWithRemainder(
-        bytes.subarray(1)
-      );
-      if (accountHashResult.ok) {
-        const key = new CLKey(accountHashResult.val);
-        return resultHelper(Ok(key), accountHashRemainder);
-      } else {
-        return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
+      case KeyTag.URef: {
+        const {
+          result: urefResult,
+          remainder: urefRemainder
+        } = new CLURefBytesParser().fromBytesWithRemainder(bytes.subarray(1));
+        if (urefResult.ok) {
+          const key = new CLKey(urefResult.val);
+          return resultHelper(Ok(key), urefRemainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(urefResult.val));
+        }
       }
-    } else if (tag === KeyTag.Dictionary) {
-      console.error('Dictionary not implemented');
-      return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
-    } else {
-      return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
+      case KeyTag.Account: {
+        const {
+          result: accountHashResult,
+          remainder: accountHashRemainder
+        } = new CLAccountHashBytesParser().fromBytesWithRemainder(
+          bytes.subarray(1)
+        );
+        if (accountHashResult.ok) {
+          const key = new CLKey(accountHashResult.val);
+          return resultHelper(Ok(key), accountHashRemainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
+        }
+      }
+      case KeyTag.Transfer: {
+        const [transferBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const transfer = new KeyTransferAddr(transferBytes);
+        return resultHelper(Ok(new CLKey(transfer)), remainder);
+      }
+      case KeyTag.DeployInfo: {
+        const [deployBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const deploy = new KeyDeployHash(deployBytes);
+        return resultHelper(Ok(new CLKey(deploy)), remainder);
+      }
+      case KeyTag.EraInfo: {
+        const [eraBytes, remainder] = splitAt(
+          64,
+          contentBytes
+        );
+        const era = new KeyEraInfo(eraBytes);
+        return resultHelper(Ok(new CLKey(era)), remainder);
+      }
+      case KeyTag.Balance: {
+        const [balanceBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const balance= new KeyBalance(balanceBytes);
+        return resultHelper(Ok(new CLKey(balance)), remainder);
+      }
+      case KeyTag.BidAddr: {
+        const { result, remainder } = BidAddrParser.fromBytesWithRemainder(contentBytes);
+        if (result.ok) {
+          const key = new CLKey(result.val);
+          return resultHelper(Ok(key), remainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(result.val));
+        }
+      }
+      case KeyTag.Bid : {
+        const [bidBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const bid = new KeyBid(bidBytes);
+        return resultHelper(Ok(new CLKey(bid)), remainder);
+      }
+      case KeyTag.Withdraw: {
+        const [withdrawBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const withdraw = new KeyWithdraw(withdrawBytes);
+        return resultHelper(Ok(new CLKey(withdraw)), remainder);
+      }
+      case KeyTag.Dictionary: {
+        const [dictBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const dict = new KeyDictionary(dictBytes);
+        return resultHelper(Ok(new CLKey(dict)), remainder);
+      }
+      case KeyTag.SystemEntityRegistry: {
+        const [systemBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const system = new KeySystemEntityRegistry(systemBytes);
+        return resultHelper(Ok(new CLKey(system)), remainder);
+      }
+      case KeyTag.EraSummary: {
+        const [eraBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const era = new KeyEraSummary(eraBytes);
+        return resultHelper(Ok(new CLKey(era)), remainder);
+      }
+      case KeyTag.ChainspecRegistry: {
+        const [chainBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const chain = new KeyChainspecRegistry(chainBytes);
+        return resultHelper(Ok(new CLKey(chain)), remainder);
+      }
+      case KeyTag.ChecksumRegistry: {
+        const [checksumBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const checksum = new KeyChecksumRegistry(checksumBytes);
+        return resultHelper(Ok(new CLKey(checksum)), remainder);
+      }
+      case KeyTag.Package: {
+        const [packageBytes, remainder] = splitAt(
+          KEY_DEFAULT_BYTE_LENGTH,
+          contentBytes
+        );
+        const keyPackage = new KeyPackage(packageBytes);
+        return resultHelper(Ok(new CLKey(keyPackage)), remainder);
+      }
+      default: {
+        return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
+      }
     }
   }
 }
 
-export type CLKeyParameters =
-  | CLByteArray
-  | CLURef
-  | CLAccountHash
-  | CLPublicKey;
-
 export class CLKey extends CLValue {
-  data: CLKeyParameters;
+  data: CLKeyVariant;
 
-  constructor(v: CLKeyParameters) {
+  constructor(v: CLKeyVariant) {
     super();
-    if (!v.isCLValue) {
-      throw Error('Provided parameter is not a valid CLValue');
-    }
-    if (v.clType().tag === CLTypeTag.PublicKey) {
-      this.data = new CLAccountHash((v as CLPublicKey).toAccountHash());
-      return;
-    }
     this.data = v;
   }
 
@@ -148,23 +318,67 @@ export class CLKey extends CLValue {
     return new CLKeyType();
   }
 
-  value(): CLKeyParameters {
+  value(): CLKeyVariant {
     return this.data;
   }
 
   toJSON(): string {
-    return Buffer.from(this.data.value() as Uint8Array).toString('hex');
+    return this.data.toString();
   }
 
   isHash(): boolean {
-    return this.data.clType().linksTo === BYTE_ARRAY_TYPE;
+    return this.data.keyVariant === KeyTag.Hash;
   }
 
   isURef(): boolean {
-    return this.data.clType().linksTo === UREF_TYPE;
+    return this.data.keyVariant === KeyTag.URef;
   }
 
   isAccount(): boolean {
-    return this.data.clType().linksTo === ACCOUNT_HASH_TYPE;
+    return this.data.keyVariant === KeyTag.Account;
+  }
+
+  static fromFormattedString(input: string): CLKey {
+    const lastDashIndex = input.lastIndexOf('-');
+    if (lastDashIndex >= 0) {
+      const prefix = input.slice(0, lastDashIndex);
+
+      switch (prefix) {
+        case ACCOUNT_HASH_PREFIX:
+          return new CLKey(CLAccountHash.fromFormattedString(input));
+        case HASH_PREFIX:
+          return new CLKey(KeyHashAddr.fromFormattedString(input));
+        case UREF_PREFIX:
+          return new CLKey(CLURef.fromFormattedString(input));
+        case TRANSFER_PREFIX:
+          return new CLKey(KeyTransferAddr.fromFormattedString(input));
+        case DEPLOY_HASH_PREFIX:
+          return new CLKey(KeyDeployHash.fromFormattedString(input));
+        case ERA_INFO_PREFIX:
+          return new CLKey(KeyEraInfo.fromFormattedString(input));
+        case BALANCE_PREFIX:
+          return new CLKey(KeyBalance.fromFormattedString(input));
+        // note: BID_ADDR must come before BID as their heads overlap (bid- / bid-addr-)
+        case BID_PREFIX:
+          return new CLKey(KeyBid.fromFormattedString(input));
+        case WITHDRAW_PREFIX:
+          return new CLKey(KeyWithdraw.fromFormattedString(input));
+        case DICTIONARY_PREFIX:
+          return new CLKey(KeyDictionary.fromFormattedString(input));
+        case UNBOND_PREFIX:
+          return new CLKey(KeyUnbond.fromFormattedString(input));
+        case SYSTEM_ENTITY_REGISTRY_PREFIX:
+          return new CLKey(KeySystemEntityRegistry.fromFormattedString(input));
+        case ERA_SUMMARY_PREFIX:
+          return new CLKey(KeyEraSummary.fromFormattedString(input));
+        case CHAINSPEC_REGISTRY_PREFIX:
+          return new CLKey(KeyChainspecRegistry.fromFormattedString(input));
+        case CHECKSUM_REGISTRY_PREFIX:
+          return new CLKey(KeyChecksumRegistry.fromFormattedString(input));
+        default:
+          throw new Error('Unsupported prefix');
+      }
+    }
+    throw Error(`Wrong string format`);
   }
 }

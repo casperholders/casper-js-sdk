@@ -35,6 +35,32 @@ export enum KeyTag {
   BalanceHold = 22
 }
 
+export const ACCOUNT_HASH_PREFIX = 'account-hash';
+export const HASH_PREFIX = 'hash';
+export const UREF_PREFIX = 'uref';
+export const TRANSFER_PREFIX = 'transfer';
+export const DEPLOY_HASH_PREFIX = 'deploy-hash';
+export const ERA_INFO_PREFIX = 'era';
+export const BALANCE_PREFIX = 'balance';
+export const BID_PREFIX = 'bid';
+export const WITHDRAW_PREFIX = 'withdraw';
+export const DICTIONARY_PREFIX = 'dictionary';
+export const SYSTEM_ENTITY_REGISTRY_PREFIX = 'system-entity-registry';
+export const ERA_SUMMARY_PREFIX = 'era-summary';
+export const UNBOND_PREFIX = 'unbond';
+export const CHAINSPEC_REGISTRY_PREFIX = 'chainspec-registry';
+export const CHECKSUM_REGISTRY_PREFIX = 'checksum-registry';
+export const BID_ADDR_PREFIX = 'bid-addr';
+export const PACKAGE_PREFIX = 'package';
+export const BLOCK_GLOBAL_TIME_PREFIX = 'block-time';
+export const BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX= 'block-message-count';
+export const ENTITY_PREFIX = 'entity';
+export const SYSTEM_ENTITY_PREFIX = 'system';
+export const ACCOUNT_ENTITY_PREFIX = 'account';
+export const CONTRACT_ENTITY_PREFIX = 'contract';
+
+
+
 /**
  * Casper types, i.e. types which can be stored and manipulated by smart contracts.
  *
@@ -90,6 +116,12 @@ export enum CLTypeTag {
   /** A value of public key type. */
   PublicKey = 22
 }
+
+// A number of bytes in most Key variants 
+export const KEY_DEFAULT_BYTE_LENGTH = 32;
+
+// The maximum length for a `dictionary_item_key`
+export const DICTIONARY_ITEM_KEY_MAX_LENGTH = 128;
 
 export const BOOL_TYPE = 'Bool';
 export const KEY_TYPE = 'Key';

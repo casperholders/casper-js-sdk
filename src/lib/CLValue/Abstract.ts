@@ -62,14 +62,6 @@ export abstract class CLValue {
   }
 }
 
-export abstract class CLKeyVariant {
-  abstract toFormattedStr(): string;
-
-  static fromStr(hexStr: string): CLKeyVariant {
-    throw Error(`Unknown string provided: ${hexStr}`);
-  }
-}
-
 export class CLValueParsers {
   static fromJSON(json: any): Result<CLValue, string> {
     const clType = matchTypeToCLType(json.cl_type);

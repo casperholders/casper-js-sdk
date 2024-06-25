@@ -4,12 +4,15 @@ import { Ok, Err } from 'ts-results';
 import {
   CLType,
   CLValue,
+  CLKeyVariant,
   CLValueBytesParsers,
   CLErrorCodes,
+  KeyTag,
   ResultAndRemainder,
   ToBytesResult,
   resultHelper,
-  padNum
+  padNum,
+  UREF_PREFIX
 } from './index';
 import { UREF_TYPE, CLTypeTag } from './constants';
 import { decodeBase16, encodeBase16 } from '../Conversions';
@@ -38,12 +41,11 @@ export class CLURefType extends CLType {
   tag = CLTypeTag.URef;
 }
 
-const FORMATTED_STRING_PREFIX = 'uref';
 /**
  * Length of [[URef]] address field.
  * @internal
  */
-const UREF_ADDR_LENGTH = 32;
+export const UREF_ADDR_LENGTH = 32;
 /**
  * Length of [[ACCESS_RIGHT]] field.
  * @internal
@@ -73,7 +75,8 @@ export class CLURefBytesParser extends CLValueBytesParsers {
   }
 }
 
-export class CLURef extends CLValue {
+export class CLURef extends CLValue implements CLKeyVariant {
+  keyVariant = KeyTag.URef;
   data: Uint8Array;
   accessRights: AccessRights;
 
@@ -99,12 +102,12 @@ export class CLURef extends CLValue {
   /**
    * Parses a casper-client supported string formatted argument into a `URef`.
    */
-  static fromFormattedStr(input: string): CLURef {
-    if (!input.startsWith(`${FORMATTED_STRING_PREFIX}-`)) {
+  static fromFormattedString(input: string): CLURef {
+    if (!input.startsWith(`${UREF_PREFIX}-`)) {
       throw new Error("Prefix is not 'uref-'");
     }
     const parts = input
-      .substring(`${FORMATTED_STRING_PREFIX}-`.length)
+      .substring(`${UREF_PREFIX}-`.length)
       .split('-', 2);
     if (parts.length !== 2) {
       throw new Error('No access rights as suffix');
@@ -116,16 +119,19 @@ export class CLURef extends CLValue {
     return new CLURef(addr, accessRight);
   }
 
-  toFormattedStr(): string {
+  toString(): string {
     return [
-      FORMATTED_STRING_PREFIX,
       encodeBase16(this.data),
       padNum(this.accessRights.toString(8), 3)
     ].join('-');
   }
 
+  toFormattedString(): string {
+    return [UREF_PREFIX, this.toString()].join('-');
+  }
+
   toJSON(): string {
-    return this.toFormattedStr();
+    return this.toFormattedString();
   }
 
   clType(): CLType {

@@ -401,7 +401,7 @@ export class CasperServiceByJsonRPC {
     if (accountIdentifier instanceof CLPublicKey) {
       identifier = accountIdentifier.toHex();
     } else if (accountIdentifier instanceof CLAccountHash) {
-      identifier = accountIdentifier.toFormattedStr();
+      identifier = accountIdentifier.toFormattedString();
     }
     const params: any = {
       account_identifier: identifier

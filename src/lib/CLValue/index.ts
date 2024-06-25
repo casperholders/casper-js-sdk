@@ -3,6 +3,7 @@ export * from './Builders';
 export * from './ByteArray';
 export * from './Any';
 export * from './Key';
+export * from './KeyVariants';
 export * from './List';
 export * from './Map';
 export * from './Numeric';

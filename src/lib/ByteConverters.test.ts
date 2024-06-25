@@ -10,7 +10,8 @@ import {
   CLPublicKeyTag,
   Keys,
   AccessRights,
-  decodeBase16
+  decodeBase16,
+  KeyHashAddr
 } from '..';
 import { toBytesNumber, toBytesDeployHash } from './ByteConverters';
 
@@ -181,7 +182,7 @@ describe(`numbers' toBytes`, () => {
 
     expect(bytes).to.deep.eq(validBytes);
 
-    const uref = CLURef.fromFormattedStr(
+    const uref = CLURef.fromFormattedString(
       'uref-d93dfedfc13180a0ea188841e64e0a1af718a733216e7fae4909dface372d2b0-007'
     );
     const clVal2 = CLValueBuilder.key(uref);
@@ -240,7 +241,7 @@ describe(`numbers' toBytes`, () => {
 
   it('should serialize/deserialize Hash variant of Key correctly', () => {
     const keyHash = CLValueBuilder.key(
-      CLValueBuilder.byteArray(Uint8Array.from(Array(32).fill(42)))
+      new KeyHashAddr(Uint8Array.from(Array(32).fill(42)))
     );
     // prettier-ignore
     const expectedBytes = Uint8Array.from([
@@ -313,7 +314,7 @@ describe(`numbers' toBytes`, () => {
   });
 
   it('should serialize/deserialize URef correctly', () => {
-    const uref = CLURef.fromFormattedStr(
+    const uref = CLURef.fromFormattedString(
       'uref-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff-007'
     );
     // prettier-ignore

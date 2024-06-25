@@ -52,7 +52,7 @@ export class InitiatorAddr {
   public toJSON(): unknown {
     if (this.AccountHash) {
       return {
-        AccountHash: this.AccountHash.toFormattedStr()
+        AccountHash: this.AccountHash.toFormattedString()
       };
     } else if (this.PublicKey) {
       return {
@@ -68,7 +68,7 @@ export const matchInitiatorAddress = (json: any): InitiatorAddr | undefined => {
     return InitiatorAddr.fromPublicKey(CLPublicKey.fromHex(json.PublicKey));
   } else if (json.AccountHash) {
     return InitiatorAddr.fromAccountHash(
-      CLAccountHash.fromFormattedStr(json.AccountHash)
+      CLAccountHash.fromFormattedString(json.AccountHash)
     );
   }
   return undefined;
