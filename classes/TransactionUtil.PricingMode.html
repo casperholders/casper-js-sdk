@@ -21,7 +21,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">PricingMode</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fae0c4a/src/lib/TransactionUtil.ts#L108">src/lib/TransactionUtil.ts:108</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/93f0692/src/lib/PricingMode.ts#L66">src/lib/PricingMode.ts:66</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -40,8 +40,8 @@
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
 <div class="tsd-index-list"><a href="TransactionUtil.PricingMode.html#toBytes" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>to<wbr/>Bytes</span></a>
-<a href="TransactionUtil.PricingMode.html#fromClassic" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>from<wbr/>Classic</span></a>
-<a href="TransactionUtil.PricingMode.html#fromFixed" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>from<wbr/>Fixed</span></a>
+<a href="TransactionUtil.PricingMode.html#buildClassic" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>build<wbr/>Classic</span></a>
+<a href="TransactionUtil.PricingMode.html#buildFixed" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>build<wbr/>Fixed</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Constructors</h2>
@@ -57,17 +57,17 @@
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>Classic</span><a href="#Classic" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">Classic<span class="tsd-signature-symbol">?:</span> <a href="TransactionUtil.PricingModeClassic.html" class="tsd-signature-type" data-tsd-kind="Class">PricingModeClassic</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fae0c4a/src/lib/TransactionUtil.ts#L112">src/lib/TransactionUtil.ts:112</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/93f0692/src/lib/PricingMode.ts#L70">src/lib/PricingMode.ts:70</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="Fixed" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>Fixed</span><a href="#Fixed" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">Fixed<span class="tsd-signature-symbol">?:</span> <a href="TransactionUtil.PricingModeFixed.html" class="tsd-signature-type" data-tsd-kind="Class">PricingModeFixed</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fae0c4a/src/lib/TransactionUtil.ts#L116">src/lib/TransactionUtil.ts:116</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/93f0692/src/lib/PricingMode.ts#L74">src/lib/PricingMode.ts:74</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="Reserved" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>Reserved</span><a href="#Reserved" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">Reserved<span class="tsd-signature-symbol">?:</span> <a href="TransactionUtil.PricingModeReserved.html" class="tsd-signature-type" data-tsd-kind="Class">PricingModeReserved</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fae0c4a/src/lib/TransactionUtil.ts#L121">src/lib/TransactionUtil.ts:121</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/93f0692/src/lib/PricingMode.ts#L79">src/lib/PricingMode.ts:79</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toBytes" class="tsd-anchor"></a>
@@ -77,11 +77,11 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="../types/ToBytesResult.html" class="tsd-signature-type" data-tsd-kind="Type alias">ToBytesResult</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fae0c4a/src/lib/TransactionUtil.ts#L143">src/lib/TransactionUtil.ts:143</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromClassic" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Classic</span><a href="#fromClassic" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/93f0692/src/lib/PricingMode.ts#L102">src/lib/PricingMode.ts:102</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="buildClassic" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>build<wbr/>Classic</span><a href="#buildClassic" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="fromClassic.fromClassic-1">from<wbr/>Classic<span class="tsd-signature-symbol">(</span>paymentAmount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, gasPriceTolerance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="TransactionUtil.PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a><a href="#fromClassic.fromClassic-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="buildClassic.buildClassic-1">build<wbr/>Classic<span class="tsd-signature-symbol">(</span>paymentAmount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, gasPriceTolerance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, standardPayment<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="TransactionUtil.PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a><a href="#buildClassic.buildClassic-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -89,14 +89,16 @@
 <li>
 <h5>paymentAmount: <span class="tsd-signature-type">number</span></h5></li>
 <li>
-<h5>gasPriceTolerance: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h5>gasPriceTolerance: <span class="tsd-signature-type">number</span></h5></li>
+<li>
+<h5>standardPayment: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="TransactionUtil.PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fae0c4a/src/lib/TransactionUtil.ts#L124">src/lib/TransactionUtil.ts:124</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromFixed" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Fixed</span><a href="#fromFixed" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/93f0692/src/lib/PricingMode.ts#L82">src/lib/PricingMode.ts:82</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="buildFixed" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>build<wbr/>Fixed</span><a href="#buildFixed" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="fromFixed.fromFixed-1">from<wbr/>Fixed<span class="tsd-signature-symbol">(</span>gasPriceTolerance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="TransactionUtil.PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a><a href="#fromFixed.fromFixed-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="buildFixed.buildFixed-1">build<wbr/>Fixed<span class="tsd-signature-symbol">(</span>gasPriceTolerance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="TransactionUtil.PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a><a href="#buildFixed.buildFixed-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -105,7 +107,7 @@
 <h5>gasPriceTolerance: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="TransactionUtil.PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fae0c4a/src/lib/TransactionUtil.ts#L136">src/lib/TransactionUtil.ts:136</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/93f0692/src/lib/PricingMode.ts#L95">src/lib/PricingMode.ts:95</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -130,9 +132,15 @@
 <li class="tsd-kind-namespace"><a href="../modules/Contracts.html">Contracts</a></li>
 <li class="tsd-kind-namespace"><a href="../modules/DeployUtil.html">Deploy<wbr/>Util</a></li>
 <li class="tsd-kind-namespace"><a href="../modules/HDKeys.html">HDKeys</a></li>
+<li class="tsd-kind-namespace"><a href="../modules/InitiatorAddr.html">Initiator<wbr/>Addr</a></li>
 <li class="tsd-kind-namespace"><a href="../modules/Keys.html">Keys</a></li>
 <li class="tsd-kind-namespace"><a href="../modules/Serialization.html">Serialization</a></li>
+<li class="tsd-kind-namespace"><a href="../modules/SerializationUtils.html">Serialization<wbr/>Utils</a></li>
 <li class="tsd-kind-namespace"><a href="../modules/Signer.html">Signer</a></li>
+<li class="tsd-kind-namespace"><a href="../modules/TransactionEntryPoint.html">Transaction<wbr/>Entry<wbr/>Point</a></li>
+<li class="tsd-kind-namespace"><a href="../modules/TransactionInvocationTarget.html">Transaction<wbr/>Invocation<wbr/>Target</a></li>
+<li class="tsd-kind-namespace"><a href="../modules/TransactionScheduling.html">Transaction<wbr/>Scheduling</a></li>
+<li class="tsd-kind-namespace"><a href="../modules/TransactionTarget.html">Transaction<wbr/>Target</a></li>
 <li class="current tsd-kind-namespace"><a href="../modules/TransactionUtil.html">Transaction<wbr/>Util</a></li></ul></li>
 <li class="tsd-kind-namespace tsd-is-external"><a href="../modules/Result.html">Result</a></li></ul></div></details></nav>
 <nav class="tsd-navigation secondary menu-sticky">
@@ -144,8 +152,8 @@
 <li class="tsd-kind-property tsd-parent-kind-class"><a href="TransactionUtil.PricingMode.html#Fixed" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Fixed?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class"><a href="TransactionUtil.PricingMode.html#Reserved" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Reserved?</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="TransactionUtil.PricingMode.html#toBytes" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>to<wbr/>Bytes</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="TransactionUtil.PricingMode.html#fromClassic" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>from<wbr/>Classic</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="TransactionUtil.PricingMode.html#fromFixed" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>from<wbr/>Fixed</a></li></ul></li></ul></nav></div></div>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="TransactionUtil.PricingMode.html#buildClassic" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>build<wbr/>Classic</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="TransactionUtil.PricingMode.html#buildFixed" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>build<wbr/>Fixed</a></li></ul></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>
