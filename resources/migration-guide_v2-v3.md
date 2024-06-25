@@ -154,10 +154,10 @@ This method is used to send a `Transaction` for execution. A `Transaction` is a 
 
 This service was removed from 3.0.0 release. It has only one method - `getAccountBalance`. Please use `CasperServiceByJsonRPC.getAccountBalance` instead.
 
+## EventName
+
+Enum `EventName` lost two values: `DeployProcessed` and `DeployAccepted`. `TransactionAccepted`, `TransactionProcessed` and `TransactionExpired` were added. Deploys stopped being a first-entity in favor of Transactions, so they all Deploys will be, in the SSE streams, communicated as `Transaction*` events. Please bear in mind that the internal structure of the events did change significantly.
+
 ## Speculative endpoints
 
-#TODO
-
-```
-
-```
+Speculative endpoints are currently not supported by the JS SDK

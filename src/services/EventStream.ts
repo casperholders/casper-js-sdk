@@ -34,8 +34,8 @@ export class DeployWatcher {
   }
 
   start() {
-    this.es.subscribe(EventName.DeployProcessed, result => {
-      const deployHash = result.body.DeployProcessed.deploy_hash;
+    this.es.subscribe(EventName.TransactionProcessed, result => {
+      const deployHash = result.body.TransactionProcessed.deploy_hash;
       const pendingDeploy = this.watchList.find(
         d => d.deployHash === deployHash
       );
@@ -55,14 +55,11 @@ export class DeployWatcher {
 type EventHandlerFn = (result: any) => void;
 
 export enum EventName {
-  /** Can be fetched in `/events/main` path */
   BlockAdded = 'BlockAdded',
-  /** Can be fetched in `/events/main` path */
-  DeployProcessed = 'DeployProcessed',
-  /** Can be fetched in `/events/deploys` path */
-  DeployAccepted = 'DeployAccepted',
+  TransactionProcessed = 'TransactionProcessed',
+  TransactionAccepted = 'TransactionAccepted',
+  TransactionExpired = 'TransactionExpired',
   BlockFinalized = 'BlockFinalized',
-  /** Can be fetched in `/events/sigs` path */
   FinalitySignature = 'FinalitySignature',
   Fault = 'Fault'
 }
