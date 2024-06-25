@@ -48,10 +48,6 @@ import {
   CHECKSUM_REGISTRY_PREFIX,
   KeyBidAddr,
   BidAddrParser
-  // BID_ADDR_PREFIX,
-  // PACKAGE_PREFIX,
-  // BLOCK_GLOBAL_TIME_PREFIX,
-  // BLOCK_GLOBAL_MESSAGE_COUNT_PREFIX
 } from './index';
 import { toBytesNumber } from '../ByteConverters';
 import { KEY_TYPE, CLTypeTag, KEY_DEFAULT_BYTE_LENGTH } from './constants';

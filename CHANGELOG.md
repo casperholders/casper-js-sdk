@@ -13,6 +13,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   ### Removed
  -->
 
+## [3.0.0-rc01] - 2024-06-25
+
+This release candidate is compatible with [#node RC3](https://github.com/casper-network/casper-node/tree/release-2.0.0-rc2)
+
+### Added
+
+- `CLKeyVariant type` witch supports for new `CLKey` variants (HashAddr, TransferAddr, DeployHash, EraInfo, Balance, Bid, Withdraw, Dictionary, SystemEntityRegistry, EraSummary, Unbound, ChainspecRegistry, ChecksumRegistry, BidAddr, KeyPackage, EntityAddr)
+
 ## [3.0.0-rc00] - 2024-06-11
 
 This release candidate is compatible with [#node RC2](https://github.com/casper-network/casper-node/tree/release-2.0.0-rc2)
