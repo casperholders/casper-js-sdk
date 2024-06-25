@@ -680,7 +680,7 @@ export class KeyPackage implements CLKeyVariant {
 
   constructor(public data: Uint8Array) {}
 
-  value(): any {
+  value(): Uint8Array {
     return this.data;
   }
 
