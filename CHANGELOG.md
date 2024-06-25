@@ -20,6 +20,11 @@ This release candidate is compatible with [#node RC3](https://github.com/casper-
 ### Added
 
 - `CLKeyVariant type` witch supports for new `CLKey` variants (HashAddr, TransferAddr, DeployHash, EraInfo, Balance, Bid, Withdraw, Dictionary, SystemEntityRegistry, EraSummary, Unbound, ChainspecRegistry, ChecksumRegistry, BidAddr, KeyPackage, EntityAddr)
+- variants `TransactionProcessed`, `TransactionExpired` and `TransactionAccepted` of enum `EventName` in `EventStream.ts`
+
+### Removed
+
+- variants `DeployProcessed` and `DeployAccepted` of enum `EventName` in `EventStream.ts`
 
 ## [3.0.0-rc00] - 2024-06-11
 
@@ -50,7 +55,6 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
   - UniqAddress
   - DeployHeader
   - Deploy
-- variants `TransactionProcessed`, `TransactionExpired` and `TransactionAccepted` of enum `EventName` in `EventStream.ts`
 
 ### Changed
 
@@ -73,7 +77,6 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
 - `BalanceServiceByJsonRPC` class
 - `execution_results` field in `GetDeployResult` was removed. This affects `CasperServiceByJsonRPC.getDeployInfo` method return types.
 - field `block` of `GetBlockResult`. This change affects `CasperServiceByJsonRPC.getBlockInfo` method return type
-- variants `DeployProcessed` and `DeployAccepted` of enum `EventName` in `EventStream.ts`
 
 ## [2.15.5] - 2024-04-18
 
