@@ -602,7 +602,7 @@ export class KeyBidAddr implements CLKeyVariant {
 
   constructor(public data: BidAddrData) {}
 
-  value(): any {
+  value(): BidAddrData {
     return this.data;
   }
 
