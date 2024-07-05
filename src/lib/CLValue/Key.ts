@@ -47,7 +47,10 @@ import {
   CHAINSPEC_REGISTRY_PREFIX,
   CHECKSUM_REGISTRY_PREFIX,
   KeyBidAddr,
-  BidAddrParser
+  BidAddrParser,
+  KeyEntityAddrParser,
+  KeyEntityAddr,
+  ENTITY_PREFIX
 } from './index';
 import { toBytesNumber } from '../ByteConverters';
 import { KEY_TYPE, CLTypeTag, KEY_DEFAULT_BYTE_LENGTH } from './constants';
@@ -90,7 +93,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
       case KeyTag.EraInfo:
         return Ok(
           concat([
-            Uint8Array.from([KeyTag.DeployInfo]),
+            Uint8Array.from([KeyTag.EraInfo]),
             toBytesNumber(64, false)(value.data.data)
           ])
         );
@@ -134,6 +137,20 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
         return Ok(
           concat([Uint8Array.from([KeyTag.ChecksumRegistry]), padding])
         );
+      }
+      case KeyTag.Unbond: {
+        return Ok(
+          concat([
+            Uint8Array.from([KeyTag.Unbond]),
+            new CLAccountHashBytesParser()
+              .toBytes(value.data as CLAccountHash)
+              .unwrap()
+          ])
+        );
+      }
+      case KeyTag.AddressableEntity: {
+        const bytes = KeyEntityAddrParser.toBytes(value.data as KeyEntityAddr);
+        return Ok(concat([Uint8Array.from([KeyTag.AddressableEntity]), bytes]));
       }
       default:
         throw new Error(
@@ -211,10 +228,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
         return resultHelper(Ok(new CLKey(deploy)), remainder);
       }
       case KeyTag.EraInfo: {
-        const [eraBytes, remainder] = splitAt(
-          64,
-          contentBytes
-        );
+        const [eraBytes, remainder] = splitAt(64, contentBytes);
         const era = new KeyEraInfo(eraBytes);
         return resultHelper(Ok(new CLKey(era)), remainder);
       }
@@ -223,11 +237,13 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
           KEY_DEFAULT_BYTE_LENGTH,
           contentBytes
         );
-        const balance= new KeyBalance(balanceBytes);
+        const balance = new KeyBalance(balanceBytes);
         return resultHelper(Ok(new CLKey(balance)), remainder);
       }
       case KeyTag.BidAddr: {
-        const { result, remainder } = BidAddrParser.fromBytesWithRemainder(contentBytes);
+        const { result, remainder } = BidAddrParser.fromBytesWithRemainder(
+          contentBytes
+        );
         if (result.ok) {
           const key = new CLKey(result.val);
           return resultHelper(Ok(key), remainder);
@@ -235,7 +251,7 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
           return resultHelper<CLKey, CLErrorCodes>(Err(result.val));
         }
       }
-      case KeyTag.Bid : {
+      case KeyTag.Bid: {
         const [bidBytes, remainder] = splitAt(
           KEY_DEFAULT_BYTE_LENGTH,
           contentBytes
@@ -298,6 +314,34 @@ export class CLKeyBytesParser extends CLValueBytesParsers {
         );
         const keyPackage = new KeyPackage(packageBytes);
         return resultHelper(Ok(new CLKey(keyPackage)), remainder);
+      }
+      case KeyTag.Unbond: {
+        const {
+          result: accountHashResult,
+          remainder: accountHashRemainder
+        } = new CLAccountHashBytesParser().fromBytesWithRemainder(
+          bytes.subarray(1)
+        );
+        if (accountHashResult.ok) {
+          const key = new CLKey(new KeyUnbond(accountHashResult.val));
+          return resultHelper(Ok(key), accountHashRemainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(Err(accountHashResult.val));
+        }
+      }
+      case KeyTag.AddressableEntity: {
+        const {
+          result: addressableEntityResult,
+          remainder: addressableEntityRemainder
+        } = KeyEntityAddrParser.fromBytesWithRemainder(bytes.subarray(1));
+        if (addressableEntityResult.ok) {
+          const key = new CLKey(addressableEntityResult.val);
+          return resultHelper(Ok(key), addressableEntityRemainder);
+        } else {
+          return resultHelper<CLKey, CLErrorCodes>(
+            Err(addressableEntityResult.val)
+          );
+        }
       }
       default: {
         return resultHelper<CLKey, CLErrorCodes>(Err(CLErrorCodes.Formatting));
@@ -375,6 +419,8 @@ export class CLKey extends CLValue {
           return new CLKey(KeyChainspecRegistry.fromFormattedString(input));
         case CHECKSUM_REGISTRY_PREFIX:
           return new CLKey(KeyChecksumRegistry.fromFormattedString(input));
+        case ENTITY_PREFIX:
+          return new CLKey(KeyEntityAddr.fromFormattedString(input));
         default:
           throw new Error('Unsupported prefix');
       }
