@@ -13,6 +13,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   ### Removed
  -->
 
+## [3.0.0-rc02] - 2024-07-05
+
+This release candidate is compatible with [#node RC3](https://github.com/casper-network/casper-node/tree/release-2.0.0-rc2)
+
+### Added
+
+- Mappings for `Key.Unbond` and `Key.AddressableEntity`
+- Github action now should include lib.js in every release
+
 ## [3.0.0-rc01] - 2024-06-25
 
 This release candidate is compatible with [#node RC3](https://github.com/casper-network/casper-node/tree/release-2.0.0-rc2)
