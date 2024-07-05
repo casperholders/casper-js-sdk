@@ -377,14 +377,14 @@ export class KeyUnbond implements CLKeyVariant {
   keyVariant = KeyTag.Unbond;
   prefix = UNBOND_PREFIX;
 
-  constructor(public data: Uint8Array) {}
+  constructor(public data: CLAccountHash) {}
 
   value(): any {
     return this.data;
   }
 
   toString() {
-    return encodeBase16(this.data);
+    return this.data.toString();
   }
 
   toFormattedString() {
@@ -399,7 +399,7 @@ export class KeyUnbond implements CLKeyVariant {
     const hashStr = input.substring(`${UNBOND_PREFIX}-`.length + 1);
     const hashBytes = decodeBase16(hashStr);
 
-    return new KeyUnbond(hashBytes);
+    return new KeyUnbond(new CLAccountHash(hashBytes));
   }
 }
 
