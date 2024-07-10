@@ -9,14 +9,14 @@ import {
   CLErrorCodes,
   resultHelper,
   ResultAndRemainder,
-  ToBytesResult
+  ToBytesResult,
+  CLKeyVariant
 } from './index';
-import { PUBLIC_KEY_TYPE, CLTypeTag } from './constants';
+import { PUBLIC_KEY_TYPE, CLTypeTag, KeyTag } from './constants';
 import { decodeBase16, encodeBase16 } from '../Conversions';
-import { byteHash } from '../ByteConverters';
 
 // TODO: Tidy up almost the same enum in Keys.
-import { SignatureAlgorithm } from '../Keys';
+import { SignatureAlgorithm, accountHashHelper } from '../Keys';
 import { encode, isChecksummed } from '../ChecksummedHex';
 
 const ED25519_LENGTH = 32;
@@ -70,9 +70,10 @@ export class CLPublicKeyBytesParser extends CLValueBytesParsers {
   }
 }
 
-export class CLPublicKey extends CLValue {
+export class CLPublicKey extends CLValue implements CLKeyVariant<Uint8Array> {
   data: Uint8Array;
   tag: CLPublicKeyTag;
+  keyVariant = KeyTag.Account;
 
   constructor(
     rawPublicKey: Uint8Array,
@@ -118,7 +119,7 @@ export class CLPublicKey extends CLValue {
     return this.tag === CLPublicKeyTag.SECP256K1;
   }
 
-  toHex(checksummed = true): string {
+  toString(checksummed = true): string {
     // Updated: Returns checksummed hex string
     const rawHex = `0${this.tag}${encodeBase16(this.data)}`;
     if (checksummed) {
@@ -128,36 +129,52 @@ export class CLPublicKey extends CLValue {
     return rawHex;
   }
 
-  toAccountHash(): Uint8Array {
-    const algorithmIdentifier = CLPublicKeyTag[this.tag];
-    const separator = Uint8Array.from([0]);
-    const prefix = Buffer.concat([
-      Buffer.from(algorithmIdentifier.toLowerCase()),
-      separator
-    ]);
-
-    if (this.data.length === 0) {
-      return Uint8Array.from([]);
-    } else {
-      return byteHash(concat([prefix, this.data]));
-    }
+  toFormattedString(checksummed = true): string {
+    return this.toString(checksummed);
   }
 
-  toAccountHashType(): CLAccountHash {
-    const hash = this.toAccountHash();
+  /**
+   * Returns hex string representation of the public key.
+   * @param checksummed if true, returns checksummed hex string
+   * @returns
+   * @deprecated Use {@link CLPublicKey.toFormattedString} instead.
+   */
+  toHex(checksummed = true): string {
+    console.warn(
+      `CLPublicKey.toHex is deprecated. Use CLPublicKey.toFormattedString instead.`
+    );
+    return this.toFormattedString(checksummed);
+  }
+
+  toAccountHash(): CLAccountHash {
+    const hash = accountHashHelper(this.getSignatureAlgorithm(), this.data);
     return new CLAccountHash(hash);
   }
 
+  /**
+   * Returns formatted account hash string
+   * @returns
+   * @deprecated Use {@link CLPublicKey.toAccountHash} instead.
+   */
   toAccountHashStr(): string {
-    const bytes = this.toAccountHash();
-    const hashHex = Buffer.from(bytes).toString('hex');
-    return `account-hash-${hashHex}`;
+    console.warn(
+      `CLPublicKey.toAccountHashStr is deprecated. Use CLPublicKey.toAccountHash().toFormattedString() instead.`
+    );
+
+    return this.toAccountHash().toFormattedString();
   }
 
+  /**
+   * Returns unformatted account hash string
+   * @returns
+   * @deprecated Use {@link CLPublicKey.toAccountHash} instead.
+   */
   toAccountRawHashStr(): string {
-    const bytes = this.toAccountHash();
-    const hashHex = Buffer.from(bytes).toString('hex');
-    return hashHex;
+    console.warn(
+      `CLPublicKey.toAccountRawHashStr is deprecated. Use CLPublicKey.toAccountHash().toString() instead.`
+    );
+
+    return this.toAccountHash().toString();
   }
 
   value(): Uint8Array {
@@ -178,7 +195,10 @@ export class CLPublicKey extends CLValue {
    * @param publicKeyHex public key hex string contains key tag
    * @param checksummed throws an Error if true and given string is not checksummed
    */
-  static fromHex(publicKeyHex: string, checksummed = false): CLPublicKey {
+  static fromFormattedString(
+    publicKeyHex: string,
+    checksummed = false
+  ): CLPublicKey {
     if (publicKeyHex.length < 2) {
       throw new Error('Asymmetric key error: too short');
     }
@@ -194,6 +214,17 @@ export class CLPublicKey extends CLValue {
     const publicKeyHexBytes = decodeBase16(publicKeyHex);
 
     return new CLPublicKey(publicKeyHexBytes.subarray(1), publicKeyHexBytes[0]);
+  }
+
+  /**
+   * Tries to decode PublicKey from its hex-representation.
+   * The hex format should be as produced by CLPublicKey.toHex
+   * @param publicKeyHex public key hex string contains key tag
+   * @param checksummed throws an Error if true and given string is not checksummed
+   * @deprecated Use {@link CLPublicKey.fromFormattedString} instead.
+   */
+  static fromHex(publicKeyHex: string, checksummed = false): CLPublicKey {
+    return this.fromFormattedString(publicKeyHex, checksummed);
   }
 
   getTag(): CLPublicKeyTag {

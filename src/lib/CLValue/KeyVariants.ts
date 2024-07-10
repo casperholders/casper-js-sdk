@@ -28,7 +28,8 @@ import {
   ENTITY_PREFIX,
   SYSTEM_ENTITY_PREFIX,
   ACCOUNT_ENTITY_PREFIX,
-  CONTRACT_ENTITY_PREFIX
+  CONTRACT_ENTITY_PREFIX,
+  KEY_DEFAULT_BYTE_LENGTH
 } from './index';
 import { decodeBase16, encodeBase16 } from '../Conversions';
 import { toBytesU64 } from '../ByteConverters';
@@ -38,11 +39,11 @@ import { toBytesU64 } from '../ByteConverters';
 //  - internal type creator
 //  - stores data
 //  - serialize when inside a Key
-export abstract class CLKeyVariant {
+export abstract class CLKeyVariant<T = any> {
   abstract keyVariant: KeyTag;
-  abstract data: any;
+  abstract data: T;
 
-  value(): any {
+  value(): T {
     return this.data;
   }
 
@@ -50,21 +51,19 @@ export abstract class CLKeyVariant {
 
   abstract toFormattedString(): string;
 
-  static fromFormattedStringing(hexStr: string): CLKeyVariant {
+  static fromFormattedString(hexStr: string): CLKeyVariant {
     throw Error(
       `Trying to deserialize KeyVariant - unknown string provided: ${hexStr}`
     );
   }
 }
 
-const KEY_HASH_LENGTH = 32;
-
 export const HashParser = {
   fromBytesWithRemainder: (
     bytes: Uint8Array
   ): ResultAndRemainder<KeyHashAddr, CLErrorCodes> => {
-    const hash = new KeyHashAddr(bytes.subarray(0, KEY_HASH_LENGTH));
-    return resultHelper(Ok(hash), bytes.subarray(KEY_HASH_LENGTH));
+    const hash = new KeyHashAddr(bytes.subarray(0, KEY_DEFAULT_BYTE_LENGTH));
+    return resultHelper(Ok(hash), bytes.subarray(KEY_DEFAULT_BYTE_LENGTH));
   }
 };
 
@@ -542,7 +541,9 @@ export const BidAddrParser = {
             );
             return resultHelper(Ok(bidAddr), remainder);
           } else {
-            return resultHelper<KeyBidAddr, CLErrorCodes>(Err(delegatorRes.val));
+            return resultHelper<KeyBidAddr, CLErrorCodes>(
+              Err(delegatorRes.val)
+            );
           }
         } else {
           return resultHelper<KeyBidAddr, CLErrorCodes>(Err(validatorRes.val));
@@ -622,13 +623,13 @@ export class KeyBidAddr implements CLKeyVariant {
     if (delegator) {
       return new KeyBidAddr({
         Delegator: {
-          validator: validator.toAccountHashType(),
-          delegator: delegator.toAccountHashType()
+          validator: validator.toAccountHash(),
+          delegator: delegator.toAccountHash()
         }
       });
     }
 
-    return new KeyBidAddr({ Validator: validator.toAccountHashType() });
+    return new KeyBidAddr({ Validator: validator.toAccountHash() });
   }
 
   static credit(validator: CLAccountHash, eraId: BigNumberish) {

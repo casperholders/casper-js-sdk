@@ -66,8 +66,8 @@ describe(`RuntimeArgs`, () => {
   it('should allow to extract lists of account hashes.', () => {
     const account0 = Keys.Ed25519.new().accountHash();
     const account1 = Keys.Ed25519.new().accountHash();
-    const account0byteArray = CLValueBuilder.byteArray(account0);
-    const account1byteArray = CLValueBuilder.byteArray(account1);
+    const account0byteArray = CLValueBuilder.byteArray(account0.value());
+    const account1byteArray = CLValueBuilder.byteArray(account1.value());
     const runtimeArgs = RuntimeArgs.fromMap({
       accounts: CLValueBuilder.list([account0byteArray, account1byteArray])
     });

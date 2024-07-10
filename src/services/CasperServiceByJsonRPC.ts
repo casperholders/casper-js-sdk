@@ -510,7 +510,7 @@ export class CasperServiceByJsonRPC {
   ): Promise<string> {
     return this.getAccountBalanceUrefByPublicKeyHash(
       stateRootHash,
-      encodeBase16(publicKey.toAccountHash()),
+      publicKey.toAccountHash().toString(),
       props
     );
   }

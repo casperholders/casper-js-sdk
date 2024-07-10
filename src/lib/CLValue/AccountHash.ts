@@ -15,6 +15,7 @@ import {
   ACCOUNT_HASH_PREFIX,
   KeyTag
 } from './index';
+import { encodeBase16 } from '../Conversions';
 
 // AccountHash is an alias, not a fully functional CLType so uses the same CLTypeTag as ByteArray
 export class CLAccountHashType extends CLByteArrayType {
@@ -75,7 +76,7 @@ export class CLAccountHash extends CLValue implements CLKeyVariant {
 
   toString(): string {
     const bytes = this.data;
-    return Buffer.from(bytes).toString('hex');
+    return encodeBase16(bytes);
   }
 
   toFormattedString(): string {
