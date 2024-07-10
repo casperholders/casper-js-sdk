@@ -13,7 +13,7 @@ import { hmac } from '@noble/hashes/hmac';
 import KeyEncoder from 'key-encoder';
 
 import { decodeBase64, encodeBase16, encodeBase64 } from '../index';
-import { CLPublicKey } from './CLValue';
+import { CLAccountHash, CLPublicKey } from './CLValue';
 import { byteHash } from './ByteConverters';
 import { SignatureAlgorithm } from './types';
 
@@ -63,7 +63,7 @@ export const getKeysFromHexPrivKey = (
  * @param publicKey The public key as a byte array
  * @returns A blake2b hash of the public key
  */
-function accountHashHelper(
+export function accountHashHelper(
   signatureAlgorithm: SignatureAlgorithm,
   publicKey: Uint8Array
 ) {
@@ -145,19 +145,19 @@ export abstract class AsymmetricKey {
 
   /**
    * Computes the blake2b account hash of the public key
-   * @returns The account hash as a byte array
+   * @returns The account hash
    */
-  public accountHash(): Uint8Array {
+  public accountHash(): CLAccountHash {
     return this.publicKey.toAccountHash();
   }
 
   /**
    * Gets the hexadecimal public key of the account
-   * @param {boolean} checksummed Indicates whether the public key should be checksummed, default: `true`
+   * @param checksummed Indicates whether the public key should be checksummed, default: `true`
    * @returns The public key of the `AsymmetricKey` as a hexadecimal string
    */
   public accountHex(checksummed = true): string {
-    return this.publicKey.toHex(checksummed);
+    return this.publicKey.toFormattedString(checksummed);
   }
 
   /**

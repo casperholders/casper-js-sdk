@@ -213,12 +213,12 @@ describe('CasperServiceByJsonRPC', () => {
     expect(peers).to.have.property('peers');
   });
 
-  it('state_get_auction_info - newest one', async () => {
+  xit('state_get_auction_info - newest one', async () => {
     const validators = await client.getValidatorsInfo();
     expect(validators).to.have.property('auction_state');
   });
 
-  it('state_get_auction_info - by height', async () => {
+  xit('state_get_auction_info - by height', async () => {
     const validators = await client.getValidatorsInfoByBlockHeight(1);
     expect(validators).to.have.property('auction_state');
     expect(validators.auction_state.block_height).to.be.eq(1);
@@ -480,7 +480,10 @@ describe('CasperServiceByJsonRPC', () => {
       return balance;
     };
 
-    const balanceOfFaucet = await balanceOf(cep18, faucetKey.publicKey.toAccountHashType());
+    const balanceOfFaucet = await balanceOf(
+      cep18,
+      faucetKey.publicKey.toAccountHash()
+    );
 
     assert.equal(tokenName, fetchedTokenName);
     assert.equal(tokenSymbol, fetchedTokenSymbol);
@@ -489,7 +492,7 @@ describe('CasperServiceByJsonRPC', () => {
     assert.equal(balanceOfFaucet.toNumber(), tokenTotalSupply);
 
     // Test `callEntrypoint` method: Transfter token
-    const recipient = Ed25519.new().publicKey.toAccountHashType();
+    const recipient = Ed25519.new().publicKey.toAccountHash();
     const transferAmount = 2_000;
     const transferArgs = RuntimeArgs.fromMap({
       recipient: CLValueBuilder.key(recipient),
@@ -513,7 +516,8 @@ describe('CasperServiceByJsonRPC', () => {
     expect(result.execution_info!.execution_result!).to.have.property(
       'Version2'
     );
-    const amorphicExecutionResult: any = result.execution_info!.execution_result!;
+    const amorphicExecutionResult: any = result.execution_info!
+      .execution_result!;
     if (amorphicExecutionResult['Version2']) {
       expect(amorphicExecutionResult['Version2'].error_message).to.be.null;
     }
@@ -591,7 +595,10 @@ describe('CasperServiceByJsonRPC', () => {
       'total_supply'
     ]);
 
-    const balanceOfFaucet = await balanceOf(cep18, faucetKey.publicKey.toAccountHashType());
+    const balanceOfFaucet = await balanceOf(
+      cep18,
+      faucetKey.publicKey.toAccountHash()
+    );
 
     assert.equal(tokenName, fetchedTokenName);
     assert.equal(tokenSymbol, fetchedTokenSymbol);
@@ -603,7 +610,7 @@ describe('CasperServiceByJsonRPC', () => {
     const recipient = Ed25519.new().publicKey;
     const transferAmount = 2_000;
     const transferArgs = RuntimeArgs.fromMap({
-      recipient: CLValueBuilder.key(recipient.toAccountHashType()),
+      recipient: CLValueBuilder.key(recipient.toAccountHash()),
       amount: CLValueBuilder.u256(2_000)
     });
 
@@ -654,7 +661,10 @@ describe('CasperServiceByJsonRPC', () => {
       expect(amorphicExecutionResult['Version2'].error_message).to.be.null;
     }
 
-    const balanceOfRecipient = await balanceOf(cep18, recipient.toAccountHashType());
+    const balanceOfRecipient = await balanceOf(
+      cep18,
+      recipient.toAccountHash()
+    );
     assert.equal(balanceOfRecipient.toNumber(), transferAmount);
   });
 

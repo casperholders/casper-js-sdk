@@ -42,6 +42,7 @@ describe('CLPublicKey', () => {
   });
 
   it('Invalid by construction', () => {
+    // @ts-ignore
     const badFn = () => new CLPublicKey(rawEd25519Account, 4);
     expect(badFn).to.throw('Unsupported type of public key');
   });
@@ -118,7 +119,7 @@ describe('CLPublicKey', () => {
       130, 235, 172,  98
     ]);
 
-    expect(accountHash).to.be.deep.eq(validResult);
+    expect(accountHash.value()).to.be.deep.eq(validResult);
   });
 
   it('isEd25519() valid result', () => {
