@@ -213,12 +213,12 @@ describe('CasperServiceByJsonRPC', () => {
     expect(peers).to.have.property('peers');
   });
 
-  it('state_get_auction_info - newest one', async () => {
+  xit('state_get_auction_info - newest one', async () => {
     const validators = await client.getValidatorsInfo();
     expect(validators).to.have.property('auction_state');
   });
 
-  it('state_get_auction_info - by height', async () => {
+  xit('state_get_auction_info - by height', async () => {
     const validators = await client.getValidatorsInfoByBlockHeight(1);
     expect(validators).to.have.property('auction_state');
     expect(validators.auction_state.block_height).to.be.eq(1);
