@@ -606,4 +606,198 @@ describe('DeployUtil', () => {
 
     assert.exists(parsed);
   });
+
+  it('should verify deploy signature correctly', () => {
+    const deployJsonFailed = {
+      hash: 'd6a2b21193692f31ee42cbb46c71734e6c40253fbf501d201f7a33e3c43c9838',
+      header: {
+        account:
+          '0203917a090d7d06e7f06071ef4f5f0ea95cb60d85ae0995ff640c1ee64d0aa3f644',
+        timestamp: '2024-07-18T09:12:46.535Z',
+        ttl: '30m',
+        gas_price: 1,
+        body_hash:
+          'd13151f9cfd1ca7f31eef276244ec38ccc0c275b70ed00708a0c47083dd7c9b7',
+        dependencies: [],
+        chain_name: 'casper-test'
+      },
+      payment: {
+        ModuleBytes: {
+          module_bytes: '',
+          args: [
+            [
+              'amount',
+              { cl_type: 'U512', bytes: '0500e40b5402', parsed: '10000000000' }
+            ]
+          ]
+        }
+      },
+      session: {
+        StoredContractByHash: {
+          hash:
+            '16c75fa5cce47675f031efea2a7c397e1749c940cea48a2d936a60954888da26',
+          entry_point: 'create_entity',
+          args: [
+            [
+              'entity_id',
+              {
+                cl_type: 'String',
+                bytes: '1000000044532d31373231323933393636353131',
+                parsed: 'DS-1721293966511'
+              }
+            ],
+            [
+              'entity_type',
+              {
+                cl_type: 'String',
+                bytes: '0700000064617461736574',
+                parsed: 'dataset'
+              }
+            ],
+            [
+              'schema_version',
+              { cl_type: 'String', bytes: '03000000312e30', parsed: '1.0' }
+            ],
+            [
+              'data',
+              {
+                cl_type: 'String',
+                bytes:
+                  '8a0200007b2264734e616d65223a22426c6f6f6d426572672064617461222c22647354797065223a22747261696e696e675f6473222c2264734465736372697074696f6e223a2246696e616e6369616c20536572766963657320646174612066726f6d20626c6f6f6d6265726720323032332061727469636c6573222c22647350726f6d6f54657874223a2246696e616e6369616c20536572766963657320646174612066726f6d20626c6f6f6d6265726720323032332061727469636c6573222c22647355726c223a2268747470733a2f2f7777772e626c6f6f6d626572672e636f6d2f6473782f7631222c22647348617368223a2278787878222c22647354616773223a5b2266696e616e6365222c22696e737572616e6365222c22726167225d2c226473437573746f6d4174747273223a5b7b226b6579223a2270726f66616e6974795f636865636b222c2276616c7565223a2270617373227d5d2c22737461747573223a227075626c6973686564222c2264735669736962696c697479223a2270726976617465222c2270696946726565223a226e6f745f7665726966696564222c2268617046726565223a226e6f745f7665726966696564222c22636f7079726967687446726565223a226e6f745f7665726966696564222c22676f7665726e616e6365506c6174666f726d223a22776174736f6e782e676f7665726e616e6365222c2264734964223a2244532d31373231323933393636353131222c22637265617465644279223a22555345522d313031222c22757064617465644279223a22555345522d313031222c2264734f776e65724f7267223a224f52472d31373230363831363636333436222c226465706c6f79537461747573223a22756e70726f636573736564227d',
+                parsed:
+                  '{"dsName":"BloomBerg data","dsType":"training_ds","dsDescription":"Financial Services data from bloomberg 2023 articles","dsPromoText":"Financial Services data from bloomberg 2023 articles","dsUrl":"https://www.bloomberg.com/dsx/v1","dsHash":"xxxx","dsTags":["finance","insurance","rag"],"dsCustomAttrs":[{"key":"profanity_check","value":"pass"}],"status":"published","dsVisibility":"private","piiFree":"not_verified","hapFree":"not_verified","copyrightFree":"not_verified","governancePlatform":"watsonx.governance","dsId":"DS-1721293966511","createdBy":"USER-101","updatedBy":"USER-101","dsOwnerOrg":"ORG-1720681666346","deployStatus":"unprocessed"}'
+              }
+            ],
+            [
+              'timestamp',
+              {
+                cl_type: 'String',
+                bytes:
+                  '18000000323032342d30372d31385430393a31323a34362e3532375a',
+                parsed: '2024-07-18T09:12:46.527Z'
+              }
+            ],
+            [
+              'user_id',
+              {
+                cl_type: 'String',
+                bytes: '08000000555345522d313031',
+                parsed: 'USER-101'
+              }
+            ]
+          ]
+        }
+      },
+      approvals: [
+        {
+          signer:
+            '0203917a090d7d06e7f06071ef4f5f0ea95cb60d85ae0995ff640c1ee64d0aa3f644',
+          signature:
+            '02392b75217f3103548988631684c73bc6ba421665146dfd65b948c9b64fc8c999f8ad477431c992f85f925eee92f6f8c4ad66d523f519a0b6865f928e97780bcf'
+        }
+      ]
+    };
+
+    const deployJsonPassed = {
+      hash: 'b490c8c91cb56c96592da62a27ec637087595e60d07d031edd2cd32f78c44240',
+      header: {
+        ttl: '30m',
+        account:
+          '0203917a090d7d06e7f06071ef4f5f0ea95cb60d85ae0995ff640c1ee64d0aa3f644',
+        body_hash:
+          '5eea74d662942d07f84ec567cc99bc10888d93b2b7730b61111e4f8e2f866bba',
+        gas_price: 1,
+        timestamp: '2024-07-18T09:11:07.020Z',
+        chain_name: 'casper-test',
+        dependencies: []
+      },
+      payment: {
+        ModuleBytes: {
+          args: [
+            [
+              'amount',
+              {
+                bytes: '0500e40b5402',
+                parsed: '10000000000',
+                cl_type: 'U512'
+              }
+            ]
+          ],
+          module_bytes: ''
+        }
+      },
+      session: {
+        StoredContractByHash: {
+          args: [
+            [
+              'entity_id',
+              {
+                bytes: '1000000044532d31373231323933383637303033',
+                parsed: 'DS-1721293867003',
+                cl_type: 'String'
+              }
+            ],
+            [
+              'entity_type',
+              {
+                bytes: '0700000064617461736574',
+                parsed: 'dataset',
+                cl_type: 'String'
+              }
+            ],
+            [
+              'schema_version',
+              {
+                bytes: '03000000312e30',
+                parsed: '1.0',
+                cl_type: 'String'
+              }
+            ],
+            [
+              'data',
+              {
+                bytes:
+                  '8a0200007b2264734e616d65223a22426c6f6f6d426572672064617461222c22647354797065223a22747261696e696e675f6473222c2264734465736372697074696f6e223a2246696e616e6369616c20536572766963657320646174612066726f6d20626c6f6f6d6265726720323032332061727469636c6573222c22647350726f6d6f54657874223a2246696e616e6369616c20536572766963657320646174612066726f6d20626c6f6f6d6265726720323032332061727469636c6573222c22647355726c223a2268747470733a2f2f7777772e626c6f6f6d626572672e636f6d2f6473782f7631222c22647348617368223a2278787878222c22647354616773223a5b2266696e616e6365222c22696e737572616e6365222c22726167225d2c226473437573746f6d4174747273223a5b7b226b6579223a2270726f66616e6974795f636865636b222c2276616c7565223a2270617373227d5d2c22737461747573223a227075626c6973686564222c2264735669736962696c697479223a2270726976617465222c2270696946726565223a226e6f745f7665726966696564222c2268617046726565223a226e6f745f7665726966696564222c22636f7079726967687446726565223a226e6f745f7665726966696564222c22676f7665726e616e6365506c6174666f726d223a22776174736f6e782e676f7665726e616e6365222c2264734964223a2244532d31373231323933383637303033222c22637265617465644279223a22555345522d313031222c22757064617465644279223a22555345522d313031222c2264734f776e65724f7267223a224f52472d31373230363831363636333436222c226465706c6f79537461747573223a22756e70726f636573736564227d',
+                parsed:
+                  '{"dsName":"BloomBerg data","dsType":"training_ds","dsDescription":"Financial Services data from bloomberg 2023 articles","dsPromoText":"Financial Services data from bloomberg 2023 articles","dsUrl":"https://www.bloomberg.com/dsx/v1","dsHash":"xxxx","dsTags":["finance","insurance","rag"],"dsCustomAttrs":[{"key":"profanity_check","value":"pass"}],"status":"published","dsVisibility":"private","piiFree":"not_verified","hapFree":"not_verified","copyrightFree":"not_verified","governancePlatform":"watsonx.governance","dsId":"DS-1721293867003","createdBy":"USER-101","updatedBy":"USER-101","dsOwnerOrg":"ORG-1720681666346","deployStatus":"unprocessed"}',
+                cl_type: 'String'
+              }
+            ],
+            [
+              'timestamp',
+              {
+                bytes:
+                  '18000000323032342d30372d31385430393a31313a30372e3031385a',
+                parsed: '2024-07-18T09:11:07.018Z',
+                cl_type: 'String'
+              }
+            ],
+            [
+              'user_id',
+              {
+                bytes: '08000000555345522d313031',
+                parsed: 'USER-101',
+                cl_type: 'String'
+              }
+            ]
+          ],
+          hash:
+            '16c75fa5cce47675f031efea2a7c397e1749c940cea48a2d936a60954888da26',
+          entry_point: 'create_entity'
+        }
+      },
+      approvals: [
+        {
+          signer:
+            '0203917a090d7d06e7f06071ef4f5f0ea95cb60d85ae0995ff640c1ee64d0aa3f644',
+          signature:
+            '02d1ac178f1ad35866642e73f023c54badb8d00b0b73830884ff9637a46535a4324185bfad1fa1f0609fde3196cc7468c57e4149659cfded8f06d38827d4b1e537'
+        }
+      ]
+    };
+
+    DeployUtil.deployFromJson({ deploy: deployJsonPassed }).unwrap();
+
+    DeployUtil.deployFromJson({ deploy: deployJsonFailed }).unwrap();
+  });
 });
