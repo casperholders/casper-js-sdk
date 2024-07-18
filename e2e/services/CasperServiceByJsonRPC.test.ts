@@ -38,12 +38,7 @@ import {
   TransactionCategoryMint,
   makeV1Transaction
 } from '../../src/lib/TransactionUtil';
-import {
-  Native,
-  Session,
-  Stored,
-  TransactionSessionKind
-} from '../../src/lib/TransactionTarget';
+import { Native, Session, Stored } from '../../src/lib/TransactionTarget';
 import { Call, Custom, Transfer } from '../../src/lib/TransactionEntryPoint';
 import { Standard } from '../../src/lib/TransactionScheduling';
 import { InitiatorAddr } from '../../src/lib/InitiatorAddr';
@@ -460,7 +455,6 @@ describe('CasperServiceByJsonRPC', () => {
     assert.exists(contractHash);
 
     cep18.setContractHash(contractHash!);
-    cep18.setContractName(`cep18_contract_hash_${tokenName}`);
     const fetchedTokenName = await cep18.queryContractData(['name']);
     const fetchedTokenSymbol = await cep18.queryContractData(['symbol']);
     const fetchedTokenDecimals: BigNumber = await cep18.queryContractData([
@@ -512,7 +506,7 @@ describe('CasperServiceByJsonRPC', () => {
     result = await client.waitForDeploy(transferDeploy, 100000);
 
     assert.equal(result.deploy.hash, deploy_hash);
-    expect(result.deploy.session).to.have.property('StoredContractByName');
+    expect(result.deploy.session).to.have.property('StoredContractByHash');
     expect(result.execution_info!.execution_result!).to.have.property(
       'Version2'
     );
@@ -526,7 +520,7 @@ describe('CasperServiceByJsonRPC', () => {
   });
 
   //This needs to wait for a fix in the node which currently prevents wasm transactions
-  xit('CEP18 should work deployed via "account_put_transaction"', async () => {
+  it('CEP18 should work deployed via "account_put_transaction"', async () => {
     const casperClient = new CasperClient(NODE_URL);
     const cep18 = new Contract(casperClient);
     const wasmPath = path.resolve(__dirname, './cep18.wasm');
@@ -556,18 +550,13 @@ describe('CasperServiceByJsonRPC', () => {
     const transaction = makeV1Transaction(
       params,
       runtimeArgs,
-      Session.build(
-        TransactionSessionKind.Installer,
-        wasm,
-        TransactionRuntime.VmCasperV1
-      ),
+      Session.build(wasm, TransactionRuntime.VmCasperV1),
       new Call(),
       new Standard(),
       TransactionCategoryInstallUpgrade
     );
     const signedTransaction = transaction.sign([faucetKey]);
     await client.transaction(signedTransaction);
-
     await sleep(2500);
 
     const result = await client.waitForTransaction(signedTransaction, 100000);
@@ -585,7 +574,6 @@ describe('CasperServiceByJsonRPC', () => {
     assert.exists(contractHash);
 
     cep18.setContractHash(contractHash!);
-    cep18.setContractName(`cep18_contract_hash_${tokenName}`);
     const fetchedTokenName = await cep18.queryContractData(['name']);
     const fetchedTokenSymbol = await cep18.queryContractData(['symbol']);
     const fetchedTokenDecimals: BigNumber = await cep18.queryContractData([

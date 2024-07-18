@@ -717,7 +717,6 @@ export class CasperServiceByJsonRPC {
       'This method is deprecated and will be removed in the future release, please use transaction method instead.'
     );
     this.checkDeploySize(signedDeploy);
-
     const { checkApproval = false } = props ?? {};
     if (checkApproval && signedDeploy.approvals.length == 0) {
       throw new Error('Required signed deploy');

@@ -71,36 +71,8 @@ export class Stored implements TransactionTarget {
   }
 }
 
-/**
- * enum of transaction session kind
- * @enum
- */
-export enum TransactionSessionKind {
-  Standard = 'Standard',
-  Installer = 'Installer',
-  Upgrader = 'Upgrader',
-  Isolated = 'Isolated'
-}
-
-function kindToBytes(sessionKind: TransactionSessionKind): Uint8Array {
-  switch (sessionKind) {
-    case TransactionSessionKind.Standard:
-      return toBytesU8(0);
-    case TransactionSessionKind.Installer:
-      return toBytesU8(1);
-    case TransactionSessionKind.Upgrader:
-      return toBytesU8(2);
-    case TransactionSessionKind.Isolated:
-      return toBytesU8(3);
-    default:
-      throw new Error('Unknown session kind');
-  }
-}
-
 @jsonObject
 export class Session implements TransactionTarget {
-  @jsonMember({ constructor: String })
-  public kind: TransactionSessionKind;
   @jsonMember({
     name: 'module_bytes',
     serializer: byteArrayJsonSerializer,
@@ -112,7 +84,6 @@ export class Session implements TransactionTarget {
   public toJSON(): unknown {
     return {
       Session: {
-        kind: this.kind,
         module_bytes: byteArrayJsonSerializer(this.moduleBytes),
         runtime: this.runtime
       }
@@ -120,7 +91,6 @@ export class Session implements TransactionTarget {
   }
 
   public toBytes(): ToBytesResult {
-    const kindBytes = kindToBytes(this.kind);
     const maybeRuntimeBytes = transactionRuntimeToBytes(this.runtime);
     if (maybeRuntimeBytes.err) {
       return maybeRuntimeBytes;
@@ -130,19 +100,13 @@ export class Session implements TransactionTarget {
     return Ok(
       concat([
         toBytesU8(SESSION_TAG),
-        kindBytes,
         toBytesArrayU8(this.moduleBytes),
         runtimeBytes
       ])
     );
   }
-  static build(
-    kind: TransactionSessionKind,
-    moduleBytes: Uint8Array,
-    runtime: TransactionRuntime
-  ): Session {
+  static build(moduleBytes: Uint8Array, runtime: TransactionRuntime): Session {
     const session = new Session();
-    session.kind = kind;
     session.moduleBytes = moduleBytes;
     session.runtime = runtime;
     return session;

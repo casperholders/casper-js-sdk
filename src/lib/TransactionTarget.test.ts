@@ -53,11 +53,10 @@ const expectedStoredVariantBytes = [
   0,
   0
 ];
-const expectedSessionVariantBytes = [2, 0, 4, 0, 0, 0, 81, 5, 6, 10, 0];
+const expectedSessionVariantBytes = [2, 4, 0, 0, 0, 81, 5, 6, 10, 0];
 const mockSessionJson = {
   a: {
     Session: {
-      kind: 'Standard',
       module_bytes: '5105060a',
       runtime: 'VmCasperV1'
     }

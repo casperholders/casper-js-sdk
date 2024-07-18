@@ -323,8 +323,8 @@ export class StoredContractByHash extends ExecutableDeployItemInternal {
   public args: RuntimeArgs;
 
   /**
-   * Constructs a `StoredContractByHash` object from the `Uint8Array` typed hash, entrypoint of the contract, and associated runtime arguments
-   * @param hash `Uint8Array` typed smart contract hash
+   * Constructs a `StoredContractByHash` object from the hash, entrypoint of the contract, and associated runtime arguments
+   * @param hash hash of the addressable entity of the contract
    * @param entryPoint An entrypoint of the smart contract
    * @param args The runtime arguments for interaction on the `entryPoint`
    */
@@ -748,7 +748,7 @@ export class ExecutableDeployItem implements ToBytes {
 
   /**
    * Creates a new `StoredContractByHash` object from a `Uint8Array` contract hash, entrypoint, and runtime arguments
-   * @param hash `Uint8Array` representation of a smart contract hash
+   * @param hash `string` representation of a smart contract addreassable entity hash
    * @param entryPoint Name of an entrypoint of the stored contract
    * @param args The runtime arguments for the new `StoredContractByHash` object
    * @returns A new `ExecutableDeployItem` created from a new `StoredContractByHash` object built using `hash`, `entryPoint` and `args`
