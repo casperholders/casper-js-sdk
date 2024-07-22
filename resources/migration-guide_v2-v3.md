@@ -52,7 +52,7 @@ The input parameter to this method is no longer a string, it's a union type that
 { Hash: string } | { Height: number }
 ```
 
-Casper v1:
+Casper JS SDK `v2`:
 
 ```typescript
 const eraInfo = await client.getEraInfoBySwitchBlock(
@@ -60,7 +60,7 @@ const eraInfo = await client.getEraInfoBySwitchBlock(
 );
 ```
 
-Casper v2:
+Casper JS SDK `v3`:
 
 ```typescript
 const eraInfo = await client.getEraInfoBySwitchBlock({
@@ -85,7 +85,7 @@ The input parameter to this method is no longer an optional string, but an optio
 { Hash: string } | { Height: number }
 ```
 
-Casper v1:
+Casper JS SDK `v2`:
 
 ```typescript
 const eraInfo = await client.getEraSummary(
@@ -93,7 +93,7 @@ const eraInfo = await client.getEraSummary(
 );
 ```
 
-Casper v2:
+Casper JS SDK `v3`:
 
 ```typescript
 const eraInfo = await client.getEraSummary({
