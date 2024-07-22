@@ -2,6 +2,8 @@
 
 The Casper JS SDK `v3` release makes several breaking changes to inputs and outputs that were present in `v2`. All changes to the SDK are driven by changes to the API of the node. `v3` does not introduce any changes to the behavior of the SDK, outside of those that were forced by the changes in the node. This document will explain all changes on an endpoint by endpoint basis.
 
+**Note**: Casper Node v1 and v2 are referred to in this article. These mentions are separate from the Casper JS SDK's upgrade from `v2` to `v3`.
+
 ## Breaking changes
 
 ### getAccountInfo
@@ -16,7 +18,7 @@ The output data for this endpoint changed. The `GetDeployResult` previously cont
 
 The `getDeployInfo` should return `ExecutionResultV1` for deploys that were executed before the changes in the node. For deploys that were executed after the changes in the node, the `getDeployInfo` should return `ExecutionResultV2`. Anyone using `getDeployInfo` should be prepared to handle both variants of `ExecutionResult`.
 
-**PLEASE NOTE** This method is considered deprecated and will be removed in the future. It is recommended to use `getTransactionInfo` instead.
+**Note:** This method is considered deprecated and will be removed in the future. It is recommended to use `getTransactionInfo` instead.
 
 #### getBlockInfo
 
@@ -129,7 +131,7 @@ This endpoint is new to the Casper JS SDK in version 3.0.0. It is used to retrie
   });
   ```
 
-  **PLEASE NOTE** The above is identical to:
+  **Note:** The above is identical to:
 
   ```typescript
   const deploy = await client.getDeployInfo(
