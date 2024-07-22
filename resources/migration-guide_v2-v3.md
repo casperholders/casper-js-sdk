@@ -1,6 +1,6 @@
 # V2 to V3 Migration Guide
 
-The `v3` release makes several breaking changes to inputs and outputs that were present in `v2`. All changes to the SDK are driven by changes to the API of the node. `V3` does not introduce any changes to the behavior of the SDK, outside of those that were forced by the changes in the node. This document will explain all changes on an endpoint by endpoint basis.
+The Casper JS SDK `v3` release makes several breaking changes to inputs and outputs that were present in `v2`. All changes to the SDK are driven by changes to the API of the node. `v3` does not introduce any changes to the behavior of the SDK, outside of those that were forced by the changes in the node. This document will explain all changes on an endpoint by endpoint basis.
 
 ## Breaking changes
 
