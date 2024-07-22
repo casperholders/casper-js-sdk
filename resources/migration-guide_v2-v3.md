@@ -20,7 +20,7 @@ The `getDeployInfo` should return `ExecutionResultV1` for deploys that were exec
 
 #### getBlockInfo
 
-This method change it's output data (`GetBlockResult`). Currently it returns a structure with one field `block_with_signatures` which is of type `JsonBlockWithSignatures`. `JsonBlockWithSignatures.signatures` are the signatures of the block, `JsonBlockWithSignatures.block` is a union type that represents the block data. It should be of the structure:
+This method's output data has changed (`GetBlockResult`). Currently it returns a structure with one field `block_with_signatures` which is of type `JsonBlockWithSignatures`. `JsonBlockWithSignatures.signatures` are the signatures of the block, `JsonBlockWithSignatures.block` is a union type that represents the block data. It should be of the structure:
 
 ```
 { Version1: BlockV1 }
@@ -44,13 +44,13 @@ All changes made to output data of `getBlockInfo` were also made to `getLatestBl
 
 #### getEraInfoBySwitchBlock
 
-The input parameter to this method is no longer a string. It's a union type that has either the structure of:
+The input parameter to this method is no longer a string, it's a union type that has either the structure of:
 
 ```
 { Hash: string } | { Height: number }
 ```
 
-So `v2` usage like this:
+Casper v1:
 
 ```typescript
 const eraInfo = await client.getEraInfoBySwitchBlock(
@@ -58,7 +58,7 @@ const eraInfo = await client.getEraInfoBySwitchBlock(
 );
 ```
 
-will now be:
+Casper v2:
 
 ```typescript
 const eraInfo = await client.getEraInfoBySwitchBlock({
@@ -67,7 +67,7 @@ const eraInfo = await client.getEraInfoBySwitchBlock({
 });
 ```
 
-It's also possible to fetch by height now:
+It is now also possible to fetch by height:
 
 ```typescript
 const eraInfo = await client.getEraInfoBySwitchBlock({
@@ -77,13 +77,13 @@ const eraInfo = await client.getEraInfoBySwitchBlock({
 
 #### getEraSummary
 
-The input parameter to this method is no longer an optional string. It's an optional union type that has either the structure of:
+The input parameter to this method is no longer an optional string, but an optional union type that has either the structure of:
 
 ```
 { Hash: string } | { Height: number }
 ```
 
-So `v2` usage like this:
+Casper v1:
 
 ```typescript
 const eraInfo = await client.getEraSummary(
@@ -91,7 +91,7 @@ const eraInfo = await client.getEraSummary(
 );
 ```
 
-will now be:
+Casper v2:
 
 ```typescript
 const eraInfo = await client.getEraSummary({
@@ -100,7 +100,7 @@ const eraInfo = await client.getEraSummary({
 });
 ```
 
-It's also possible to fetch by height now:
+It is now also possible to fetch by height:
 
 ```typescript
 const eraInfo = await client.getEraSummary({
@@ -118,7 +118,7 @@ Response `GetStatusResult` has a new field: `latest_switch_block_hash`
 
 #### getTransactionInfo
 
-This endpoint was added in `v3`. It is used to retrieve the new data format which is a union type of either a `Deploy` or `Transaction`. Example usage would be:
+This endpoint is new to the Casper JS SDK in version 3.0.0. It is used to retrieve the new data format which is a union type of either a `Deploy` or `Transaction`. Example usage would be:
 
 - for fetching a `Deploy` variant:
 
@@ -129,7 +129,7 @@ This endpoint was added in `v3`. It is used to retrieve the new data format whic
   });
   ```
 
-  **PLEASE NOTE** The above is identical to
+  **PLEASE NOTE** The above is identical to:
 
   ```typescript
   const deploy = await client.getDeployInfo(
@@ -152,12 +152,12 @@ This method is used to send a `Transaction` for execution. A `Transaction` is a 
 
 ## BalanceServiceByJsonRPC
 
-This service was removed from 3.0.0 release. It has only one method - `getAccountBalance`. Please use `CasperServiceByJsonRPC.getAccountBalance` instead.
+This service was removed from the 3.0.0 release. It has only one method - `getAccountBalance`. Please use `CasperServiceByJsonRPC.getAccountBalance` instead.
 
 ## EventName
 
-Enum `EventName` lost two values: `DeployProcessed` and `DeployAccepted`. `TransactionAccepted`, `TransactionProcessed` and `TransactionExpired` were added. Deploys stopped being a first-entity in favor of Transactions, so they all Deploys will be, in the SSE streams, communicated as `Transaction*` events. Please bear in mind that the internal structure of the events did change significantly.
+Enum `EventName` lost two values: `DeployProcessed` and `DeployAccepted`. `TransactionAccepted`, `TransactionProcessed` and `TransactionExpired` were added. Deploys stopped being a first-entity in favor of Transactions, so all Deploys will be, in SSE streams, communicated as `Transaction*` events. Please bear in mind that the internal structure of the events did change significantly.
 
 ## Speculative endpoints
 
-Speculative endpoints are currently not supported by the JS SDK
+Speculative endpoints are currently not supported by the Casper JS SDK
