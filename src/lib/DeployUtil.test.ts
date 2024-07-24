@@ -397,7 +397,7 @@ describe('DeployUtil', () => {
 
   it('DeployUtil.UniqAddress should serialize and deserialize', () => {
     const recipientKey = Keys.Ed25519.new();
-    const hexAddress = recipientKey.publicKey.toHex();
+    const hexAddress = recipientKey.publicKey.toFormattedString();
     const transferId = '80172309';
     const transferIdHex = '0x04c75515';
 

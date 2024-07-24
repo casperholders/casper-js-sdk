@@ -235,7 +235,7 @@ describe('CasperServiceByJsonRPC', () => {
     const faucetBalance = '1000000000000000000000000000000000';
     const stateRootHash = await client.getStateRootHash();
     const entity_identifier = {
-      PublicKey: faucetKey.publicKey.toHex(false)
+      PublicKey: faucetKey.publicKey.toFormattedString(false)
     };
     const entity = await client.getEntity(entity_identifier);
     const main_purse = entity.AddressableEntity.entity.main_purse;
@@ -246,17 +246,17 @@ describe('CasperServiceByJsonRPC', () => {
   it('query_balance', async () => {
     const balanceByPublicKey = await client.queryBalance(
       PurseIdentifier.MainPurseUnderPublicKey,
-      faucetKey.publicKey.toHex(false)
+      faucetKey.publicKey.toFormattedString(false)
     );
 
     const balanceByAccountHash = await client.queryBalance(
       PurseIdentifier.MainPurseUnderAccountHash,
-      faucetKey.publicKey.toAccountHashStr()
+      faucetKey.publicKey.toAccountHash().toFormattedString()
     );
     expect(balanceByAccountHash.eq(balanceByPublicKey)).to.be;
 
     const entity = await client.getEntity({
-      PublicKey: faucetKey.publicKey.toHex(false)
+      PublicKey: faucetKey.publicKey.toFormattedString(false)
     });
 
     const balanceByUref = await client.queryBalance(
@@ -305,7 +305,7 @@ describe('CasperServiceByJsonRPC', () => {
     await client.transaction(signedTransaction);
     await sleep(2500);
     const result = await client.waitForTransaction(signedTransaction, 100000);
-    if (!result) {
+    if (!result || !client.isTransactionSuccessfull(result)) {
       assert.fail('Transfer deploy failed');
     }
     expect(encodeBase16(signedTransaction.Version1!.hash)).to.be.equal(
@@ -319,7 +319,7 @@ describe('CasperServiceByJsonRPC', () => {
 
     const balance = await client.queryBalance(
       PurseIdentifier.MainPurseUnderPublicKey,
-      toPublicKey.toHex(false)
+      toPublicKey.toFormattedString(false)
     );
 
     expect('' + paymentAmount).to.be.equal(balance.toString());
@@ -351,7 +351,7 @@ describe('CasperServiceByJsonRPC', () => {
     await sleep(2500);
 
     const result = await client.waitForDeploy(signedDeploy, 100000);
-    if (!result) {
+    if (!result || !client.isDeploySuccessfull(result)) {
       assert.fail('Transfer deploy failed');
     }
     expect(deploy_hash).to.be.equal(result.deploy.hash);
@@ -364,7 +364,7 @@ describe('CasperServiceByJsonRPC', () => {
 
     const balance = await client.queryBalance(
       PurseIdentifier.MainPurseUnderPublicKey,
-      toPublicKey.toHex(false)
+      toPublicKey.toFormattedString(false)
     );
 
     expect(amount).to.be.equal(balance.toString());
@@ -398,9 +398,12 @@ describe('CasperServiceByJsonRPC', () => {
 
     await client.deploy(signedDeploy);
     await sleep(2500);
-    await client.waitForDeploy(signedDeploy, 100000);
+    let res = await client.waitForDeploy(signedDeploy, 100000);
+    if (!res || !client.isDeploySuccessfull(res)) {
+      assert.fail('Transfer deploy failed');
+    }
     const entity_identifier = {
-      AccountHash: faucetKey.publicKey.toAccountHashStr()
+      AccountHash: faucetKey.publicKey.toAccountHash().toFormattedString()
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
     const named_key = AddressableEntity!.named_keys.find((i: NamedKey) => {
@@ -443,9 +446,11 @@ describe('CasperServiceByJsonRPC', () => {
     await sleep(2500);
 
     let result = await client.waitForDeploy(signedDeploy, 100000);
-
+    if (!result || !client.isDeploySuccessfull(result)) {
+      assert.fail('Transfer deploy failed');
+    }
     const entity_identifier = {
-      AccountHash: faucetKey.publicKey.toAccountHashStr()
+      AccountHash: faucetKey.publicKey.toAccountHash().toFormattedString()
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
     const contractHash = AddressableEntity!.named_keys.find((i: NamedKey) => {
@@ -504,7 +509,9 @@ describe('CasperServiceByJsonRPC', () => {
     const { deploy_hash } = await client.deploy(transferDeploy);
     await sleep(2500);
     result = await client.waitForDeploy(transferDeploy, 100000);
-
+    if (!result || !client.isDeploySuccessfull(result)) {
+      assert.fail('Transfer deploy failed');
+    }
     assert.equal(result.deploy.hash, deploy_hash);
     expect(result.deploy.session).to.have.property('StoredContractByHash');
     expect(result.execution_info!.execution_result!).to.have.property(
@@ -560,11 +567,11 @@ describe('CasperServiceByJsonRPC', () => {
     await sleep(2500);
 
     const result = await client.waitForTransaction(signedTransaction, 100000);
-    if (!result) {
+    if (!result || !client.isTransactionSuccessfull(result)) {
       assert.fail('Deploy failed');
     }
     const entity_identifier = {
-      AccountHash: faucetKey.publicKey.toAccountHashStr()
+      AccountHash: faucetKey.publicKey.toAccountHash().toFormattedString()
     };
     const { AddressableEntity } = await client.getEntity(entity_identifier);
     const contractHash = AddressableEntity!.named_keys.find((i: NamedKey) => {
@@ -632,6 +639,9 @@ describe('CasperServiceByJsonRPC', () => {
       signedRunEndpointTransaction,
       100000
     );
+    if (!transferResult || !client.isTransactionSuccessfull(transferResult)) {
+      assert.fail('Deploy failed');
+    }
     assert.equal(
       transferResult.transaction.Version1.hash,
       transaction_hash.Version1!

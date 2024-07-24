@@ -207,7 +207,7 @@ export class CLPublicKey extends CLValue implements CLKeyVariant<Uint8Array> {
     }
     if (!isChecksummed(publicKeyHex)) {
       console.warn(
-        'Provided public key is not checksummed. Please check if you provide valid public key. You can generate checksummed public key from CLPublicKey.toHex(true).'
+        'Provided public key is not checksummed. Please check if you provide valid public key. You can generate checksummed public key from CLPublicKey.toFormattedString(true).'
       );
       if (checksummed) throw Error('Provided public key is not checksummed.');
     }

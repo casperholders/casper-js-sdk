@@ -141,12 +141,17 @@ export class CasperServiceByJsonRPC {
   oneMegaByte = 1048576;
   /** JSON RPC client */
   protected client: Client;
+  private muffleDeprecationWarnings: boolean;
 
   /**
    * Constructor for building a `CasperServiceByJsonRPC`
    * @param provider A provider uri
    */
-  constructor(provider: string | SafeEventEmitterProvider) {
+  constructor(
+    provider: string | SafeEventEmitterProvider,
+    muffleDeprecationWarnings = false
+  ) {
+    this.muffleDeprecationWarnings = muffleDeprecationWarnings;
     let transport: HTTPTransport | ProviderTransport;
     if (typeof provider === 'string') {
       let providerUrl = provider.endsWith('/')
@@ -178,9 +183,12 @@ export class CasperServiceByJsonRPC {
     finalizedApprovals?: boolean,
     props?: RpcRequestProps
   ): Promise<GetDeployResult> {
-    console.warn(
-      'This method is deprecated and will be removed in the future release, please use getTransactionInfo method instead.'
-    );
+    if (!this.muffleDeprecationWarnings) {
+      console.warn(
+        'This method is deprecated and will be removed in the future release, please use getTransactionInfo method instead.'
+      );
+    }
+
     const params: any[] = [deployHash];
     if (finalizedApprovals) {
       params.push(finalizedApprovals);
@@ -399,7 +407,7 @@ export class CasperServiceByJsonRPC {
   ): Promise<any> {
     let identifier;
     if (accountIdentifier instanceof CLPublicKey) {
-      identifier = accountIdentifier.toHex();
+      identifier = accountIdentifier.toFormattedString();
     } else if (accountIdentifier instanceof CLAccountHash) {
       identifier = accountIdentifier.toFormattedString();
     }
@@ -460,9 +468,11 @@ export class CasperServiceByJsonRPC {
     purseUref: string,
     props?: RpcRequestProps
   ): Promise<BigNumber> {
-    console.warn(
-      'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
-    );
+    if (!this.muffleDeprecationWarnings) {
+      console.warn(
+        'This method is deprecated and will be removed in the future release, please use queryBalance method instead.'
+      );
+    }
     return await this.client
       .request(
         {
@@ -713,9 +723,11 @@ export class CasperServiceByJsonRPC {
       checkApproval?: boolean;
     }
   ): Promise<DeployResult> {
-    console.warn(
-      'This method is deprecated and will be removed in the future release, please use transaction method instead.'
-    );
+    if (!this.muffleDeprecationWarnings) {
+      console.warn(
+        'This method is deprecated and will be removed in the future release, please use transaction method instead.'
+      );
+    }
     this.checkDeploySize(signedDeploy);
     const { checkApproval = false } = props ?? {};
     if (checkApproval && signedDeploy.approvals.length == 0) {
@@ -782,13 +794,7 @@ export class CasperServiceByJsonRPC {
       if (!execution_result) {
         successful = false;
       } else {
-        if ('Version1' in execution_result) {
-          //Technically Transaction should never have Version1 execution result
-          successful = !!execution_result.Version1.Success;
-        }
-        if ('Version2' in execution_result) {
-          successful = execution_result.Version2.error_message === null;
-        }
+        return transactionInfo;
       }
 
       if (successful) {
@@ -827,12 +833,7 @@ export class CasperServiceByJsonRPC {
       if (!execution_result) {
         successful = false;
       } else {
-        if ('Version1' in execution_result) {
-          successful = !!execution_result.Version1.Success;
-        }
-        if ('Version2' in execution_result) {
-          successful = execution_result.Version2.error_message === null;
-        }
+        return deployInfo;
       }
 
       if (successful) {
@@ -842,6 +843,40 @@ export class CasperServiceByJsonRPC {
         await sleep(400);
       }
     }
+  }
+
+  public isTransactionSuccessfull(results: GetTransactionResult): boolean {
+    if (!results.execution_info) {
+      return false;
+    }
+    if (!results.execution_info.execution_result) {
+      return false;
+    }
+    const execution_result = results.execution_info.execution_result;
+    if ('Version1' in execution_result) {
+      return !!execution_result.Version1.Success;
+    }
+    if ('Version2' in execution_result) {
+      return execution_result.Version2.error_message === null;
+    }
+    return false;
+  }
+
+  public isDeploySuccessfull(results: GetDeployResult): boolean {
+    if (!results.execution_info) {
+      return false;
+    }
+    if (!results.execution_info.execution_result) {
+      return false;
+    }
+    const execution_result = results.execution_info.execution_result;
+    if ('Version1' in execution_result) {
+      return !!execution_result.Version1.Success;
+    }
+    if ('Version2' in execution_result) {
+      return execution_result.Version2.error_message === null;
+    }
+    return false;
   }
 
   /**

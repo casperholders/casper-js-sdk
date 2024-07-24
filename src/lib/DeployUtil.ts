@@ -88,7 +88,7 @@ export class UniqAddress {
    * @returns string with the format "accountHex-transferIdHex"
    */
   toString(): string {
-    return `${this.publicKey.toHex()}-${this.transferId.toHexString()}`;
+    return `${this.publicKey.toFormattedString()}-${this.transferId.toHexString()}`;
   }
 
   /**
@@ -98,7 +98,7 @@ export class UniqAddress {
    */
   static fromString(value: string): UniqAddress {
     const [accountHex, transferHex] = value.split('-');
-    const publicKey = CLPublicKey.fromHex(accountHex);
+    const publicKey = CLPublicKey.fromFormattedString(accountHex);
     return UniqAddress.build(publicKey, transferHex);
   }
 }
@@ -108,10 +108,10 @@ export class UniqAddress {
 export class DeployHeader implements ToBytes {
   @jsonMember({
     serializer: (account: CLPublicKey) => {
-      return account.toHex();
+      return account.toFormattedString();
     },
     deserializer: (hexStr: string) => {
-      return CLPublicKey.fromHex(hexStr, false);
+      return CLPublicKey.fromFormattedString(hexStr, false);
     }
   })
   public account: CLPublicKey;
@@ -1333,7 +1333,7 @@ export const setSignature = (
   publicKey: CLPublicKey
 ): Deploy => {
   const approval = new Approval();
-  approval.signer = publicKey.toHex();
+  approval.signer = publicKey.toFormattedString();
   // TBD: Make sure it is proper
   if (publicKey.isEd25519()) {
     approval.signature = Keys.Ed25519.accountHex(sig);
@@ -1479,7 +1479,7 @@ export const validateDeploy = (deploy: Deploy): Result<Deploy, string> => {
   }
 
   const isProperlySigned = deploy.approvals.every(({ signer, signature }) => {
-    const pk = CLPublicKey.fromHex(signer, false);
+    const pk = CLPublicKey.fromFormattedString(signer, false);
     const signatureRaw = decodeBase16(signature.slice(2));
     return validateSignature(deploy.hash, signatureRaw, pk);
   });

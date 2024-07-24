@@ -579,13 +579,13 @@ describe(`numbers' toBytes`, () => {
   it('should compute hex from PublicKey correctly', () => {
     const ed25519Account = Keys.Ed25519.new();
     const ed25519AccountHex = ed25519Account.accountHex();
-    expect(CLPublicKey.fromHex(ed25519AccountHex)).to.deep.equal(
+    expect(CLPublicKey.fromFormattedString(ed25519AccountHex)).to.deep.equal(
       ed25519Account.publicKey
     );
 
     const secp256K1Account = Keys.Secp256K1.new();
     const secp256K1AccountHex = secp256K1Account.accountHex();
-    expect(CLPublicKey.fromHex(secp256K1AccountHex)).to.deep.equal(
+    expect(CLPublicKey.fromFormattedString(secp256K1AccountHex)).to.deep.equal(
       secp256K1Account.publicKey
     );
   });

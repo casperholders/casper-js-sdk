@@ -39,7 +39,7 @@ describe('TransactionUtil', () => {
   const expectedBodyHash =
     '7d963698c7464204e91e1b1b4ead647a9e85e64dbf5573b2180216214d155724';
   it('should calculate body has correctly', () => {
-    CLPublicKey.fromHex(
+    CLPublicKey.fromFormattedString(
       '01ae0a8ba1e0d2c96eaa84de63d4051396147ed30aeba6919b01952c833e0814b8',
       false
     );
