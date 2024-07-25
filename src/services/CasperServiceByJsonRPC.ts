@@ -146,6 +146,7 @@ export class CasperServiceByJsonRPC {
   /**
    * Constructor for building a `CasperServiceByJsonRPC`
    * @param provider A provider uri
+   * @param muffleDeprecationWarnings If set to `true`, deprecation warnings in this class will be suppressed. Defaults to `false`.
    */
   constructor(
     provider: string | SafeEventEmitterProvider,

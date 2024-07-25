@@ -33,7 +33,8 @@ export class Contract {
   constructor(public casperClient?: CasperClient) {}
 
   /**
-   * Attaches an on-chain smart contract to this `Contract` object using its hexadecimal string typed hash. The contract hash must include the prefix "hash-"
+   * Attaches an on-chain smart contract to this `Contract` object using its hexadecimal string typed hash. The contract hash must include the prefix "hash-".
+   * Setting contract hash will imply that the contract endpoints need to by called by contract hash. You still can use `setContractName`, but `setContractHash` takes priority if both are used.
    * @param contractHash The hexadecimal smart contract hash, with the prefix "entity-contract-"
    * @param contractPackageHash The hexadecimal smart contract package hash, with the prefix "package-". This parameter is optional, and only used when there is event processing present.
    */
