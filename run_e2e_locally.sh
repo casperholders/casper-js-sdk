@@ -1,4 +1,4 @@
-export FAUCET_PRIV_KEY="MC4CAQAwBQYDK2VwBCIEIHXch+pMtOX6MqKQHT+yLnflYxl5XytTYZtYuItlko4g"
+export FAUCET_PRIV_KEY=`cat /home/casperlabs-dev/DEV/src/casper-nctl/assets/net-1/users/user-1/secret_key.pem  | sed -n '2 p'`
 export NODE_URL="http://127.0.0.1:7777/rpc"
 export HTTP_EVENT_STREAM_URL="http://127.0.0.1:19999/events"
 export HTTPS_EVENT_STREAM_URL="https://events.mainnet.casperlabs.io/events"

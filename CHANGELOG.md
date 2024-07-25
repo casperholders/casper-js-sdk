@@ -13,6 +13,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   ### Removed
  -->
 
+## [3.0.0-rc04] - 2024-07-25
+
+### Added
+
+- Brought back the functionality of setting contract hash (`setContractHash` method) in `Contract` class. Previously even using that method would ignore the contract hash due to a bug in the node. Now setting it will imply that the contract endpoints need to by called by contract hash. You still can use `setContractName`, but `setContractHash` takes priority if both are used.
+- Added the possibility to muffle deprecation warnings in `CasperServiceByJsonRPC`. You can now pass `muffleDeprecationWarnings` as an optional parameter to the constructor. If set to `true`, the SDK will not log any deprecation warnings from that class. Defaults to `false`
+
+### Removed
+
+- `TransactionSessionKind` since field kind was removed from `Session` implementation of `TransactionTarget`
+- Removed usages of `toHex`, `fromHex` and `toAccountHashStr` since they are deprecated.
+
+### Changed
+
+- `waitForDeploy` and `waitForTransaction` methods will fail fast if the results for getting deploy/transaction info is present but was not successfull.
+
 ## [3.0.0-rc02] - 2024-07-05
 
 This release candidate is compatible with [#node RC3](https://github.com/casper-network/casper-node/tree/release-2.0.0-rc2)

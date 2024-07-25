@@ -88,7 +88,7 @@ export class UniqAddress {
    * @returns string with the format "accountHex-transferIdHex"
    */
   toString(): string {
-    return `${this.publicKey.toHex()}-${this.transferId.toHexString()}`;
+    return `${this.publicKey.toFormattedString()}-${this.transferId.toHexString()}`;
   }
 
   /**
@@ -98,7 +98,7 @@ export class UniqAddress {
    */
   static fromString(value: string): UniqAddress {
     const [accountHex, transferHex] = value.split('-');
-    const publicKey = CLPublicKey.fromHex(accountHex);
+    const publicKey = CLPublicKey.fromFormattedString(accountHex);
     return UniqAddress.build(publicKey, transferHex);
   }
 }
@@ -108,10 +108,10 @@ export class UniqAddress {
 export class DeployHeader implements ToBytes {
   @jsonMember({
     serializer: (account: CLPublicKey) => {
-      return account.toHex();
+      return account.toFormattedString();
     },
     deserializer: (hexStr: string) => {
-      return CLPublicKey.fromHex(hexStr, false);
+      return CLPublicKey.fromFormattedString(hexStr, false);
     }
   })
   public account: CLPublicKey;
@@ -323,8 +323,8 @@ export class StoredContractByHash extends ExecutableDeployItemInternal {
   public args: RuntimeArgs;
 
   /**
-   * Constructs a `StoredContractByHash` object from the `Uint8Array` typed hash, entrypoint of the contract, and associated runtime arguments
-   * @param hash `Uint8Array` typed smart contract hash
+   * Constructs a `StoredContractByHash` object from the hash, entrypoint of the contract, and associated runtime arguments
+   * @param hash hash of the addressable entity of the contract
    * @param entryPoint An entrypoint of the smart contract
    * @param args The runtime arguments for interaction on the `entryPoint`
    */
@@ -748,7 +748,7 @@ export class ExecutableDeployItem implements ToBytes {
 
   /**
    * Creates a new `StoredContractByHash` object from a `Uint8Array` contract hash, entrypoint, and runtime arguments
-   * @param hash `Uint8Array` representation of a smart contract hash
+   * @param hash `string` representation of a smart contract addreassable entity hash
    * @param entryPoint Name of an entrypoint of the stored contract
    * @param args The runtime arguments for the new `StoredContractByHash` object
    * @returns A new `ExecutableDeployItem` created from a new `StoredContractByHash` object built using `hash`, `entryPoint` and `args`
@@ -1333,7 +1333,7 @@ export const setSignature = (
   publicKey: CLPublicKey
 ): Deploy => {
   const approval = new Approval();
-  approval.signer = publicKey.toHex();
+  approval.signer = publicKey.toFormattedString();
   // TBD: Make sure it is proper
   if (publicKey.isEd25519()) {
     approval.signature = Keys.Ed25519.accountHex(sig);
@@ -1479,7 +1479,7 @@ export const validateDeploy = (deploy: Deploy): Result<Deploy, string> => {
   }
 
   const isProperlySigned = deploy.approvals.every(({ signer, signature }) => {
-    const pk = CLPublicKey.fromHex(signer, false);
+    const pk = CLPublicKey.fromFormattedString(signer, false);
     const signatureRaw = decodeBase16(signature.slice(2));
     return validateSignature(deploy.hash, signatureRaw, pk);
   });

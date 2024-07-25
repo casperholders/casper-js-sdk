@@ -17,6 +17,9 @@ export const contractHashToByteArray = (contractHash: string) =>
 const NO_CLIENT_ERR =
   'You need to either create Contract instance with casperClient or pass it as parameter to this function';
 
+const NO_ENTRYPOINT_QUALIFIER =
+  'You need to either specify contractName or contractHash before calling an endpoint';
+
 /** Smart contract object for interacting with contracts on the Casper Network */
 export class Contract {
   public contractHash?: string;
@@ -30,7 +33,8 @@ export class Contract {
   constructor(public casperClient?: CasperClient) {}
 
   /**
-   * Attaches an on-chain smart contract to this `Contract` object using its hexadecimal string typed hash. The contract hash must include the prefix "hash-"
+   * Attaches an on-chain smart contract to this `Contract` object using its hexadecimal string typed hash. The contract hash must include the prefix "hash-".
+   * Setting contract hash will imply that the contract endpoints need to by called by contract hash. You still can use `setContractName`, but `setContractHash` takes priority if both are used.
    * @param contractHash The hexadecimal smart contract hash, with the prefix "entity-contract-"
    * @param contractPackageHash The hexadecimal smart contract package hash, with the prefix "package-". This parameter is optional, and only used when there is event processing present.
    */
@@ -86,8 +90,10 @@ export class Contract {
   }
 
   private checkSetup(): boolean {
-    if (this.contractHash) return true;
-    throw Error('You need to setContract before running this method.');
+    if (this.contractHash || this.contractName) return true;
+    throw Error(
+      'You need to setContractHash or setContractName before running this method.'
+    );
   }
 
   /**
@@ -111,14 +117,10 @@ export class Contract {
     ttl: number = DEFAULT_DEPLOY_TTL
   ): Deploy {
     this.checkSetup();
-
+    const session = this.buildSession(entryPoint, args);
     const deploy = DeployUtil.makeDeploy(
       new DeployUtil.DeployParams(sender, chainName, 1, ttl),
-      DeployUtil.ExecutableDeployItem.newStoredContractByName(
-        this.contractName!,
-        entryPoint,
-        args
-      ),
+      session,
       DeployUtil.standardPayment(paymentAmount)
     );
 
@@ -190,6 +192,30 @@ export class Contract {
       return storedValue.CLValue;
     } else {
       throw Error('Invalid stored value');
+    }
+  }
+
+  private buildSession(
+    entryPoint: string,
+    args: RuntimeArgs
+  ): DeployUtil.ExecutableDeployItem {
+    if (this.contractHash) {
+      const hashOnly = this.contractHash!.slice(16);
+      const addrEntityBytes = contractHashToByteArray(hashOnly);
+
+      return DeployUtil.ExecutableDeployItem.newStoredContractByHash(
+        addrEntityBytes,
+        entryPoint,
+        args
+      );
+    } else if (this.contractName) {
+      return DeployUtil.ExecutableDeployItem.newStoredContractByName(
+        this.contractName!,
+        entryPoint,
+        args
+      );
+    } else {
+      throw Error(NO_ENTRYPOINT_QUALIFIER);
     }
   }
 }

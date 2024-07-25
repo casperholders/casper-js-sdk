@@ -56,7 +56,7 @@ export class InitiatorAddr {
       };
     } else if (this.PublicKey) {
       return {
-        PublicKey: this.PublicKey.toHex()
+        PublicKey: this.PublicKey.toFormattedString()
       };
     }
     return undefined;
@@ -65,7 +65,9 @@ export class InitiatorAddr {
 
 export const matchInitiatorAddress = (json: any): InitiatorAddr | undefined => {
   if (json.PublicKey) {
-    return InitiatorAddr.fromPublicKey(CLPublicKey.fromHex(json.PublicKey));
+    return InitiatorAddr.fromPublicKey(
+      CLPublicKey.fromFormattedString(json.PublicKey)
+    );
   } else if (json.AccountHash) {
     return InitiatorAddr.fromAccountHash(
       CLAccountHash.fromFormattedString(json.AccountHash)

@@ -196,7 +196,7 @@ export class CasperWallet extends BaseSigner {
       const signedDeploy = DeployUtil.setSignature(
         DeployUtil.deployFromJson(deploy).unwrap(),
         result.signature,
-        CLPublicKey.fromHex(signingPublicKey)
+        CLPublicKey.fromFormattedString(signingPublicKey)
       );
 
       return DeployUtil.deployToJson(signedDeploy);
