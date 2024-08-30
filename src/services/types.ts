@@ -149,31 +149,97 @@ export type AddKey = {
   key: string;
   name: string;
 };
+export type ISeigniorageAllocation =
+  | {
+      Validator: {
+        validator_public_key: string;
+        amount: string;
+      };
+    }
+  | {
+      Delegator: {
+        delegator_public_key: string;
+        validator_public_key: string;
+        amount: string;
+      };
+    };
 
+export interface EraInfo {
+  seigniorage_allocations: ISeigniorageAllocation[];
+}
 export type TransformValue =
   | 'Identity'
-  | 'WriteContractWasm'
-  | 'WriteContract'
-  | 'WriteContractPackage'
   | {
       WriteCLValue: WriteCLValue;
     }
+  | { WriteAccount: string }
+  | 'WriteContractWasm'
+  | 'WriteContract'
+  | 'WriteContractPackage'
   | { WriteDeployInfo: WriteDeployInfo }
+  | { WriteEraInfo: EraInfo }
   | { WriteTransfer: WriteTransfer }
+  | { WriteBid: any } //TODO fill this definition
+  | { WriteWithdraw: any[] } //TODO fill this definition
+  | { AddInt32: number }
+  | { AddUInt64: number }
+  | { AddUInt128: string }
+  | { AddUInt256: string }
   | { AddUInt512: string }
-  | { AddKeys: AddKey[] };
+  | { AddKeys: AddKey[] }
+  | { Failure: string }
+  | { WriteUnbonding: any[] } //TODO fill this definition
+  | 'WriteAddressableEntity'
+  | { Prune: string }
+  | { WriteBidKind: any }; //TODO fill this definition
 
-interface Transform {
+export interface Transform {
   key: string;
   transform: TransformValue;
 }
 
-interface Effect {
+export interface TransformV2 {
+  key: string;
+  kind: TransformKindV2;
+}
+
+export type TransformKindV2 =
+  | 'Identity'
+  | { Write: any }
+  | { AddInt32: number }
+  | { AddUInt64: number }
+  | { AddUInt128: string }
+  | { AddUInt256: string }
+  | { AddUInt512: string }
+  | { AddKeys: NamedKey[] }
+  | { Prune: string }
+  | {
+      Failure:
+        | 'Deprecated'
+        | { Serialization: string }
+        | { TypeMismatch: { expected: string; found: string } };
+    };
+
+export enum OpKind {
+  Read = 'Read',
+  Write = 'Write',
+  Add = 'Add',
+  NoOp = 'NoOp',
+  Prune = 'Prune'
+}
+
+export interface Operation {
+  key: string;
+  kind: OpKind;
+}
+
+export interface Effect {
+  operations: Operation[];
   transforms: Transform[];
 }
 
 /** Result interface for an execution result body */
-interface ExecutionResultBody {
+export interface ExecutionResultBody {
   cost: number;
   error_message?: string | null;
   transfers: string[];
@@ -200,7 +266,7 @@ export interface ExecutionResultV2 {
   cost: string;
   payment: { source: string }[];
   transfers: any[];
-  effect: Effect;
+  effects: TransformV2[];
 }
 
 export type ExecutionResult =
