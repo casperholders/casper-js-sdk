@@ -13,6 +13,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   ### Removed
  -->
 
+## [3.0.0-rc05] - 2024-08-30
+
+### Fixed
+
+- Filled missing variants of `TransformValue` type (AddInt32|AddUInt64|AddUInt128|AddUInt256|WriteEraInfo|WriteBid|WriteWithdraw|Failure|WriteUnbonding)
+- Removed field `effect` from `ExecutionResultV2` type (it was incorrect)
+- Added field `effects` to `ExecutionResultV2` type and added `TransformV2` type to match the node's response
+
 ## [3.0.0-rc04] - 2024-07-25
 
 ### Added
@@ -102,6 +110,14 @@ This release candidate is compatible with [#node RC2](https://github.com/casper-
 - `BalanceServiceByJsonRPC` class
 - `execution_results` field in `GetDeployResult` was removed. This affects `CasperServiceByJsonRPC.getDeployInfo` method return types.
 - field `block` of `GetBlockResult`. This change affects `CasperServiceByJsonRPC.getBlockInfo` method return type
+
+## [2.15.6] - 2024-08-29
+
+### Fixed
+
+- Backfilled missing variants of `TransformValue` type (AddInt32|AddUInt64|AddUInt128|AddUInt256|WriteEraInfo|WriteBid|WriteWithdraw|Failure|WriteUnbonding)
+- Backfilled `operations` field in `Effect` type
+- Exported all types in `services/types` module so that they can be used by end users
 
 ## [2.15.5] - 2024-04-18
 
