@@ -13,6 +13,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   ### Removed
  -->
 
+## [2.15.7] - 2024-11-12
+
+### Fixed
+
+- Backfilled missing variants of `TransformValue` type (AddInt32|AddUInt64|AddUInt128|AddUInt256|WriteEraInfo|WriteBid|WriteWithdraw|Failure|WriteUnbonding)
+- Backfilled `operations` field in `Effect` type
+- Exported all types in `services/types` module so that they can be used by end users
+
 ## [2.15.6] - 2024-04-18
 
 ### Fixed
