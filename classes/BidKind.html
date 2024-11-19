@@ -15,12 +15,17 @@
 <li><a href="../modules.html">casper-js-sdk</a></li>
 <li><a href="BidKind.html">BidKind</a></li></ul>
 <h1>Class BidKind</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Represents a polymorphic bid kind, allowing for different types of bid-related entities.
+This class contains properties for various bid types, including unified bids, validator bids,
+delegators, bridge transitions, and credits.</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">BidKind</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/BidKind.ts#L5">src/types/BidKind.ts:5</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/BidKind.ts#L10">src/types/BidKind.ts:10</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -50,29 +55,39 @@
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="bridge" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>bridge</span><a href="#bridge" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">bridge<span class="tsd-signature-symbol">?:</span> <a href="Bridge.html" class="tsd-signature-type" data-tsd-kind="Class">Bridge</a></div><aside class="tsd-sources">
+<div class="tsd-signature">bridge<span class="tsd-signature-symbol">?:</span> <a href="Bridge.html" class="tsd-signature-type" data-tsd-kind="Class">Bridge</a></div>
+<div class="tsd-comment tsd-typography"><p>Represents a transition bridge between validators, connecting an old validator with a new one.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/BidKind.ts#L16">src/types/BidKind.ts:16</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/BidKind.ts#L33">src/types/BidKind.ts:33</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="credit" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>credit</span><a href="#credit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">credit<span class="tsd-signature-symbol">?:</span> <a href="Credit.html" class="tsd-signature-type" data-tsd-kind="Class">Credit</a></div><aside class="tsd-sources">
+<div class="tsd-signature">credit<span class="tsd-signature-symbol">?:</span> <a href="Credit.html" class="tsd-signature-type" data-tsd-kind="Class">Credit</a></div>
+<div class="tsd-comment tsd-typography"><p>Represents a credit entry for a validator, specifying an amount and era.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/BidKind.ts#L19">src/types/BidKind.ts:19</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/BidKind.ts#L39">src/types/BidKind.ts:39</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="delegator" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>delegator</span><a href="#delegator" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">delegator<span class="tsd-signature-symbol">?:</span> <a href="Delegator.html" class="tsd-signature-type" data-tsd-kind="Class">Delegator</a></div><aside class="tsd-sources">
+<div class="tsd-signature">delegator<span class="tsd-signature-symbol">?:</span> <a href="Delegator.html" class="tsd-signature-type" data-tsd-kind="Class">Delegator</a></div>
+<div class="tsd-comment tsd-typography"><p>A bid specific to a delegator, which represents a user delegating their stake to a validator.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/BidKind.ts#L13">src/types/BidKind.ts:13</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/BidKind.ts#L27">src/types/BidKind.ts:27</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="unified" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>unified</span><a href="#unified" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">unified<span class="tsd-signature-symbol">?:</span> <a href="Bid.html" class="tsd-signature-type" data-tsd-kind="Class">Bid</a></div><aside class="tsd-sources">
+<div class="tsd-signature">unified<span class="tsd-signature-symbol">?:</span> <a href="Bid.html" class="tsd-signature-type" data-tsd-kind="Class">Bid</a></div>
+<div class="tsd-comment tsd-typography"><p>A unified bid that combines multiple bid attributes.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/BidKind.ts#L7">src/types/BidKind.ts:7</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/BidKind.ts#L15">src/types/BidKind.ts:15</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="validator" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>validator</span><a href="#validator" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">validator<span class="tsd-signature-symbol">?:</span> <a href="ValidatorBid.html" class="tsd-signature-type" data-tsd-kind="Class">ValidatorBid</a></div><aside class="tsd-sources">
+<div class="tsd-signature">validator<span class="tsd-signature-symbol">?:</span> <a href="ValidatorBid.html" class="tsd-signature-type" data-tsd-kind="Class">ValidatorBid</a></div>
+<div class="tsd-comment tsd-typography"><p>A validator-specific bid, containing information unique to validators.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/BidKind.ts#L10">src/types/BidKind.ts:10</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/BidKind.ts#L21">src/types/BidKind.ts:21</a></li></ul></aside></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

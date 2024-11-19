@@ -16,14 +16,14 @@
 <li><a href="BalanceHoldAddr.html">BalanceHoldAddr</a></li></ul>
 <h1>Class BalanceHoldAddr</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Represents a balance hold address.</p>
+<div class="tsd-comment tsd-typography"><p>Represents an address holding a balance, categorized by either &#39;Gas&#39; or &#39;Processing&#39; type.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">BalanceHoldAddr</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L74">src/types/key/BalanceHoldAddr.ts:74</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L77">src/types/key/BalanceHoldAddr.ts:77</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -63,23 +63,23 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> processing: <a href="Hold.html" class="tsd-signature-type" data-tsd-kind="Class">Hold</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="BalanceHoldAddr.html" class="tsd-signature-type" data-tsd-kind="Class">BalanceHoldAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L87">src/types/key/BalanceHoldAddr.ts:87</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L90">src/types/key/BalanceHoldAddr.ts:90</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="gas" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>gas</span><a href="#gas" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">gas<span class="tsd-signature-symbol">?:</span> <a href="Hold.html" class="tsd-signature-type" data-tsd-kind="Class">Hold</a></div>
-<div class="tsd-comment tsd-typography"><p>The gas hold, if any.</p>
+<div class="tsd-comment tsd-typography"><p>The hold categorized as &#39;Gas&#39;, if any.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L79">src/types/key/BalanceHoldAddr.ts:79</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L82">src/types/key/BalanceHoldAddr.ts:82</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="processing" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>processing</span><a href="#processing" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">processing<span class="tsd-signature-symbol">?:</span> <a href="Hold.html" class="tsd-signature-type" data-tsd-kind="Class">Hold</a></div>
-<div class="tsd-comment tsd-typography"><p>The processing hold, if any.</p>
+<div class="tsd-comment tsd-typography"><p>The hold categorized as &#39;Processing&#39;, if any.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L85">src/types/key/BalanceHoldAddr.ts:85</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L88">src/types/key/BalanceHoldAddr.ts:88</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toBytes" class="tsd-anchor"></a>
@@ -87,43 +87,44 @@
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toBytes.toBytes-1">to<wbr/>Bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><a href="#toBytes.toBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the BalanceHoldAddr to its byte representation.</p>
+<div class="tsd-comment tsd-typography"><p>Serializes the BalanceHoldAddr to its byte representation.
+Includes a byte for the hold type, the purse address, and an 8-byte block time.</p>
 
-<h3>Returns</h3><p>The byte representation of the BalanceHoldAddr.</p>
+<h3>Returns</h3><p>The serialized byte representation of the BalanceHoldAddr.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L117">src/types/key/BalanceHoldAddr.ts:117</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L121">src/types/key/BalanceHoldAddr.ts:121</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toJSON</span><a href="#toJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toJSON.toJSON-1">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toJSON.toJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the BalanceHoldAddr to its JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Serializes the BalanceHoldAddr to its JSON string representation.</p>
 
 <h3>Returns</h3><p>The JSON string representation of the BalanceHoldAddr.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L185">src/types/key/BalanceHoldAddr.ts:185</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L189">src/types/key/BalanceHoldAddr.ts:189</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toPrefixedString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Prefixed<wbr/>String</span><a href="#toPrefixedString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toPrefixedString.toPrefixedString-1">to<wbr/>Prefixed<wbr/>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toPrefixedString.toPrefixedString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Returns the prefixed string representation of the BalanceHoldAddr.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the BalanceHoldAddr to a prefixed string, using &#39;balance-hold-&#39; as the prefix.</p>
 
-<h3>Returns</h3><p>The prefixed string representation.</p>
+<h3>Returns</h3><p>The prefixed string representation of the BalanceHoldAddr.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L108">src/types/key/BalanceHoldAddr.ts:108</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L111">src/types/key/BalanceHoldAddr.ts:111</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Bytes</span><a href="#fromBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromBytes.fromBytes-1">from<wbr/>Bytes<span class="tsd-signature-symbol">(</span>bytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/IResultWithBytes.html" class="tsd-signature-type" data-tsd-kind="Interface">IResultWithBytes</a><span class="tsd-signature-symbol">&lt;</span><a href="BalanceHoldAddr.html" class="tsd-signature-type" data-tsd-kind="Class">BalanceHoldAddr</a><span class="tsd-signature-symbol">&gt;</span><a href="#fromBytes.fromBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a BalanceHoldAddr from its byte representation.</p>
+<div class="tsd-comment tsd-typography"><p>Deserializes a BalanceHoldAddr from a byte array.</p>
 
 <h3>Returns</h3><p>A new BalanceHoldAddr instance.</p>
 
@@ -136,17 +137,17 @@
 <ul class="tsd-parameter-list">
 <li>
 <h5>bytes: <span class="tsd-signature-type">Uint8Array</span></h5>
-<div class="tsd-comment tsd-typography"><p>The byte representation of the BalanceHoldAddr.</p>
+<div class="tsd-comment tsd-typography"><p>The byte array containing the BalanceHoldAddr data.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/IResultWithBytes.html" class="tsd-signature-type" data-tsd-kind="Interface">IResultWithBytes</a><span class="tsd-signature-symbol">&lt;</span><a href="BalanceHoldAddr.html" class="tsd-signature-type" data-tsd-kind="Class">BalanceHoldAddr</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L146">src/types/key/BalanceHoldAddr.ts:146</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L150">src/types/key/BalanceHoldAddr.ts:150</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>fromJSON</span><a href="#fromJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromJSON.fromJSON-1">fromJSON<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="BalanceHoldAddr.html" class="tsd-signature-type" data-tsd-kind="Class">BalanceHoldAddr</a><a href="#fromJSON.fromJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a BalanceHoldAddr from its JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Parses a JSON string representation of a BalanceHoldAddr.</p>
 
 <h3>Returns</h3><p>A new BalanceHoldAddr instance.</p>
 </div>
@@ -155,17 +156,17 @@
 <ul class="tsd-parameter-list">
 <li>
 <h5>json: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The JSON string representation of the BalanceHoldAddr.</p>
+<div class="tsd-comment tsd-typography"><p>The JSON string.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="BalanceHoldAddr.html" class="tsd-signature-type" data-tsd-kind="Class">BalanceHoldAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L177">src/types/key/BalanceHoldAddr.ts:177</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L181">src/types/key/BalanceHoldAddr.ts:181</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>String</span><a href="#fromString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromString.fromString-1">from<wbr/>String<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="BalanceHoldAddr.html" class="tsd-signature-type" data-tsd-kind="Class">BalanceHoldAddr</a><a href="#fromString.fromString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a BalanceHoldAddr from a string representation.</p>
+<div class="tsd-comment tsd-typography"><p>Parses a string representation of a BalanceHoldAddr and returns a new instance.</p>
 
 <h3>Returns</h3><p>A new BalanceHoldAddr instance.</p>
 </div>
@@ -178,7 +179,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="BalanceHoldAddr.html" class="tsd-signature-type" data-tsd-kind="Class">BalanceHoldAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/BalanceHoldAddr.ts#L97">src/types/key/BalanceHoldAddr.ts:97</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/BalanceHoldAddr.ts#L100">src/types/key/BalanceHoldAddr.ts:100</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

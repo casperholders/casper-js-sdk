@@ -16,7 +16,10 @@
 <li><a href="DeployParams.html">DeployParams</a></li></ul>
 <h1>Class DeployParams</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography">
+<div class="tsd-comment tsd-typography"><p>The parameters of a <code>Deploy</code> object.
+This class is deprecated. Use <code>Deploy.fromHeaderAndItems</code> instead.</p>
+<p>It is used to configure the construction of a <code>Deploy</code> object.</p>
+
 <h3>Deprecated</h3><p>The parameters of a <code>Deploy</code> object. Use Deploy.fromHeaderAndItems</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
@@ -24,7 +27,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">DeployParams</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L477">src/types/Deploy.ts:477</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L565">src/types/Deploy.ts:565</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -50,82 +53,82 @@
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_DeployParams">new <wbr/>Deploy<wbr/>Params<span class="tsd-signature-symbol">(</span>accountPublicKey<span class="tsd-signature-symbol">: </span><a href="PublicKey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a>, chainName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, gasPrice<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, ttl<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, dependencies<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">[]</span>, timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="DeployParams.html" class="tsd-signature-type" data-tsd-kind="Class">DeployParams</a><a href="#constructor.new_DeployParams" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Container for <code>Deploy</code> construction options.</p>
+<div class="tsd-comment tsd-typography"><p>Constructor for <code>DeployParams</code>.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5>accountPublicKey: <a href="PublicKey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a></h5>
-<div class="tsd-comment tsd-typography"><p>The public key of the deploying account as a <code>PublicKey</code></p>
+<div class="tsd-comment tsd-typography"><p>The public key of the deploying account as a <code>PublicKey</code>.</p>
 </div></li>
 <li>
 <h5>chainName: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>Name of the chain, to avoid the <code>Deploy</code> from being accidentally or maliciously included in a different chain.</p>
+<div class="tsd-comment tsd-typography"><p>The name of the blockchain chain to avoid the <code>Deploy</code> from being accidentally or maliciously included in another chain.</p>
 </div></li>
 <li>
 <h5>gasPrice: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></h5>
-<div class="tsd-comment tsd-typography"><p>Conversion rate between the cost of Wasm opcodes and the motes sent by the payment code, where 1 mote = 1 * 10^-9 CSPR</p>
+<div class="tsd-comment tsd-typography"><p>The conversion rate between the cost of Wasm opcodes and the motes sent by the payment code. 1 mote = 1 * 10^-9 CSPR.</p>
 </div></li>
 <li>
 <h5>ttl: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = DEFAULT_DEPLOY_TTL</span></h5>
-<div class="tsd-comment tsd-typography"><p>Time that the <code>Deploy</code> will remain valid for, in milliseconds. The default value is 1800000, which is 30 minutes</p>
+<div class="tsd-comment tsd-typography"><p>The time-to-live (TTL) for the deploy, in milliseconds. The default value is 30 minutes (1800000 milliseconds).</p>
 </div></li>
 <li>
 <h5>dependencies: <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></h5>
-<div class="tsd-comment tsd-typography"><p>Hex-encoded <code>Deploy</code> hashes of deploys which must be executed before this one.</p>
+<div class="tsd-comment tsd-typography"><p>Hex-encoded <code>Deploy</code> hashes of deploys that must be executed before this one.</p>
 </div></li>
 <li>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> timestamp: <span class="tsd-signature-type">number</span></h5>
-<div class="tsd-comment tsd-typography"><p>Note that timestamp is UTC, not local.</p>
+<div class="tsd-comment tsd-typography"><p>The timestamp when the deploy is created, in UTC.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="DeployParams.html" class="tsd-signature-type" data-tsd-kind="Class">DeployParams</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L487">src/types/Deploy.ts:487</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L576">src/types/Deploy.ts:576</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="accountPublicKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span class="deprecated">account<wbr/>Public<wbr/>Key</span><a href="#accountPublicKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">account<wbr/>Public<wbr/>Key<span class="tsd-signature-symbol">:</span> <a href="PublicKey.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a></div>
-<div class="tsd-comment tsd-typography"><p>The public key of the deploying account as a <code>PublicKey</code></p>
+<div class="tsd-comment tsd-typography"><p>The public key of the deploying account as a <code>PublicKey</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L488">src/types/Deploy.ts:488</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L577">src/types/Deploy.ts:577</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="chainName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span class="deprecated">chain<wbr/>Name</span><a href="#chainName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">chain<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-<div class="tsd-comment tsd-typography"><p>Name of the chain, to avoid the <code>Deploy</code> from being accidentally or maliciously included in a different chain.</p>
+<div class="tsd-comment tsd-typography"><p>The name of the blockchain chain to avoid the <code>Deploy</code> from being accidentally or maliciously included in another chain.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L489">src/types/Deploy.ts:489</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L578">src/types/Deploy.ts:578</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="dependencies" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span class="deprecated">dependencies</span><a href="#dependencies" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">dependencies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
-<div class="tsd-comment tsd-typography"><p>Hex-encoded <code>Deploy</code> hashes of deploys which must be executed before this one.</p>
+<div class="tsd-comment tsd-typography"><p>Hex-encoded <code>Deploy</code> hashes of deploys that must be executed before this one.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L492">src/types/Deploy.ts:492</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L581">src/types/Deploy.ts:581</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="gasPrice" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span class="deprecated">gas<wbr/>Price</span><a href="#gasPrice" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">gas<wbr/>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
-<div class="tsd-comment tsd-typography"><p>Conversion rate between the cost of Wasm opcodes and the motes sent by the payment code, where 1 mote = 1 * 10^-9 CSPR</p>
+<div class="tsd-comment tsd-typography"><p>The conversion rate between the cost of Wasm opcodes and the motes sent by the payment code. 1 mote = 1 * 10^-9 CSPR.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L490">src/types/Deploy.ts:490</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L579">src/types/Deploy.ts:579</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="timestamp" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span class="deprecated">timestamp</span><a href="#timestamp" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">timestamp<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span></div>
-<div class="tsd-comment tsd-typography"><p>Note that timestamp is UTC, not local.</p>
+<div class="tsd-comment tsd-typography"><p>The timestamp when the deploy is created, in UTC.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L493">src/types/Deploy.ts:493</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L582">src/types/Deploy.ts:582</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="ttl" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span class="deprecated">ttl</span><a href="#ttl" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">ttl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = DEFAULT_DEPLOY_TTL</span></div>
-<div class="tsd-comment tsd-typography"><p>Time that the <code>Deploy</code> will remain valid for, in milliseconds. The default value is 1800000, which is 30 minutes</p>
+<div class="tsd-comment tsd-typography"><p>The time-to-live (TTL) for the deploy, in milliseconds. The default value is 30 minutes (1800000 milliseconds).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Deploy.ts#L491">src/types/Deploy.ts:491</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Deploy.ts#L580">src/types/Deploy.ts:580</a></li></ul></aside></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

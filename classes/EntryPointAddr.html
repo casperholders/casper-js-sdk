@@ -16,14 +16,14 @@
 <li><a href="EntryPointAddr.html">EntryPointAddr</a></li></ul>
 <h1>Class EntryPointAddr</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Represents an entry point address in the system.</p>
+<div class="tsd-comment tsd-typography"><p>Represents an entry point address in the system, which may be a V1 or V2 Casper VM entry point.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">EntryPointAddr</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L95">src/types/key/EntryPointAddr.ts:95</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L95">src/types/key/EntryPointAddr.ts:95</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -54,28 +54,34 @@
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_EntryPointAddr">new <wbr/>Entry<wbr/>Point<wbr/>Addr<span class="tsd-signature-symbol">(</span>vmCasperV1<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">VmCasperV1</span>, vmCasperV2<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">VmCasperV2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="EntryPointAddr.html" class="tsd-signature-type" data-tsd-kind="Class">EntryPointAddr</a><a href="#constructor.new_EntryPointAddr" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Creates a new EntryPointAddr instance.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> vmCasperV1: <span class="tsd-signature-type">VmCasperV1</span></h5></li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> vmCasperV1: <span class="tsd-signature-type">VmCasperV1</span></h5>
+<div class="tsd-comment tsd-typography"><p>The V1 Casper VM entry point, if applicable.</p>
+</div></li>
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> vmCasperV2: <span class="tsd-signature-type">VmCasperV2</span></h5></li></ul></div>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> vmCasperV2: <span class="tsd-signature-type">VmCasperV2</span></h5>
+<div class="tsd-comment tsd-typography"><p>The V2 Casper VM entry point, if applicable.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="EntryPointAddr.html" class="tsd-signature-type" data-tsd-kind="Class">EntryPointAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L102">src/types/key/EntryPointAddr.ts:102</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L107">src/types/key/EntryPointAddr.ts:107</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="vmCasperV1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>vm<wbr/>Casper<wbr/>V1</span><a href="#vmCasperV1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">vm<wbr/>Casper<wbr/>V1<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">VmCasperV1</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L97">src/types/key/EntryPointAddr.ts:97</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L97">src/types/key/EntryPointAddr.ts:97</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="vmCasperV2" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>vm<wbr/>Casper<wbr/>V2</span><a href="#vmCasperV2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">vm<wbr/>Casper<wbr/>V2<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">VmCasperV2</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L100">src/types/key/EntryPointAddr.ts:100</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L100">src/types/key/EntryPointAddr.ts:100</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toBytes" class="tsd-anchor"></a>
@@ -91,7 +97,7 @@
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L177">src/types/key/EntryPointAddr.ts:177</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L182">src/types/key/EntryPointAddr.ts:182</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toJSON</span><a href="#toJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -103,7 +109,7 @@
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L256">src/types/key/EntryPointAddr.ts:256</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L261">src/types/key/EntryPointAddr.ts:261</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toPrefixedString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Prefixed<wbr/>String</span><a href="#toPrefixedString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -117,7 +123,7 @@
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L151">src/types/key/EntryPointAddr.ts:151</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L156">src/types/key/EntryPointAddr.ts:156</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Bytes</span><a href="#fromBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -138,7 +144,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/IResultWithBytes.html" class="tsd-signature-type" data-tsd-kind="Interface">IResultWithBytes</a><span class="tsd-signature-symbol">&lt;</span><a href="EntryPointAddr.html" class="tsd-signature-type" data-tsd-kind="Class">EntryPointAddr</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L208">src/types/key/EntryPointAddr.ts:208</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L213">src/types/key/EntryPointAddr.ts:213</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>fromJSON</span><a href="#fromJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -157,7 +163,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="EntryPointAddr.html" class="tsd-signature-type" data-tsd-kind="Class">EntryPointAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L248">src/types/key/EntryPointAddr.ts:248</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L253">src/types/key/EntryPointAddr.ts:253</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>String</span><a href="#fromString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -178,7 +184,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="EntryPointAddr.html" class="tsd-signature-type" data-tsd-kind="Class">EntryPointAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/EntryPointAddr.ts#L113">src/types/key/EntryPointAddr.ts:113</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/EntryPointAddr.ts#L118">src/types/key/EntryPointAddr.ts:118</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

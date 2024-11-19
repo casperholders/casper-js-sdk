@@ -17,7 +17,7 @@
 <h1>Class AddressableEntityHash</h1></div>
 <section class="tsd-panel tsd-comment">
 <div class="tsd-comment tsd-typography"><p>Represents an addressable entity hash in the Casper network.
-Extends the Hash class with additional functionality specific to addressable entity hashes.</p>
+This class extends the <code>Hash</code> class to include a prefix indicating it is an addressable entity, adding specific methods and properties for managing such hashes.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
@@ -26,7 +26,7 @@ Extends the Hash class with additional functionality specific to addressable ent
 <ul class="tsd-hierarchy">
 <li><span class="target">AddressableEntityHash</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/AddressableEntity.ts#L14">src/types/key/AddressableEntity.ts:14</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/AddressableEntity.ts#L10">src/types/key/AddressableEntity.ts:10</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -62,48 +62,49 @@ Extends the Hash class with additional functionality specific to addressable ent
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_AddressableEntityHash">new <wbr/>Addressable<wbr/>Entity<wbr/>Hash<span class="tsd-signature-symbol">(</span>hashBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, originPrefix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="AddressableEntityHash.html" class="tsd-signature-type" data-tsd-kind="Class">AddressableEntityHash</a><a href="#constructor.new_AddressableEntityHash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a new AddressableEntityHash instance.</p>
+<div class="tsd-comment tsd-typography"><p>Initializes a new AddressableEntityHash instance.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5>hashBytes: <span class="tsd-signature-type">Uint8Array</span></h5>
-<div class="tsd-comment tsd-typography"><p>The byte array representing the hash.</p>
+<div class="tsd-comment tsd-typography"><p>The byte array representing the hash value.</p>
 </div></li>
 <li>
-<h5>originPrefix: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = PrefixAddressableEntity</span></h5>
-<div class="tsd-comment tsd-typography"><p>The prefix of the original hash string. Defaults to PrefixAddressableEntity.</p>
+<h5>originPrefix: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = PrefixName.AddressableEntity</span></h5>
+<div class="tsd-comment tsd-typography"><p>Optional. The prefix of the original hash string. Defaults to <code>addressable-entity-</code>.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="AddressableEntityHash.html" class="tsd-signature-type" data-tsd-kind="Class">AddressableEntityHash</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="Hash.html">Hash</a>.<a href="Hash.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/AddressableEntity.ts#L26">src/types/key/AddressableEntity.ts:26</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/AddressableEntity.ts#L23">src/types/key/AddressableEntity.ts:23</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="originPrefix" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>origin<wbr/>Prefix</span><a href="#originPrefix" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">origin<wbr/>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-<div class="tsd-comment tsd-typography"><p>The prefix of the original hash string, if any.</p>
+<div class="tsd-comment tsd-typography"><p>Stores the prefix of the original hash string if it had one.
+Defaults to <code>addressable-entity-</code> if not provided.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/AddressableEntity.ts#L19">src/types/key/AddressableEntity.ts:19</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/AddressableEntity.ts#L16">src/types/key/AddressableEntity.ts:16</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="ByteHashLen" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>Byte<wbr/>Hash<wbr/>Len</span><a href="#ByteHashLen" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">Byte<wbr/>Hash<wbr/>Len<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 32</span></div>
-<div class="tsd-comment tsd-typography"><p>The length of the hash in bytes.</p>
+<div class="tsd-comment tsd-typography"><p>The fixed length of the hash in bytes.</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#ByteHashLen">ByteHashLen</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L14">src/types/key/Hash.ts:14</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L13">src/types/key/Hash.ts:13</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="StringHashLen" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>String<wbr/>Hash<wbr/>Len</span><a href="#StringHashLen" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">String<wbr/>Hash<wbr/>Len<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 64</span></div>
-<div class="tsd-comment tsd-typography"><p>The length of the hash string representation in hexadecimal.</p>
+<div class="tsd-comment tsd-typography"><p>The fixed length of the hash string representation in hexadecimal characters.</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#StringHashLen">StringHashLen</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L17">src/types/key/Hash.ts:17</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L16">src/types/key/Hash.ts:16</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="equals" class="tsd-anchor"></a>
@@ -111,7 +112,7 @@ Extends the Hash class with additional functionality specific to addressable ent
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="equals.equals-1">equals<span class="tsd-signature-symbol">(</span>other<span class="tsd-signature-symbol">: </span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#equals.equals-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Compares this Hash with another Hash for equality.</p>
+<div class="tsd-comment tsd-typography"><p>Compares this Hash instance with another Hash instance for equality.</p>
 
 <h3>Returns</h3><p>True if the hashes are equal, false otherwise.</p>
 </div>
@@ -125,78 +126,88 @@ Extends the Hash class with additional functionality specific to addressable ent
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#equals">equals</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L134">src/types/key/Hash.ts:134</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L139">src/types/key/Hash.ts:139</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="toBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Bytes</span><a href="#toBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="toBytes.toBytes-1">to<wbr/>Bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><a href="#toBytes.toBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the Hash to a byte array.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the Hash instance to a byte array.</p>
 
 <h3>Returns</h3><p>The byte array representation of the hash.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#toBytes">toBytes</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L61">src/types/key/Hash.ts:61</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L60">src/types/key/Hash.ts:60</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="toHex" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Hex</span><a href="#toHex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="toHex.toHex-1">to<wbr/>Hex<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toHex.toHex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the Hash to a hexadecimal string.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the Hash instance to a hexadecimal string.</p>
 
 <h3>Returns</h3><p>The hexadecimal string representation of the hash.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#toHex">toHex</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L53">src/types/key/Hash.ts:53</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L52">src/types/key/Hash.ts:52</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toJSON</span><a href="#toJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toJSON.toJSON-1">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toJSON.toJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the AddressableEntityHash to its JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Serializes the AddressableEntityHash to its JSON representation.
+The JSON representation includes the original prefix if it was specified.</p>
 
-<h3>Returns</h3><p>A string representation of the AddressableEntityHash, including the original prefix.</p>
+<h3>Returns</h3><p>A string combining the prefix (if present) and the hexadecimal representation of the hash.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Overrides <a href="Hash.html">Hash</a>.<a href="Hash.html#toJSON">toJSON</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/AddressableEntity.ts#L59">src/types/key/AddressableEntity.ts:59</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/AddressableEntity.ts#L59">src/types/key/AddressableEntity.ts:59</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toPrefixedString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Prefixed<wbr/>String</span><a href="#toPrefixedString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toPrefixedString.toPrefixedString-1">to<wbr/>Prefixed<wbr/>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toPrefixedString.toPrefixedString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Returns the addressable entity hash as a prefixed string.</p>
+<div class="tsd-comment tsd-typography"><p>Returns the addressable entity hash as a prefixed string.
+Always includes the <code>addressable-entity-</code> prefix.</p>
 
-<h3>Returns</h3><p>The hash with the &#39;addressable-entity-&#39; prefix.</p>
+<h3>Returns</h3><p>The prefixed hexadecimal string representation of the hash.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/AddressableEntity.ts#L51">src/types/key/AddressableEntity.ts:51</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/AddressableEntity.ts#L50">src/types/key/AddressableEntity.ts:50</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="createHashArray" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>create<wbr/>Hash<wbr/>Array</span><a href="#createHashArray" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="createHashArray.createHashArray-1">create<wbr/>Hash<wbr/>Array<span class="tsd-signature-symbol">(</span>byteArray<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">[]</span><a href="#createHashArray.createHashArray-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Creates an array of Hash instances from a byte array.</p>
+
+<h3>Returns</h3><p>An array of Hash instances created from the byte array.</p>
+
+<h3>Throws</h3><p>Error if the byte array length is not a multiple of the hash length.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>byteArray: <span class="tsd-signature-type">Uint8Array</span></h5></li></ul></div>
+<h5>byteArray: <span class="tsd-signature-type">Uint8Array</span></h5>
+<div class="tsd-comment tsd-typography"><p>The byte array containing multiple hash values.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#createHashArray">createHashArray</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L113">src/types/key/Hash.ts:113</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L118">src/types/key/Hash.ts:118</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="fromBuffer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Buffer</span><a href="#fromBuffer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="fromBuffer.fromBuffer-1">from<wbr/>Buffer<span class="tsd-signature-symbol">(</span>buffer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><a href="#fromBuffer.fromBuffer-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a Hash from a Buffer.</p>
+<div class="tsd-comment tsd-typography"><p>Creates a Hash instance from a Buffer.</p>
 
 <h3>Returns</h3><p>A new Hash instance.</p>
 
@@ -212,17 +223,17 @@ Extends the Hash class with additional functionality specific to addressable ent
 <h4 class="tsd-returns-title">Returns <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#fromBuffer">fromBuffer</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L106">src/types/key/Hash.ts:106</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L105">src/types/key/Hash.ts:105</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="fromBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Bytes</span><a href="#fromBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="fromBytes.fromBytes-1">from<wbr/>Bytes<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/IResultWithBytes.html" class="tsd-signature-type" data-tsd-kind="Interface">IResultWithBytes</a><span class="tsd-signature-symbol">&lt;</span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">&gt;</span><a href="#fromBytes.fromBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a Hash from a byte array.</p>
+<div class="tsd-comment tsd-typography"><p>Creates a Hash instance from a byte array.</p>
 
-<h3>Returns</h3><p>A new Hash instance.</p>
+<h3>Returns</h3><p>A result object containing the new Hash instance and the remaining bytes.</p>
 
-<h3>Throws</h3><p>Error if the byte array length is invalid.</p>
+<h3>Throws</h3><p>Error if the byte array length does not match the expected hash length.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -234,13 +245,14 @@ Extends the Hash class with additional functionality specific to addressable ent
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/IResultWithBytes.html" class="tsd-signature-type" data-tsd-kind="Interface">IResultWithBytes</a><span class="tsd-signature-symbol">&lt;</span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Hash.html">Hash</a>.<a href="Hash.html#fromBytes">fromBytes</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/Hash.ts#L88">src/types/key/Hash.ts:88</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/Hash.ts#L87">src/types/key/Hash.ts:87</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromHex" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Hex</span><a href="#fromHex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromHex.fromHex-1">from<wbr/>Hex<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="AddressableEntityHash.html" class="tsd-signature-type" data-tsd-kind="Class">AddressableEntityHash</a><a href="#fromHex.fromHex-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates an AddressableEntityHash instance from a hexadecimal string.</p>
+<div class="tsd-comment tsd-typography"><p>Parses a hexadecimal string to create an AddressableEntityHash instance.
+Checks if the input string starts with the <code>addressable-entity-</code> prefix, removing it if present.</p>
 
 <h3>Returns</h3><p>A new AddressableEntityHash instance.</p>
 </div>
@@ -249,32 +261,32 @@ Extends the Hash class with additional functionality specific to addressable ent
 <ul class="tsd-parameter-list">
 <li>
 <h5>source: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The hexadecimal string representation of the hash.</p>
+<div class="tsd-comment tsd-typography"><p>The hexadecimal string representation of the hash, with or without the prefix.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="AddressableEntityHash.html" class="tsd-signature-type" data-tsd-kind="Class">AddressableEntityHash</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="Hash.html">Hash</a>.<a href="Hash.html#fromHex">fromHex</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/AddressableEntity.ts#L39">src/types/key/AddressableEntity.ts:39</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/AddressableEntity.ts#L37">src/types/key/AddressableEntity.ts:37</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>fromJSON</span><a href="#fromJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromJSON.fromJSON-1">fromJSON<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="AddressableEntityHash.html" class="tsd-signature-type" data-tsd-kind="Class">AddressableEntityHash</a><a href="#fromJSON.fromJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates an AddressableEntityHash instance from its JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Deserializes an AddressableEntityHash instance from a JSON string representation.</p>
 
-<h3>Returns</h3><p>A new AddressableEntityHash instance.</p>
+<h3>Returns</h3><p>A new AddressableEntityHash instance created from the JSON string.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5>json: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The JSON string representation of the AddressableEntityHash.</p>
+<div class="tsd-comment tsd-typography"><p>The JSON string representation of the AddressableEntityHash, with or without the prefix.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="AddressableEntityHash.html" class="tsd-signature-type" data-tsd-kind="Class">AddressableEntityHash</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="Hash.html">Hash</a>.<a href="Hash.html#fromJSON">fromJSON</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/AddressableEntity.ts#L68">src/types/key/AddressableEntity.ts:68</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/AddressableEntity.ts#L68">src/types/key/AddressableEntity.ts:68</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

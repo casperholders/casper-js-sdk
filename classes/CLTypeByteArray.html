@@ -16,8 +16,9 @@
 <li><a href="CLTypeByteArray.html">CLTypeByteArray</a></li></ul>
 <h1>Class CLTypeByteArray</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Represents a ByteArray type in the CasperLabs type system.
-This type is used for fixed-size byte arrays.</p>
+<div class="tsd-comment tsd-typography"><p>Represents a fixed-size ByteArray type within the Casper type system.
+This class allows for defining a ByteArray with a specific size, and includes methods
+to handle its serialization, string representation, and conversion to JSON format.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
@@ -28,7 +29,7 @@ This type is used for fixed-size byte arrays.</p>
 <ul class="tsd-hierarchy">
 <li><a href="../interfaces/CLType.html" class="tsd-signature-type" data-tsd-kind="Interface">CLType</a></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L10">src/types/clvalue/cltype/ByteArray.ts:10</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L10">src/types/clvalue/cltype/ByteArray.ts:10</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -59,25 +60,25 @@ This type is used for fixed-size byte arrays.</p>
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_CLTypeByteArray">new CLType<wbr/>Byte<wbr/>Array<span class="tsd-signature-symbol">(</span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CLTypeByteArray.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeByteArray</a><a href="#constructor.new_CLTypeByteArray" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Constructs a new CLTypeByteArray instance.</p>
+<div class="tsd-comment tsd-typography"><p>Initializes a new instance of the CLTypeByteArray class.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5>size: <span class="tsd-signature-type">number</span></h5>
-<div class="tsd-comment tsd-typography"><p>The size of the byte array.</p>
+<div class="tsd-comment tsd-typography"><p>Specifies the fixed size of the byte array.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="CLTypeByteArray.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeByteArray</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L17">src/types/clvalue/cltype/ByteArray.ts:17</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L17">src/types/clvalue/cltype/ByteArray.ts:17</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="size" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>size</span><a href="#size" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L11">src/types/clvalue/cltype/ByteArray.ts:11</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L11">src/types/clvalue/cltype/ByteArray.ts:11</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getName" class="tsd-anchor"></a>
@@ -85,60 +86,63 @@ This type is used for fixed-size byte arrays.</p>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getName.getName-1">get<wbr/>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#getName.getName-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Gets the name of the CLTypeByteArray.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves the name of this type as defined in the Casper system.</p>
 
-<h3>Returns</h3><p>The TypeName for ByteArray.</p>
+<h3>Returns</h3><p>TypeName for ByteArray.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#getName">getName</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L49">src/types/clvalue/cltype/ByteArray.ts:49</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L50">src/types/clvalue/cltype/ByteArray.ts:50</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getSize" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Size</span><a href="#getSize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getSize.getSize-1">get<wbr/>Size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#getSize.getSize-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Gets the size of the byte array.</p>
+<div class="tsd-comment tsd-typography"><p>Gets the fixed size of the byte array.</p>
 
 <h3>Returns</h3><p>The size of the byte array.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L57">src/types/clvalue/cltype/ByteArray.ts:57</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L58">src/types/clvalue/cltype/ByteArray.ts:58</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getTypeID" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>TypeID</span><a href="#getTypeID" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getTypeID.getTypeID-1">get<wbr/>TypeID<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/TypeID.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TypeID</a><a href="#getTypeID.getTypeID-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Gets the type ID of the CLTypeByteArray.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves the unique type identifier (TypeID) for the ByteArray.</p>
 
-<h3>Returns</h3><p>The TypeID for ByteArray.</p>
+<h3>Returns</h3><p>TypeID for ByteArray.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <a href="../enums/TypeID.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TypeID</a></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#getTypeID">getTypeID</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L41">src/types/clvalue/cltype/ByteArray.ts:41</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L42">src/types/clvalue/cltype/ByteArray.ts:42</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Bytes</span><a href="#toBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toBytes.toBytes-1">to<wbr/>Bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><a href="#toBytes.toBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the CLTypeByteArray to its byte representation.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the CLTypeByteArray instance into a byte representation.
+This includes the type ID and the size of the byte array.</p>
 
-<h3>Returns</h3><p>A Uint8Array representing the CLTypeByteArray, including its type ID and size.</p>
+<h3>Returns</h3><p>A Uint8Array that represents the CLTypeByteArray.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#toBytes">toBytes</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L25">src/types/clvalue/cltype/ByteArray.ts:25</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L26">src/types/clvalue/cltype/ByteArray.ts:26</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toJSON</span><a href="#toJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toJSON.toJSON-1">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>[key: <span class="tsd-signature-type">string</span>]<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><a href="#toJSON.toJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the CLTypeByteArray to a JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the CLTypeByteArray instance to a JSON-compatible representation.
+The JSON object contains a single key-value pair, where the key is &quot;ByteArray&quot;
+and the value is the size of the array.</p>
 
-<h3>Returns</h3><p>An object with a single key-value pair, where the key is &quot;ByteArray&quot; and the value is the size.</p>
+<h3>Returns</h3><p>An object with the ByteArray size.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span><br/><span>    </span>[key: <span class="tsd-signature-type">string</span>]<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h4>
 <ul class="tsd-parameters">
@@ -146,41 +150,41 @@ This type is used for fixed-size byte arrays.</p>
 <h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">number</span></h5></li></ul><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#toJSON">toJSON</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L65">src/types/clvalue/cltype/ByteArray.ts:65</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L68">src/types/clvalue/cltype/ByteArray.ts:68</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>String</span><a href="#toString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toString.toString-1">to<wbr/>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toString.toString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Returns a string representation of the CLTypeByteArray.</p>
+<div class="tsd-comment tsd-typography"><p>Provides a human-readable string representation of the CLTypeByteArray.</p>
 
 <h3>Returns</h3><p>A string in the format &quot;ByteArray: size&quot;.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#toString">toString</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L33">src/types/clvalue/cltype/ByteArray.ts:33</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L34">src/types/clvalue/cltype/ByteArray.ts:34</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>fromJSON</span><a href="#fromJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromJSON.fromJSON-1">fromJSON<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CLTypeByteArray.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeByteArray</a><a href="#fromJSON.fromJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a CLTypeByteArray instance from a JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Constructs a CLTypeByteArray instance from a JSON representation.</p>
 
 <h3>Returns</h3><p>A new CLTypeByteArray instance.</p>
 
-<h3>Throws</h3><p>Will throw an error if the source is not a number.</p>
+<h3>Throws</h3><p>Will throw an error if the input type is not a number.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5>source: <span class="tsd-signature-type">any</span></h5>
-<div class="tsd-comment tsd-typography"><p>The JSON representation of the CLTypeByteArray.</p>
+<div class="tsd-comment tsd-typography"><p>The JSON input containing the size of the ByteArray.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="CLTypeByteArray.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeByteArray</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/ByteArray.ts#L75">src/types/clvalue/cltype/ByteArray.ts:75</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/ByteArray.ts#L78">src/types/clvalue/cltype/ByteArray.ts:78</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

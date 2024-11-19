@@ -15,12 +15,15 @@
 <li><a href="../modules.html">casper-js-sdk</a></li>
 <li><a href="ExecutableDeployItem.html">ExecutableDeployItem</a></li></ul>
 <h1>Class ExecutableDeployItem</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Represents an executable deploy item, which can be one of several types such as <code>ModuleBytes</code>, <code>StoredContractByHash</code>, etc.</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">ExecutableDeployItem</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L254">src/types/ExecutableDeployItem.ts:254</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L404">src/types/ExecutableDeployItem.ts:404</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -52,6 +55,7 @@
 <a href="ExecutableDeployItem.html#isStoredVersionContractByName" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Stored<wbr/>Version<wbr/>Contract<wbr/>By<wbr/>Name</span></a>
 <a href="ExecutableDeployItem.html#isTransfer" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Transfer</span></a>
 <a href="ExecutableDeployItem.html#setArg" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Arg</span></a>
+<a href="ExecutableDeployItem.html#newModuleBytes" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>new<wbr/>Module<wbr/>Bytes</span></a>
 <a href="ExecutableDeployItem.html#standardPayment" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>standard<wbr/>Payment</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
@@ -66,34 +70,46 @@
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="moduleBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>module<wbr/>Bytes</span><a href="#moduleBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">module<wbr/>Bytes<span class="tsd-signature-symbol">?:</span> <a href="ModuleBytes.html" class="tsd-signature-type" data-tsd-kind="Class">ModuleBytes</a></div><aside class="tsd-sources">
+<div class="tsd-signature">module<wbr/>Bytes<span class="tsd-signature-symbol">?:</span> <a href="ModuleBytes.html" class="tsd-signature-type" data-tsd-kind="Class">ModuleBytes</a></div>
+<div class="tsd-comment tsd-typography"><p>A module bytes deploy item.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L256">src/types/ExecutableDeployItem.ts:256</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L409">src/types/ExecutableDeployItem.ts:409</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="storedContractByHash" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>stored<wbr/>Contract<wbr/>By<wbr/>Hash</span><a href="#storedContractByHash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">stored<wbr/>Contract<wbr/>By<wbr/>Hash<span class="tsd-signature-symbol">?:</span> <a href="StoredContractByHash.html" class="tsd-signature-type" data-tsd-kind="Class">StoredContractByHash</a></div><aside class="tsd-sources">
+<div class="tsd-signature">stored<wbr/>Contract<wbr/>By<wbr/>Hash<span class="tsd-signature-symbol">?:</span> <a href="StoredContractByHash.html" class="tsd-signature-type" data-tsd-kind="Class">StoredContractByHash</a></div>
+<div class="tsd-comment tsd-typography"><p>A stored contract deploy item referenced by hash.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L261">src/types/ExecutableDeployItem.ts:261</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L418">src/types/ExecutableDeployItem.ts:418</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="storedContractByName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>stored<wbr/>Contract<wbr/>By<wbr/>Name</span><a href="#storedContractByName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">stored<wbr/>Contract<wbr/>By<wbr/>Name<span class="tsd-signature-symbol">?:</span> <a href="StoredContractByName.html" class="tsd-signature-type" data-tsd-kind="Class">StoredContractByName</a></div><aside class="tsd-sources">
+<div class="tsd-signature">stored<wbr/>Contract<wbr/>By<wbr/>Name<span class="tsd-signature-symbol">?:</span> <a href="StoredContractByName.html" class="tsd-signature-type" data-tsd-kind="Class">StoredContractByName</a></div>
+<div class="tsd-comment tsd-typography"><p>A stored contract deploy item referenced by name.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L266">src/types/ExecutableDeployItem.ts:266</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L427">src/types/ExecutableDeployItem.ts:427</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="storedVersionedContractByHash" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>stored<wbr/>Versioned<wbr/>Contract<wbr/>By<wbr/>Hash</span><a href="#storedVersionedContractByHash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">stored<wbr/>Versioned<wbr/>Contract<wbr/>By<wbr/>Hash<span class="tsd-signature-symbol">?:</span> <a href="StoredVersionedContractByHash.html" class="tsd-signature-type" data-tsd-kind="Class">StoredVersionedContractByHash</a></div><aside class="tsd-sources">
+<div class="tsd-signature">stored<wbr/>Versioned<wbr/>Contract<wbr/>By<wbr/>Hash<span class="tsd-signature-symbol">?:</span> <a href="StoredVersionedContractByHash.html" class="tsd-signature-type" data-tsd-kind="Class">StoredVersionedContractByHash</a></div>
+<div class="tsd-comment tsd-typography"><p>A stored versioned contract deploy item referenced by hash.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L271">src/types/ExecutableDeployItem.ts:271</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L436">src/types/ExecutableDeployItem.ts:436</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="storedVersionedContractByName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>stored<wbr/>Versioned<wbr/>Contract<wbr/>By<wbr/>Name</span><a href="#storedVersionedContractByName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">stored<wbr/>Versioned<wbr/>Contract<wbr/>By<wbr/>Name<span class="tsd-signature-symbol">?:</span> <a href="StoredVersionedContractByName.html" class="tsd-signature-type" data-tsd-kind="Class">StoredVersionedContractByName</a></div><aside class="tsd-sources">
+<div class="tsd-signature">stored<wbr/>Versioned<wbr/>Contract<wbr/>By<wbr/>Name<span class="tsd-signature-symbol">?:</span> <a href="StoredVersionedContractByName.html" class="tsd-signature-type" data-tsd-kind="Class">StoredVersionedContractByName</a></div>
+<div class="tsd-comment tsd-typography"><p>A stored versioned contract deploy item referenced by name.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L276">src/types/ExecutableDeployItem.ts:276</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L445">src/types/ExecutableDeployItem.ts:445</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="transfer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>transfer</span><a href="#transfer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">transfer<span class="tsd-signature-symbol">?:</span> <a href="TransferDeployItem.html" class="tsd-signature-type" data-tsd-kind="Class">TransferDeployItem</a></div><aside class="tsd-sources">
+<div class="tsd-signature">transfer<span class="tsd-signature-symbol">?:</span> <a href="TransferDeployItem.html" class="tsd-signature-type" data-tsd-kind="Class">TransferDeployItem</a></div>
+<div class="tsd-comment tsd-typography"><p>A transfer deploy item.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L278">src/types/ExecutableDeployItem.ts:278</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L451">src/types/ExecutableDeployItem.ts:451</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="asModuleBytes" class="tsd-anchor"></a>
@@ -101,142 +117,191 @@
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="asModuleBytes.asModuleBytes-1">as<wbr/>Module<wbr/>Bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="ModuleBytes.html" class="tsd-signature-type" data-tsd-kind="Class">ModuleBytes</a><a href="#asModuleBytes.asModuleBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Casts the <code>ExecutableDeployItem</code> to <code>ModuleBytes</code> if possible</p>
+<div class="tsd-comment tsd-typography"><p>Casts the <code>ExecutableDeployItem</code> to <code>ModuleBytes</code> if possible.</p>
 
-<h3>Returns</h3><p><code>ModuleBytes</code> representation of <code>ExecutableDeployItem</code>, or <code>undefined</code> if the <code>ExecutableDeployItem</code> cannot be cast</p>
+<h3>Returns</h3><p>The <code>ModuleBytes</code> representation of the <code>ExecutableDeployItem</code>, or <code>undefined</code> if not possible.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="ModuleBytes.html" class="tsd-signature-type" data-tsd-kind="Class">ModuleBytes</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L358">src/types/ExecutableDeployItem.ts:358</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L554">src/types/ExecutableDeployItem.ts:554</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="bytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>bytes</span><a href="#bytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="bytes.bytes-1">bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><a href="#bytes.bytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Serializes the <code>ExecutableDeployItem</code> to a byte array.</p>
+
+<h3>Returns</h3><p>The serialized byte array.</p>
+</div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L302">src/types/ExecutableDeployItem.ts:302</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L493">src/types/ExecutableDeployItem.ts:493</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getArgByName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Arg<wbr/>By<wbr/>Name</span><a href="#getArgByName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getArgByName.getArgByName-1">get<wbr/>Arg<wbr/>By<wbr/>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="CLValue.html" class="tsd-signature-type" data-tsd-kind="Class">CLValue</a><a href="#getArgByName.getArgByName-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Retrieves an argument by name from the deploy item.</p>
+
+<h3>Returns</h3><p>The argument value, or <code>undefined</code> if not found.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>name: <span class="tsd-signature-type">string</span></h5></li></ul></div>
+<h5>name: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The name of the argument.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="CLValue.html" class="tsd-signature-type" data-tsd-kind="Class">CLValue</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L280">src/types/ExecutableDeployItem.ts:280</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L458">src/types/ExecutableDeployItem.ts:458</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getArgs" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Args</span><a href="#getArgs" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getArgs.getArgs-1">get<wbr/>Args<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Args.html" class="tsd-signature-type" data-tsd-kind="Class">Args</a><a href="#getArgs.getArgs-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Retrieves the arguments for the deploy item.</p>
+
+<h3>Returns</h3><p>The arguments for the deploy item.</p>
+</div>
 <h4 class="tsd-returns-title">Returns <a href="Args.html" class="tsd-signature-type" data-tsd-kind="Class">Args</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L290">src/types/ExecutableDeployItem.ts:290</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L477">src/types/ExecutableDeployItem.ts:477</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isModuleBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Module<wbr/>Bytes</span><a href="#isModuleBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="isModuleBytes.isModuleBytes-1">is<wbr/>Module<wbr/>Bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isModuleBytes.isModuleBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Identifies whether the <code>ExecutableDeployItem</code> is of the original type <code>ModuleBytes</code></p>
+<div class="tsd-comment tsd-typography"><p>Checks if the <code>ExecutableDeployItem</code> is of type <code>ModuleBytes</code>.</p>
 
-<h3>Returns</h3><p><code>true</code> is the <code>ExecutableDeployItem</code> conforms to <code>ModuleBytes</code>, and <code>false</code> otherwise.</p>
+<h3>Returns</h3><p><code>true</code> if the <code>ExecutableDeployItem</code> is of type <code>ModuleBytes</code>, <code>false</code> otherwise.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L406">src/types/ExecutableDeployItem.ts:406</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L602">src/types/ExecutableDeployItem.ts:602</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isStoredContractByHash" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Stored<wbr/>Contract<wbr/>By<wbr/>Hash</span><a href="#isStoredContractByHash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="isStoredContractByHash.isStoredContractByHash-1">is<wbr/>Stored<wbr/>Contract<wbr/>By<wbr/>Hash<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isStoredContractByHash.isStoredContractByHash-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Identifies whether the <code>ExecutableDeployItem</code> is of the original type <code>StoredContractByHash</code></p>
+<div class="tsd-comment tsd-typography"><p>Checks if the <code>ExecutableDeployItem</code> is of type <code>StoredContractByHash</code>.</p>
 
-<h3>Returns</h3><p><code>true</code> is the <code>ExecutableDeployItem</code> conforms to <code>StoredContractByHash</code>, and <code>false</code> otherwise.</p>
+<h3>Returns</h3><p><code>true</code> if the <code>ExecutableDeployItem</code> is a stored contract by hash, <code>false</code> otherwise.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L398">src/types/ExecutableDeployItem.ts:398</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L594">src/types/ExecutableDeployItem.ts:594</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isStoredContractByName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Stored<wbr/>Contract<wbr/>By<wbr/>Name</span><a href="#isStoredContractByName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="isStoredContractByName.isStoredContractByName-1">is<wbr/>Stored<wbr/>Contract<wbr/>By<wbr/>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isStoredContractByName.isStoredContractByName-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Identifies whether the <code>ExecutableDeployItem</code> is of the original type <code>StoredContractByName</code></p>
+<div class="tsd-comment tsd-typography"><p>Checks if the <code>ExecutableDeployItem</code> is of type <code>StoredContractByName</code>.</p>
 
-<h3>Returns</h3><p><code>true</code> is the <code>ExecutableDeployItem</code> conforms to <code>StoredContractByName</code>, and <code>false</code> otherwise.</p>
+<h3>Returns</h3><p><code>true</code> if the <code>ExecutableDeployItem</code> is a stored contract by name, <code>false</code> otherwise.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L390">src/types/ExecutableDeployItem.ts:390</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L586">src/types/ExecutableDeployItem.ts:586</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isStoredVersionContractByHash" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Stored<wbr/>Version<wbr/>Contract<wbr/>By<wbr/>Hash</span><a href="#isStoredVersionContractByHash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="isStoredVersionContractByHash.isStoredVersionContractByHash-1">is<wbr/>Stored<wbr/>Version<wbr/>Contract<wbr/>By<wbr/>Hash<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isStoredVersionContractByHash.isStoredVersionContractByHash-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Identifies whether the <code>ExecutableDeployItem</code> is of the original type <code>StoredVersionedContractByHash</code></p>
+<div class="tsd-comment tsd-typography"><p>Checks if the <code>ExecutableDeployItem</code> is of type <code>StoredVersionedContractByHash</code>.</p>
 
-<h3>Returns</h3><p><code>true</code> is the <code>ExecutableDeployItem</code> conforms to <code>StoredVersionedContractByHash</code>, and <code>false</code> otherwise.</p>
+<h3>Returns</h3><p><code>true</code> if the <code>ExecutableDeployItem</code> is a stored versioned contract by hash, <code>false</code> otherwise.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L374">src/types/ExecutableDeployItem.ts:374</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L570">src/types/ExecutableDeployItem.ts:570</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isStoredVersionContractByName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Stored<wbr/>Version<wbr/>Contract<wbr/>By<wbr/>Name</span><a href="#isStoredVersionContractByName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="isStoredVersionContractByName.isStoredVersionContractByName-1">is<wbr/>Stored<wbr/>Version<wbr/>Contract<wbr/>By<wbr/>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isStoredVersionContractByName.isStoredVersionContractByName-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Identifies whether the <code>ExecutableDeployItem</code> is of the original type <code>StoredVersionedContractByName</code></p>
+<div class="tsd-comment tsd-typography"><p>Checks if the <code>ExecutableDeployItem</code> is of type <code>StoredVersionedContractByName</code>.</p>
 
-<h3>Returns</h3><p><code>true</code> is the <code>ExecutableDeployItem</code> conforms to <code>StoredVersionedContractByName</code>, and <code>false</code> otherwise.</p>
+<h3>Returns</h3><p><code>true</code> if the <code>ExecutableDeployItem</code> is a stored versioned contract by name, <code>false</code> otherwise.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L382">src/types/ExecutableDeployItem.ts:382</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L578">src/types/ExecutableDeployItem.ts:578</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isTransfer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Transfer</span><a href="#isTransfer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="isTransfer.isTransfer-1">is<wbr/>Transfer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isTransfer.isTransfer-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Identifies whether the <code>ExecutableDeployItem</code> is of the original type <code>Transfer</code></p>
+<div class="tsd-comment tsd-typography"><p>Checks if the <code>ExecutableDeployItem</code> is of type <code>Transfer</code>.</p>
 
-<h3>Returns</h3><p><code>true</code> is the <code>ExecutableDeployItem</code> conforms to <code>Transfer</code>, and <code>false</code> otherwise.</p>
+<h3>Returns</h3><p><code>true</code> if the <code>ExecutableDeployItem</code> is a transfer item, <code>false</code> otherwise.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L366">src/types/ExecutableDeployItem.ts:366</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L562">src/types/ExecutableDeployItem.ts:562</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setArg" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Arg</span><a href="#setArg" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="setArg.setArg-1">set<wbr/>Arg<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><a href="CLValue.html" class="tsd-signature-type" data-tsd-kind="Class">CLValue</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#setArg.setArg-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Sets an argument by name for the deploy item.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>name: <span class="tsd-signature-type">string</span></h5></li>
+<h5>name: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The name of the argument.</p>
+</div></li>
 <li>
-<h5>value: <a href="CLValue.html" class="tsd-signature-type" data-tsd-kind="Class">CLValue</a></h5></li></ul></div>
+<h5>value: <a href="CLValue.html" class="tsd-signature-type" data-tsd-kind="Class">CLValue</a></h5>
+<div class="tsd-comment tsd-typography"><p>The value of the argument.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L285">src/types/ExecutableDeployItem.ts:285</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L468">src/types/ExecutableDeployItem.ts:468</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="newModuleBytes" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>new<wbr/>Module<wbr/>Bytes</span><a href="#newModuleBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="newModuleBytes.newModuleBytes-1">new<wbr/>Module<wbr/>Bytes<span class="tsd-signature-symbol">(</span>moduleBytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, args<span class="tsd-signature-symbol">: </span><a href="Args.html" class="tsd-signature-type" data-tsd-kind="Class">Args</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ExecutableDeployItem.html" class="tsd-signature-type" data-tsd-kind="Class">ExecutableDeployItem</a><a href="#newModuleBytes.newModuleBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Creates a new <code>ModuleBytes</code> object from a <code>Uint8Array</code> of module bytes and a set of <code>RuntimeArgs</code></p>
+
+<h3>Returns</h3><p>A new <code>ExecutableDeployItem</code> created from a new <code>ModuleBytes</code> object built using <code>moduleBytes</code> and <code>args</code></p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>moduleBytes: <span class="tsd-signature-type">Uint8Array</span></h5>
+<div class="tsd-comment tsd-typography"><p>A set of module bytes as a <code>Uint8Array</code></p>
+</div></li>
+<li>
+<h5>args: <a href="Args.html" class="tsd-signature-type" data-tsd-kind="Class">Args</a></h5>
+<div class="tsd-comment tsd-typography"><p>The runtime arguments for the new <code>ModuleBytes</code> object</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="ExecutableDeployItem.html" class="tsd-signature-type" data-tsd-kind="Class">ExecutableDeployItem</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L612">src/types/ExecutableDeployItem.ts:612</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="standardPayment" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>standard<wbr/>Payment</span><a href="#standardPayment" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="standardPayment.standardPayment-1">standard<wbr/>Payment<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigNumber</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ExecutableDeployItem.html" class="tsd-signature-type" data-tsd-kind="Class">ExecutableDeployItem</a><a href="#standardPayment.standardPayment-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Creates a standard payment <code>ExecutableDeployItem</code> with the specified amount.</p>
+
+<h3>Returns</h3><p>A new <code>ExecutableDeployItem</code> instance with the payment.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>amount: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigNumber</span></h5></li></ul></div>
+<h5>amount: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigNumber</span></h5>
+<div class="tsd-comment tsd-typography"><p>The amount to be transferred.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="ExecutableDeployItem.html" class="tsd-signature-type" data-tsd-kind="Class">ExecutableDeployItem</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/ExecutableDeployItem.ts#L343">src/types/ExecutableDeployItem.ts:343</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/ExecutableDeployItem.ts#L539">src/types/ExecutableDeployItem.ts:539</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -280,6 +345,7 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="ExecutableDeployItem.html#isStoredVersionContractByName" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Stored<wbr/>Version<wbr/>Contract<wbr/>By<wbr/>Name</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="ExecutableDeployItem.html#isTransfer" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Transfer</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="ExecutableDeployItem.html#setArg" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Arg</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="ExecutableDeployItem.html#newModuleBytes" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>new<wbr/>Module<wbr/>Bytes</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="ExecutableDeployItem.html#standardPayment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>standard<wbr/>Payment</a></li></ul></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>

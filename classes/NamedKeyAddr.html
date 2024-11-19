@@ -16,14 +16,15 @@
 <li><a href="NamedKeyAddr.html">NamedKeyAddr</a></li></ul>
 <h1>Class NamedKeyAddr</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Represents a named key address, identified by a base entity address and a name.</p>
+<div class="tsd-comment tsd-typography"><p>Represents a named key address, which is identified by a base entity address and a unique name.
+The name is represented in bytes to allow for efficient encoding and decoding.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">NamedKeyAddr</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L10">src/types/key/NewNamedKeyAddr.ts:10</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L11">src/types/key/NewNamedKeyAddr.ts:11</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -64,27 +65,28 @@
 </div></li>
 <li>
 <h5>nameBytes: <span class="tsd-signature-type">Uint8Array</span></h5>
-<div class="tsd-comment tsd-typography"><p>The bytes representing the name.</p>
+<div class="tsd-comment tsd-typography"><p>The 32-byte array representing the name associated with the address.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="NamedKeyAddr.html" class="tsd-signature-type" data-tsd-kind="Class">NamedKeyAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L28">src/types/key/NewNamedKeyAddr.ts:28</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L30">src/types/key/NewNamedKeyAddr.ts:30</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="baseAddr" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>base<wbr/>Addr</span><a href="#baseAddr" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">base<wbr/>Addr<span class="tsd-signature-symbol">:</span> <a href="EntityAddr.html" class="tsd-signature-type" data-tsd-kind="Class">EntityAddr</a></div>
-<div class="tsd-comment tsd-typography"><p>The base address of the entity.</p>
+<div class="tsd-comment tsd-typography"><p>The base address of the entity to which this key belongs.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L15">src/types/key/NewNamedKeyAddr.ts:15</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L16">src/types/key/NewNamedKeyAddr.ts:16</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="nameBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>name<wbr/>Bytes</span><a href="#nameBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">name<wbr/>Bytes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
-<div class="tsd-comment tsd-typography"><p>The bytes representing the name associated with the address.</p>
+<div class="tsd-comment tsd-typography"><p>The bytes representing the name associated with the address.
+Expected to be a 32-byte array for validity.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L21">src/types/key/NewNamedKeyAddr.ts:21</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L23">src/types/key/NewNamedKeyAddr.ts:23</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toBytes" class="tsd-anchor"></a>
@@ -92,47 +94,51 @@
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toBytes.toBytes-1">to<wbr/>Bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><a href="#toBytes.toBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the NamedKeyAddr to a byte array representation.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the NamedKeyAddr to a byte array for efficient storage or transmission.
+The byte array includes the base address followed by the 32-byte name.</p>
 
 <h3>Returns</h3><p>A Uint8Array representing the NamedKeyAddr.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L97">src/types/key/NewNamedKeyAddr.ts:97</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L104">src/types/key/NewNamedKeyAddr.ts:104</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toJSON</span><a href="#toJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toJSON.toJSON-1">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toJSON.toJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the NamedKeyAddr to a JSON-compatible string.</p>
+<div class="tsd-comment tsd-typography"><p>Serializes the NamedKeyAddr to a JSON-compatible string.
+Primarily used for exchanging data in JSON format.</p>
 
-<h3>Returns</h3><p>A JSON string representation of the NamedKeyAddr.</p>
+<h3>Returns</h3><p>A JSON-compatible string representation of the NamedKeyAddr.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L70">src/types/key/NewNamedKeyAddr.ts:70</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L75">src/types/key/NewNamedKeyAddr.ts:75</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toPrefixedString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Prefixed<wbr/>String</span><a href="#toPrefixedString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toPrefixedString.toPrefixedString-1">to<wbr/>Prefixed<wbr/>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toPrefixedString.toPrefixedString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the NamedKeyAddr to a prefixed string representation.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the NamedKeyAddr instance to a standardized prefixed string format.
+This format includes the base address and the name bytes, represented in hexadecimal.</p>
 
 <h3>Returns</h3><p>A prefixed string representation of the NamedKeyAddr.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L58">src/types/key/NewNamedKeyAddr.ts:58</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L62">src/types/key/NewNamedKeyAddr.ts:62</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Bytes</span><a href="#fromBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromBytes.fromBytes-1">from<wbr/>Bytes<span class="tsd-signature-symbol">(</span>bytes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/IResultWithBytes.html" class="tsd-signature-type" data-tsd-kind="Interface">IResultWithBytes</a><span class="tsd-signature-symbol">&lt;</span><a href="NamedKeyAddr.html" class="tsd-signature-type" data-tsd-kind="Class">NamedKeyAddr</a><span class="tsd-signature-symbol">&gt;</span><a href="#fromBytes.fromBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a NamedKeyAddr instance from a byte array.</p>
+<div class="tsd-comment tsd-typography"><p>Constructs a NamedKeyAddr instance from a byte array representation.
+The byte array should contain the base address followed by the name bytes.</p>
 
-<h3>Returns</h3><p>A new NamedKeyAddr instance.</p>
+<h3>Returns</h3><p>An <code>IResultWithBytes</code> object containing the NamedKeyAddr instance and any remaining bytes.</p>
 
-<h3>Throws</h3><p>Error if the byte array is shorter than expected.</p>
+<h3>Throws</h3><p>Error if the byte array does not contain at least 32 bytes for the name.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -143,17 +149,18 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/IResultWithBytes.html" class="tsd-signature-type" data-tsd-kind="Interface">IResultWithBytes</a><span class="tsd-signature-symbol">&lt;</span><a href="NamedKeyAddr.html" class="tsd-signature-type" data-tsd-kind="Class">NamedKeyAddr</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L80">src/types/key/NewNamedKeyAddr.ts:80</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L86">src/types/key/NewNamedKeyAddr.ts:86</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>String</span><a href="#fromString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromString.fromString-1">from<wbr/>String<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="NamedKeyAddr.html" class="tsd-signature-type" data-tsd-kind="Class">NamedKeyAddr</a><a href="#fromString.fromString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a NamedKeyAddr instance from a string representation.</p>
+<div class="tsd-comment tsd-typography"><p>Creates a NamedKeyAddr instance from a string representation, parsing the base address and name bytes.
+The string should follow the expected prefixed format used by the system.</p>
 
 <h3>Returns</h3><p>A new NamedKeyAddr instance.</p>
 
-<h3>Throws</h3><p>Error if the name bytes length is not valid.</p>
+<h3>Throws</h3><p>Error if the nameBytes length is not exactly 32 bytes.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -164,7 +171,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="NamedKeyAddr.html" class="tsd-signature-type" data-tsd-kind="Class">NamedKeyAddr</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/key/NewNamedKeyAddr.ts#L39">src/types/key/NewNamedKeyAddr.ts:39</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/key/NewNamedKeyAddr.ts#L42">src/types/key/NewNamedKeyAddr.ts:42</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

@@ -15,12 +15,16 @@
 <li><a href="../modules.html">casper-js-sdk</a></li>
 <li><a href="TransactionHeader.html">TransactionHeader</a></li></ul>
 <h1>Class TransactionHeader</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Represents the header of a transaction, including details like chain name, timestamp,
+time-to-live (TTL), initiator address, and pricing mode.</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">TransactionHeader</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L398">src/types/Transaction.ts:398</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L538">src/types/Transaction.ts:538</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -45,49 +49,71 @@
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_TransactionHeader">new <wbr/>Transaction<wbr/>Header<span class="tsd-signature-symbol">(</span>chainName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, timestamp<span class="tsd-signature-symbol">: </span><a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a>, ttl<span class="tsd-signature-symbol">: </span><a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a>, initiatorAddr<span class="tsd-signature-symbol">: </span><a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a>, pricingMode<span class="tsd-signature-symbol">: </span><a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="TransactionHeader.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionHeader</a><a href="#constructor.new_TransactionHeader" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Creates a new <code>TransactionHeader</code> instance with the given properties.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>chainName: <span class="tsd-signature-type">string</span></h5></li>
+<h5>chainName: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The name of the blockchain chain.</p>
+</div></li>
 <li>
-<h5>timestamp: <a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a></h5></li>
+<h5>timestamp: <a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a></h5>
+<div class="tsd-comment tsd-typography"><p>The timestamp of the transaction.</p>
+</div></li>
 <li>
-<h5>ttl: <a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a></h5></li>
+<h5>ttl: <a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a></h5>
+<div class="tsd-comment tsd-typography"><p>The TTL (Time-To-Live) for the transaction.</p>
+</div></li>
 <li>
-<h5>initiatorAddr: <a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a></h5></li>
+<h5>initiatorAddr: <a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a></h5>
+<div class="tsd-comment tsd-typography"><p>The address of the transaction initiator.</p>
+</div></li>
 <li>
-<h5>pricingMode: <a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></h5></li></ul></div>
+<h5>pricingMode: <a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></h5>
+<div class="tsd-comment tsd-typography"><p>The pricing mode for the transaction.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="TransactionHeader.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionHeader</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L429">src/types/Transaction.ts:429</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L592">src/types/Transaction.ts:592</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="chainName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>chain<wbr/>Name</span><a href="#chainName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">chain<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature">chain<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>The name of the blockchain chain associated with this transaction.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L400">src/types/Transaction.ts:400</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L543">src/types/Transaction.ts:543</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="initiatorAddr" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>initiator<wbr/>Addr</span><a href="#initiatorAddr" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">initiator<wbr/>Addr<span class="tsd-signature-symbol">:</span> <a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a></div><aside class="tsd-sources">
+<div class="tsd-signature">initiator<wbr/>Addr<span class="tsd-signature-symbol">:</span> <a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a></div>
+<div class="tsd-comment tsd-typography"><p>The address of the initiator of the transaction.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L424">src/types/Transaction.ts:424</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L576">src/types/Transaction.ts:576</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="pricingMode" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>pricing<wbr/>Mode</span><a href="#pricingMode" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">pricing<wbr/>Mode<span class="tsd-signature-symbol">:</span> <a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></div><aside class="tsd-sources">
+<div class="tsd-signature">pricing<wbr/>Mode<span class="tsd-signature-symbol">:</span> <a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></div>
+<div class="tsd-comment tsd-typography"><p>The pricing mode used for the transaction, which may involve different cost mechanisms.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L427">src/types/Transaction.ts:427</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L582">src/types/Transaction.ts:582</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="timestamp" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>timestamp</span><a href="#timestamp" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">timestamp<span class="tsd-signature-symbol">:</span> <a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a></div><aside class="tsd-sources">
+<div class="tsd-signature">timestamp<span class="tsd-signature-symbol">:</span> <a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a></div>
+<div class="tsd-comment tsd-typography"><p>The timestamp when the transaction was created.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L408">src/types/Transaction.ts:408</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L554">src/types/Transaction.ts:554</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="ttl" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ttl</span><a href="#ttl" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">ttl<span class="tsd-signature-symbol">:</span> <a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a></div><aside class="tsd-sources">
+<div class="tsd-signature">ttl<span class="tsd-signature-symbol">:</span> <a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a></div>
+<div class="tsd-comment tsd-typography"><p>The time-to-live (TTL) duration of the transaction. It defines the expiration time for the transaction.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L416">src/types/Transaction.ts:416</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L565">src/types/Transaction.ts:565</a></li></ul></aside></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

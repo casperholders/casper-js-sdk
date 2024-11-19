@@ -16,8 +16,8 @@
 <li><a href="CLTypeOption.html">CLTypeOption</a></li></ul>
 <h1>Class CLTypeOption</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Represents an Option type in the CasperLabs type system.
-This class implements the CLType interface for Option types.</p>
+<div class="tsd-comment tsd-typography"><p>Represents an Option type in the Casper type system.
+This class implements the CLType interface, allowing for optional values with specified inner types.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
@@ -28,7 +28,7 @@ This class implements the CLType interface for Option types.</p>
 <ul class="tsd-hierarchy">
 <li><a href="../interfaces/CLType.html" class="tsd-signature-type" data-tsd-kind="Interface">CLType</a></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L10">src/types/clvalue/cltype/Option.ts:10</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L9">src/types/clvalue/cltype/Option.ts:9</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -58,7 +58,7 @@ This class implements the CLType interface for Option types.</p>
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_CLTypeOption">new CLType<wbr/>Option<span class="tsd-signature-symbol">(</span>inner<span class="tsd-signature-symbol">: </span><a href="../interfaces/CLType.html" class="tsd-signature-type" data-tsd-kind="Interface">CLType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CLTypeOption.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeOption</a><a href="#constructor.new_CLTypeOption" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Constructs a new CLTypeOption instance.</p>
+<div class="tsd-comment tsd-typography"><p>Initializes a new instance of the CLTypeOption class.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -69,16 +69,16 @@ This class implements the CLType interface for Option types.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="CLTypeOption.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeOption</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L20">src/types/clvalue/cltype/Option.ts:20</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L19">src/types/clvalue/cltype/Option.ts:19</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="inner" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>inner</span><a href="#inner" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">inner<span class="tsd-signature-symbol">:</span> <a href="../interfaces/CLType.html" class="tsd-signature-type" data-tsd-kind="Interface">CLType</a></div>
-<div class="tsd-comment tsd-typography"><p>The inner CLType that this Option can contain.</p>
+<div class="tsd-comment tsd-typography"><p>The inner CLType that this Option may contain.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L14">src/types/clvalue/cltype/Option.ts:14</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L13">src/types/clvalue/cltype/Option.ts:13</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getName" class="tsd-anchor"></a>
@@ -86,48 +86,50 @@ This class implements the CLType interface for Option types.</p>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getName.getName-1">get<wbr/>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#getName.getName-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Gets the name of the CLTypeOption.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves the name of the CLTypeOption.</p>
 
 <h3>Returns</h3><p>The TypeName for Option.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#getName">getName</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L52">src/types/clvalue/cltype/Option.ts:52</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L52">src/types/clvalue/cltype/Option.ts:52</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getTypeID" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>TypeID</span><a href="#getTypeID" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getTypeID.getTypeID-1">get<wbr/>TypeID<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/TypeID.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TypeID</a><a href="#getTypeID.getTypeID-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Gets the type ID of the CLTypeOption.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves the type ID of the CLTypeOption.</p>
 
-<h3>Returns</h3><p>The TypeID for Option.</p>
+<h3>Returns</h3><p>The TypeID associated with Option.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <a href="../enums/TypeID.html" class="tsd-signature-type" data-tsd-kind="Enumeration">TypeID</a></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#getTypeID">getTypeID</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L44">src/types/clvalue/cltype/Option.ts:44</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L44">src/types/clvalue/cltype/Option.ts:44</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toBytes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Bytes</span><a href="#toBytes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toBytes.toBytes-1">to<wbr/>Bytes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><a href="#toBytes.toBytes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the CLTypeOption to its byte representation.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the CLTypeOption instance to its byte representation.
+This includes the type ID for Option followed by the byte representation of the inner type.</p>
 
-<h3>Returns</h3><p>A Uint8Array representing the CLTypeOption, including its type ID and the bytes of its inner type.</p>
+<h3>Returns</h3><p>A Uint8Array representing the CLTypeOption.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#toBytes">toBytes</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L28">src/types/clvalue/cltype/Option.ts:28</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L28">src/types/clvalue/cltype/Option.ts:28</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>toJSON</span><a href="#toJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toJSON.toJSON-1">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>[key: <span class="tsd-signature-type">string</span>]<span class="tsd-signature-symbol">: </span><a href="../interfaces/CLType.html" class="tsd-signature-type" data-tsd-kind="Interface">CLType</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><a href="#toJSON.toJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts the CLTypeOption to a JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Converts the CLTypeOption instance to a JSON-compatible representation.
+The JSON object includes a single key-value pair, where the key is &quot;Option&quot; and the value is the JSON representation of the inner type.</p>
 
-<h3>Returns</h3><p>An object with a single key-value pair, where the key is &quot;Option&quot; and the value is the JSON representation of the inner type.</p>
+<h3>Returns</h3><p>A JSON object representing the option type and its inner type.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span><br/><span>    </span>[key: <span class="tsd-signature-type">string</span>]<span class="tsd-signature-symbol">: </span><a href="../interfaces/CLType.html" class="tsd-signature-type" data-tsd-kind="Interface">CLType</a><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h4>
 <ul class="tsd-parameters">
@@ -135,28 +137,29 @@ This class implements the CLType interface for Option types.</p>
 <h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/CLType.html" class="tsd-signature-type" data-tsd-kind="Interface">CLType</a></h5></li></ul><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#toJSON">toJSON</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L60">src/types/clvalue/cltype/Option.ts:60</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L61">src/types/clvalue/cltype/Option.ts:61</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="toString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>String</span><a href="#toString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="toString.toString-1">to<wbr/>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toString.toString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Returns a string representation of the CLTypeOption.</p>
+<div class="tsd-comment tsd-typography"><p>Provides a string representation of the CLTypeOption.</p>
 
 <h3>Returns</h3><p>A string in the format &quot;(Option: innerType)&quot;.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/CLType.html">CLType</a>.<a href="../interfaces/CLType.html#toString">toString</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L36">src/types/clvalue/cltype/Option.ts:36</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L36">src/types/clvalue/cltype/Option.ts:36</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromJSON" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>fromJSON</span><a href="#fromJSON" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fromJSON.fromJSON-1">fromJSON<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="CLTypeOption.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeOption</a><a href="#fromJSON.fromJSON-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a CLTypeOption instance from a JSON representation.</p>
+<div class="tsd-comment tsd-typography"><p>Creates a CLTypeOption instance from a JSON representation.
+Parses JSON input to determine the inner type of the option.</p>
 
-<h3>Returns</h3><p>A new CLTypeOption instance.</p>
+<h3>Returns</h3><p>A new CLTypeOption instance with the parsed inner type.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,7 +170,7 @@ This class implements the CLType interface for Option types.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="CLTypeOption.html" class="tsd-signature-type" data-tsd-kind="Class">CLTypeOption</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/clvalue/cltype/Option.ts#L69">src/types/clvalue/cltype/Option.ts:69</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/clvalue/cltype/Option.ts#L71">src/types/clvalue/cltype/Option.ts:71</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

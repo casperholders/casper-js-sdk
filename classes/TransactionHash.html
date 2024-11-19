@@ -15,12 +15,16 @@
 <li><a href="../modules.html">casper-js-sdk</a></li>
 <li><a href="TransactionHash.html">TransactionHash</a></li></ul>
 <h1>Class TransactionHash</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Represents a transaction hash, which can either be associated with a <code>Deploy</code> or a <code>TransactionV1</code>.
+This class helps in wrapping transaction hashes from different transaction types.</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">TransactionHash</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L580">src/types/Transaction.ts:580</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L836">src/types/Transaction.ts:836</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -42,28 +46,40 @@
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_TransactionHash">new <wbr/>Transaction<wbr/>Hash<span class="tsd-signature-symbol">(</span>deploy<span class="tsd-signature-symbol">?: </span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a>, transactionV1<span class="tsd-signature-symbol">?: </span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="TransactionHash.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionHash</a><a href="#constructor.new_TransactionHash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Constructs a new <code>TransactionHash</code> instance, which can hold either a <code>Deploy</code> hash or a <code>TransactionV1</code> hash.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> deploy: <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></h5></li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> deploy: <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></h5>
+<div class="tsd-comment tsd-typography"><p>The hash of the deploy transaction, if applicable.</p>
+</div></li>
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> transactionV1: <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></h5></li></ul></div>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> transactionV1: <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></h5>
+<div class="tsd-comment tsd-typography"><p>The hash of the version 1 transaction, if applicable.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="TransactionHash.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionHash</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L606">src/types/Transaction.ts:606</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L878">src/types/Transaction.ts:878</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="deploy" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>deploy</span><a href="#deploy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">deploy<span class="tsd-signature-symbol">?:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></div><aside class="tsd-sources">
+<div class="tsd-signature">deploy<span class="tsd-signature-symbol">?:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></div>
+<div class="tsd-comment tsd-typography"><p>The hash associated with the deploy transaction, if applicable.
+This will contain the hash of the <code>Deploy</code> transaction.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L593">src/types/Transaction.ts:593</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L853">src/types/Transaction.ts:853</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="transactionV1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>transaction<wbr/>V1</span><a href="#transactionV1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">transaction<wbr/>V1<span class="tsd-signature-symbol">?:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></div><aside class="tsd-sources">
+<div class="tsd-signature">transaction<wbr/>V1<span class="tsd-signature-symbol">?:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></div>
+<div class="tsd-comment tsd-typography"><p>The hash associated with the version 1 transaction, if applicable.
+This will contain the hash of the <code>TransactionV1</code>.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Transaction.ts#L604">src/types/Transaction.ts:604</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Transaction.ts#L871">src/types/Transaction.ts:871</a></li></ul></aside></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

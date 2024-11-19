@@ -15,12 +15,16 @@
 <li><a href="../modules.html">casper-js-sdk</a></li>
 <li><a href="BlockBodyV1.html">BlockBodyV1</a></li></ul>
 <h1>Class BlockBodyV1</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Represents the body of a version 1 block in the blockchain.
+The body contains essential data related to transactions, deploys, and other actions within the block.</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">BlockBodyV1</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Block.ts#L431">src/types/Block.ts:431</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Block.ts#L621">src/types/Block.ts:621</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -48,19 +52,27 @@
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="deployHashes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>deploy<wbr/>Hashes</span><a href="#deployHashes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">deploy<wbr/>Hashes<span class="tsd-signature-symbol">:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
+<div class="tsd-signature">deploy<wbr/>Hashes<span class="tsd-signature-symbol">:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>The list of deploy hashes included in the block.
+Deploys represent the transactions that are being executed within this block.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Block.ts#L437">src/types/Block.ts:437</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Block.ts#L631">src/types/Block.ts:631</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="proposer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>proposer</span><a href="#proposer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">proposer<span class="tsd-signature-symbol">:</span> <a href="Proposer.html" class="tsd-signature-type" data-tsd-kind="Class">Proposer</a></div><aside class="tsd-sources">
+<div class="tsd-signature">proposer<span class="tsd-signature-symbol">:</span> <a href="Proposer.html" class="tsd-signature-type" data-tsd-kind="Class">Proposer</a></div>
+<div class="tsd-comment tsd-typography"><p>The proposer of the block, which represents the entity that created or proposed the block.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Block.ts#L445">src/types/Block.ts:445</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Block.ts#L642">src/types/Block.ts:642</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="transferHashes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>transfer<wbr/>Hashes</span><a href="#transferHashes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">transfer<wbr/>Hashes<span class="tsd-signature-symbol">:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
+<div class="tsd-signature">transfer<wbr/>Hashes<span class="tsd-signature-symbol">:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>The list of transfer hashes included in the block.
+Transfers represent the transactions related to the movement of tokens within the blockchain.</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/d8a2e00/src/types/Block.ts#L452">src/types/Block.ts:452</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/e19640d/src/types/Block.ts#L653">src/types/Block.ts:653</a></li></ul></aside></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
