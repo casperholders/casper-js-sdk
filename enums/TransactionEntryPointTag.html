@@ -16,10 +16,11 @@
 <li><a href="TransactionEntryPointTag.html">TransactionEntryPointTag</a></li></ul>
 <h1>Enumeration TransactionEntryPointTag</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Enum representing the tags for different transaction entry points. This is used for efficient storage and comparison.</p>
+<div class="tsd-comment tsd-typography"><p>Enum representing the unique tags associated with each transaction entry point.
+These tags are used to simplify storage and facilitate efficient comparison of entry points.</p>
 </div></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L25">src/types/TransactionEntryPoint.ts:25</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L27">src/types/TransactionEntryPoint.ts:27</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -29,7 +30,9 @@
 <h3 class="tsd-index-heading">Enumeration Members</h3>
 <div class="tsd-index-list"><a href="TransactionEntryPointTag.html#ActivateBid" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>Activate<wbr/>Bid</span></a>
 <a href="TransactionEntryPointTag.html#AddBid" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>Add<wbr/>Bid</span></a>
+<a href="TransactionEntryPointTag.html#AddReservations" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>Add<wbr/>Reservations</span></a>
 <a href="TransactionEntryPointTag.html#Call" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>Call</span></a>
+<a href="TransactionEntryPointTag.html#CancelReservations" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>Cancel<wbr/>Reservations</span></a>
 <a href="TransactionEntryPointTag.html#ChangeBidPublicKey" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>Change<wbr/>Bid<wbr/>Public<wbr/>Key</span></a>
 <a href="TransactionEntryPointTag.html#Custom" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>Custom</span></a>
 <a href="TransactionEntryPointTag.html#Delegate" class="tsd-index-link tsd-kind-enum-member tsd-parent-kind-enum"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>Delegate</span></a>
@@ -42,54 +45,64 @@
 <h2>Enumeration Members</h2>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="ActivateBid" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Activate<wbr/>Bid</span><a href="#ActivateBid" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
-<div class="tsd-signature">Activate<wbr/>Bid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">7</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Activate<wbr/>Bid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">8</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L33">src/types/TransactionEntryPoint.ts:33</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L36">src/types/TransactionEntryPoint.ts:36</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="AddBid" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Add<wbr/>Bid</span><a href="#AddBid" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Add<wbr/>Bid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Add<wbr/>Bid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">3</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L28">src/types/TransactionEntryPoint.ts:28</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L31">src/types/TransactionEntryPoint.ts:31</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="AddReservations" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>Add<wbr/>Reservations</span><a href="#AddReservations" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">Add<wbr/>Reservations<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">10</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L38">src/types/TransactionEntryPoint.ts:38</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="Call" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Call</span><a href="#Call" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">9</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Call<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L35">src/types/TransactionEntryPoint.ts:35</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L29">src/types/TransactionEntryPoint.ts:29</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="CancelReservations" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>Cancel<wbr/>Reservations</span><a href="#CancelReservations" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">Cancel<wbr/>Reservations<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">11</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L39">src/types/TransactionEntryPoint.ts:39</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="ChangeBidPublicKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Change<wbr/>Bid<wbr/>Public<wbr/>Key</span><a href="#ChangeBidPublicKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Change<wbr/>Bid<wbr/>Public<wbr/>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">8</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Change<wbr/>Bid<wbr/>Public<wbr/>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">9</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L34">src/types/TransactionEntryPoint.ts:34</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L37">src/types/TransactionEntryPoint.ts:37</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="Custom" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Custom</span><a href="#Custom" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">Custom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L26">src/types/TransactionEntryPoint.ts:26</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L28">src/types/TransactionEntryPoint.ts:28</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="Delegate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Delegate</span><a href="#Delegate" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Delegate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">4</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Delegate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">5</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L30">src/types/TransactionEntryPoint.ts:30</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L33">src/types/TransactionEntryPoint.ts:33</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="Redelegate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Redelegate</span><a href="#Redelegate" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Redelegate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">6</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Redelegate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">7</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L32">src/types/TransactionEntryPoint.ts:32</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L35">src/types/TransactionEntryPoint.ts:35</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="Transfer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Transfer</span><a href="#Transfer" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Transfer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L27">src/types/TransactionEntryPoint.ts:27</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L30">src/types/TransactionEntryPoint.ts:30</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="Undelegate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Undelegate</span><a href="#Undelegate" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Undelegate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">5</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Undelegate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">6</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L31">src/types/TransactionEntryPoint.ts:31</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L34">src/types/TransactionEntryPoint.ts:34</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum"><a id="WithdrawBid" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>Withdraw<wbr/>Bid</span><a href="#WithdrawBid" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">Withdraw<wbr/>Bid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">3</span></div><aside class="tsd-sources">
+<div class="tsd-signature">Withdraw<wbr/>Bid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">4</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/TransactionEntryPoint.ts#L29">src/types/TransactionEntryPoint.ts:29</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/TransactionEntryPoint.ts#L32">src/types/TransactionEntryPoint.ts:32</a></li></ul></aside></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -117,7 +130,9 @@
 <ul>
 <li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#ActivateBid" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Activate<wbr/>Bid</a></li>
 <li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#AddBid" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Add<wbr/>Bid</a></li>
+<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#AddReservations" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Add<wbr/>Reservations</a></li>
 <li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#Call" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Call</a></li>
+<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#CancelReservations" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Cancel<wbr/>Reservations</a></li>
 <li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#ChangeBidPublicKey" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Change<wbr/>Bid<wbr/>Public<wbr/>Key</a></li>
 <li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#Custom" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Custom</a></li>
 <li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="TransactionEntryPointTag.html#Delegate" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>Delegate</a></li>

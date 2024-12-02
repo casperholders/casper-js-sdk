@@ -16,15 +16,14 @@
 <li><a href="Transaction.html">Transaction</a></li></ul>
 <h1>Class Transaction</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Represents a transaction in the system, containing information such as its hash,
-header, body, approvals, and optionally its associated deployment and transaction details.</p>
+<div class="tsd-comment tsd-typography"><p>A wrapper for a TransactionV1 or Deploy.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">Transaction</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L689">src/types/Transaction.ts:689</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L277">src/types/Transaction.ts:277</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -37,11 +36,18 @@ header, body, approvals, and optionally its associated deployment and transactio
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Properties</h3>
 <div class="tsd-index-list"><a href="Transaction.html#approvals" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>approvals</span></a>
-<a href="Transaction.html#body" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>body</span></a>
+<a href="Transaction.html#args" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>args</span></a>
+<a href="Transaction.html#chainName" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>chain<wbr/>Name</span></a>
+<a href="Transaction.html#entryPoint" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>entry<wbr/>Point</span></a>
 <a href="Transaction.html#hash" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>hash</span></a>
-<a href="Transaction.html#header" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>header</span></a>
+<a href="Transaction.html#initiatorAddr" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>initiator<wbr/>Addr</span></a>
 <a href="Transaction.html#originDeployV1" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-private"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>origin<wbr/>Deploy<wbr/>V1?</span></a>
 <a href="Transaction.html#originTransactionV1" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-private"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>origin<wbr/>Transaction<wbr/>V1?</span></a>
+<a href="Transaction.html#pricingMode" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>pricing<wbr/>Mode</span></a>
+<a href="Transaction.html#scheduling" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>scheduling</span></a>
+<a href="Transaction.html#target" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>target</span></a>
+<a href="Transaction.html#timestamp" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>timestamp</span></a>
+<a href="Transaction.html#ttl" class="tsd-index-link tsd-kind-property tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>ttl</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
@@ -54,7 +60,7 @@ header, body, approvals, and optionally its associated deployment and transactio
 <section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_Transaction">new <wbr/>Transaction<span class="tsd-signature-symbol">(</span>hash<span class="tsd-signature-symbol">: </span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a>, header<span class="tsd-signature-symbol">: </span><a href="TransactionHeader.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionHeader</a>, body<span class="tsd-signature-symbol">: </span><a href="TransactionBody.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionBody</a>, approvals<span class="tsd-signature-symbol">: </span><a href="Approval.html" class="tsd-signature-type" data-tsd-kind="Class">Approval</a><span class="tsd-signature-symbol">[]</span>, originTransactionV1<span class="tsd-signature-symbol">?: </span><a href="TransactionV1.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionV1</a>, originDeployV1<span class="tsd-signature-symbol">?: </span><a href="Deploy.html" class="tsd-signature-type" data-tsd-kind="Class">Deploy</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Transaction.html" class="tsd-signature-type" data-tsd-kind="Class">Transaction</a><a href="#constructor.new_Transaction" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_Transaction">new <wbr/>Transaction<span class="tsd-signature-symbol">(</span>hash<span class="tsd-signature-symbol">: </span><a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a>, chainName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, timestamp<span class="tsd-signature-symbol">: </span><a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a>, ttl<span class="tsd-signature-symbol">: </span><a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a>, initiatorAddr<span class="tsd-signature-symbol">: </span><a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a>, pricingMode<span class="tsd-signature-symbol">: </span><a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a>, args<span class="tsd-signature-symbol">: </span><a href="Args.html" class="tsd-signature-type" data-tsd-kind="Class">Args</a>, target<span class="tsd-signature-symbol">: </span><a href="TransactionTarget.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionTarget</a>, entryPoint<span class="tsd-signature-symbol">: </span><a href="TransactionEntryPoint.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionEntryPoint</a>, scheduling<span class="tsd-signature-symbol">: </span><a href="TransactionScheduling.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionScheduling</a>, approvals<span class="tsd-signature-symbol">: </span><a href="Approval.html" class="tsd-signature-type" data-tsd-kind="Class">Approval</a><span class="tsd-signature-symbol">[]</span>, originTransactionV1<span class="tsd-signature-symbol">?: </span><a href="TransactionV1.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionV1</a>, originDeployV1<span class="tsd-signature-symbol">?: </span><a href="Deploy.html" class="tsd-signature-type" data-tsd-kind="Class">Deploy</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Transaction.html" class="tsd-signature-type" data-tsd-kind="Class">Transaction</a><a href="#constructor.new_Transaction" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Creates a new <code>Transaction</code> instance with the specified values.</p>
 </div>
@@ -66,12 +72,40 @@ header, body, approvals, and optionally its associated deployment and transactio
 <div class="tsd-comment tsd-typography"><p>The hash of the transaction.</p>
 </div></li>
 <li>
-<h5>header: <a href="TransactionHeader.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionHeader</a></h5>
-<div class="tsd-comment tsd-typography"><p>The header of the transaction.</p>
+<h5>chainName: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The blockchain chain name associated with this transaction.</p>
 </div></li>
 <li>
-<h5>body: <a href="TransactionBody.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionBody</a></h5>
-<div class="tsd-comment tsd-typography"><p>The body of the transaction.</p>
+<h5>timestamp: <a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a></h5>
+<div class="tsd-comment tsd-typography"><p>The timestamp of transaction creation.</p>
+</div></li>
+<li>
+<h5>ttl: <a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a></h5>
+<div class="tsd-comment tsd-typography"><p>The time-to-live duration of the transaction.</p>
+</div></li>
+<li>
+<h5>initiatorAddr: <a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a></h5>
+<div class="tsd-comment tsd-typography"><p>The address of the transaction initiator.</p>
+</div></li>
+<li>
+<h5>pricingMode: <a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></h5>
+<div class="tsd-comment tsd-typography"><p>The pricing mode for this transaction.</p>
+</div></li>
+<li>
+<h5>args: <a href="Args.html" class="tsd-signature-type" data-tsd-kind="Class">Args</a></h5>
+<div class="tsd-comment tsd-typography"><p>The arguments for the transaction.</p>
+</div></li>
+<li>
+<h5>target: <a href="TransactionTarget.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionTarget</a></h5>
+<div class="tsd-comment tsd-typography"><p>The target of the transaction.</p>
+</div></li>
+<li>
+<h5>entryPoint: <a href="TransactionEntryPoint.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionEntryPoint</a></h5>
+<div class="tsd-comment tsd-typography"><p>The entry point of the transaction.</p>
+</div></li>
+<li>
+<h5>scheduling: <a href="TransactionScheduling.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionScheduling</a></h5>
+<div class="tsd-comment tsd-typography"><p>The scheduling information for the transaction.</p>
 </div></li>
 <li>
 <h5>approvals: <a href="Approval.html" class="tsd-signature-type" data-tsd-kind="Class">Approval</a><span class="tsd-signature-symbol">[]</span></h5>
@@ -87,7 +121,7 @@ header, body, approvals, and optionally its associated deployment and transactio
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Transaction.html" class="tsd-signature-type" data-tsd-kind="Class">Transaction</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L740">src/types/Transaction.ts:740</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L411">src/types/Transaction.ts:411</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="approvals" class="tsd-anchor"></a>
@@ -96,28 +130,42 @@ header, body, approvals, and optionally its associated deployment and transactio
 <div class="tsd-comment tsd-typography"><p>The list of approvals for this transaction.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L717">src/types/Transaction.ts:717</a></li></ul></aside></section>
-<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="body" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>body</span><a href="#body" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">body<span class="tsd-signature-symbol">:</span> <a href="TransactionBody.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionBody</a></div>
-<div class="tsd-comment tsd-typography"><p>The body of the transaction, containing details such as the target, entry point, and arguments.</p>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L380">src/types/Transaction.ts:380</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="args" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>args</span><a href="#args" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">args<span class="tsd-signature-symbol">:</span> <a href="Args.html" class="tsd-signature-type" data-tsd-kind="Class">Args</a></div>
+<div class="tsd-comment tsd-typography"><p>The arguments for the transaction, which can be a map of values required by the entry point.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L711">src/types/Transaction.ts:711</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L341">src/types/Transaction.ts:341</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="chainName" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>chain<wbr/>Name</span><a href="#chainName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">chain<wbr/>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>The name of the blockchain chain associated with this transaction.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L293">src/types/Transaction.ts:293</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="entryPoint" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>entry<wbr/>Point</span><a href="#entryPoint" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">entry<wbr/>Point<span class="tsd-signature-symbol">:</span> <a href="TransactionEntryPoint.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionEntryPoint</a></div>
+<div class="tsd-comment tsd-typography"><p>The entry point of the transaction, specifying the method or action to be executed.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L363">src/types/Transaction.ts:363</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="hash" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>hash</span><a href="#hash" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">hash<span class="tsd-signature-symbol">:</span> <a href="Hash.html" class="tsd-signature-type" data-tsd-kind="Class">Hash</a></div>
 <div class="tsd-comment tsd-typography"><p>The hash of the transaction.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L699">src/types/Transaction.ts:699</a></li></ul></aside></section>
-<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="header" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>header</span><a href="#header" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">header<span class="tsd-signature-symbol">:</span> <a href="TransactionHeader.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionHeader</a></div>
-<div class="tsd-comment tsd-typography"><p>The header of the transaction, which includes metadata about the transaction.</p>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L287">src/types/Transaction.ts:287</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="initiatorAddr" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>initiator<wbr/>Addr</span><a href="#initiatorAddr" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">initiator<wbr/>Addr<span class="tsd-signature-symbol">:</span> <a href="InitiatorAddr.html" class="tsd-signature-type" data-tsd-kind="Class">InitiatorAddr</a></div>
+<div class="tsd-comment tsd-typography"><p>The address of the initiator of the transaction.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L705">src/types/Transaction.ts:705</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L326">src/types/Transaction.ts:326</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="originDeployV1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagOptional">Optional</code> <span>origin<wbr/>Deploy<wbr/>V1</span><a href="#originDeployV1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">origin<wbr/>Deploy<wbr/>V1<span class="tsd-signature-symbol">?:</span> <a href="Deploy.html" class="tsd-signature-type" data-tsd-kind="Class">Deploy</a></div>
@@ -125,7 +173,7 @@ header, body, approvals, and optionally its associated deployment and transactio
 This is optional and only populated if the transaction originated from a deploy.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L723">src/types/Transaction.ts:723</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L386">src/types/Transaction.ts:386</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="originTransactionV1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagOptional">Optional</code> <span>origin<wbr/>Transaction<wbr/>V1</span><a href="#originTransactionV1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">origin<wbr/>Transaction<wbr/>V1<span class="tsd-signature-symbol">?:</span> <a href="TransactionV1.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionV1</a></div>
@@ -133,7 +181,42 @@ This is optional and only populated if the transaction originated from a deploy.
 This is optional and only populated if the transaction is based on a TransactionV1.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L729">src/types/Transaction.ts:729</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L392">src/types/Transaction.ts:392</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="pricingMode" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>pricing<wbr/>Mode</span><a href="#pricingMode" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">pricing<wbr/>Mode<span class="tsd-signature-symbol">:</span> <a href="PricingMode.html" class="tsd-signature-type" data-tsd-kind="Class">PricingMode</a></div>
+<div class="tsd-comment tsd-typography"><p>The pricing mode used for the transaction, which may involve different cost mechanisms.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L332">src/types/Transaction.ts:332</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="scheduling" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>scheduling</span><a href="#scheduling" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">scheduling<span class="tsd-signature-symbol">:</span> <a href="TransactionScheduling.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionScheduling</a></div>
+<div class="tsd-comment tsd-typography"><p>The scheduling information for when the transaction should be executed.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L374">src/types/Transaction.ts:374</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="target" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>target</span><a href="#target" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">target<span class="tsd-signature-symbol">:</span> <a href="TransactionTarget.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionTarget</a></div>
+<div class="tsd-comment tsd-typography"><p>The target of the transaction, which specifies where the transaction is directed (e.g., a contract or account).</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L352">src/types/Transaction.ts:352</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="timestamp" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>timestamp</span><a href="#timestamp" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">timestamp<span class="tsd-signature-symbol">:</span> <a href="Timestamp.html" class="tsd-signature-type" data-tsd-kind="Class">Timestamp</a></div>
+<div class="tsd-comment tsd-typography"><p>The timestamp when the transaction was created.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L304">src/types/Transaction.ts:304</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="ttl" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>ttl</span><a href="#ttl" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">ttl<span class="tsd-signature-symbol">:</span> <a href="Duration.html" class="tsd-signature-type" data-tsd-kind="Class">Duration</a></div>
+<div class="tsd-comment tsd-typography"><p>The time-to-live (TTL) duration of the transaction. It defines the expiration time for the transaction.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L315">src/types/Transaction.ts:315</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getDeploy" class="tsd-anchor"></a>
@@ -147,7 +230,7 @@ This is optional and only populated if the transaction is based on a Transaction
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="Deploy.html" class="tsd-signature-type" data-tsd-kind="Class">Deploy</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L760">src/types/Transaction.ts:760</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L446">src/types/Transaction.ts:446</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getTransactionV1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Transaction<wbr/>V1</span><a href="#getTransactionV1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -159,7 +242,7 @@ This is optional and only populated if the transaction is based on a Transaction
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="TransactionV1.html" class="tsd-signature-type" data-tsd-kind="Class">TransactionV1</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L768">src/types/Transaction.ts:768</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L454">src/types/Transaction.ts:454</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fromTransactionV1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Transaction<wbr/>V1</span><a href="#fromTransactionV1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -178,7 +261,7 @@ This is optional and only populated if the transaction is based on a Transaction
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Transaction.html" class="tsd-signature-type" data-tsd-kind="Class">Transaction</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/fe40022/src/types/Transaction.ts#L777">src/types/Transaction.ts:777</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/casper-ecosystem/casper-js-sdk/blob/4d606c3/src/types/Transaction.ts#L463">src/types/Transaction.ts:463</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -206,11 +289,18 @@ This is optional and only populated if the transaction is based on a Transaction
 <ul>
 <li class="tsd-kind-constructor tsd-parent-kind-class"><a href="Transaction.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-512-path"></use><use href="#icon-512-text"></use></svg>constructor</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#approvals" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>approvals</a></li>
-<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#body" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>body</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#args" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>args</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#chainName" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>chain<wbr/>Name</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#entryPoint" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>entry<wbr/>Point</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#hash" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>hash</a></li>
-<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#header" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>header</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#initiatorAddr" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>initiator<wbr/>Addr</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="Transaction.html#originDeployV1" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>origin<wbr/>Deploy<wbr/>V1?</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="Transaction.html#originTransactionV1" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>origin<wbr/>Transaction<wbr/>V1?</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#pricingMode" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>pricing<wbr/>Mode</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#scheduling" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>scheduling</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#target" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>target</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#timestamp" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>timestamp</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class"><a href="Transaction.html#ttl" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>ttl</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="Transaction.html#getDeploy" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Deploy</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="Transaction.html#getTransactionV1" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Transaction<wbr/>V1</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="Transaction.html#fromTransactionV1" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>from<wbr/>Transaction<wbr/>V1</a></li></ul></li></ul></nav></div></div>
