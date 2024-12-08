@@ -2,7 +2,6 @@ import { jsonObject, jsonMember, jsonArrayMember, TypedJSON } from 'typedjson';
 
 import {
   Effect,
-  Effects,
   ExecutionResult,
   ExecutionResultV1,
   Deploy,
@@ -17,7 +16,7 @@ import {
   HexBytes,
   Timestamp,
   PublicKey,
-  Hash
+  Hash, Transform
 } from '../types';
 
 export enum EventType {
@@ -758,8 +757,8 @@ export class StepPayload {
   @jsonMember({ name: 'execution_effect', constructor: Effect })
   executionEffect: Effect;
 
-  @jsonMember({ name: 'execution_effects', constructor: Effects })
-  executionEffects: Effects;
+  @jsonArrayMember(Transform, { name: 'execution_effects' })
+  executionEffects: Transform[];
 }
 
 @jsonObject

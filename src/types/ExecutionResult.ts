@@ -46,8 +46,7 @@ export class Operation {
  * A collection of transformations applied during a transaction.
  * A log of all transforms produced during execution, used only in 2.0+ Network
  */
-@jsonObject
-export class Effects extends Array<Transform> {}
+
 
 /**
  * Represents the effect of a transaction, including the operations and transformations.
